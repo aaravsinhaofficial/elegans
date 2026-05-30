@@ -5,7 +5,7 @@
 ## 1. Core Infrastructure
 
 - [x] 1.1 Add `cma` dependency to pyproject.toml
-- [x] 1.2 Create `quantumnematode/optimizers/evolutionary.py` module
+- [x] 1.2 Create `elegans/optimizers/evolutionary.py` module
 - [x] 1.3 Implement `EvolutionaryOptimizer` base class with fitness evaluation interface
 - [x] 1.4 Implement `CMAESOptimizer` wrapper for cma library
 - [x] 1.5 Implement `GeneticAlgorithmOptimizer` for simple GA alternative

@@ -963,6 +963,6 @@ ______________________________________________________________________
 
 ### Code Files Modified
 
-- `quantumnematode/brain/arch/spiking.py` - Complete rewrite
-- `quantumnematode/brain/arch/_spiking_layers.py` - LIF neurons, surrogate gradients
+- `elegans/brain/arch/spiking.py` - Complete rewrite
+- `elegans/brain/arch/_spiking_layers.py` - LIF neurons, surrogate gradients
 - All 7 spiking config files - Added decay parameters

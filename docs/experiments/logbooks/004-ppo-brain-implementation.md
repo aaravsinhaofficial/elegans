@@ -141,10 +141,10 @@ Parameters: `clip_epsilon=0.2`, `gamma=0.99`, `gae_lambda=0.95`, `value_loss_coe
 
 ### Code Changes
 
-- `quantumnematode/brain/arch/ppo.py` - Complete PPO implementation (~400 lines)
-- `quantumnematode/brain/arch/__init__.py` - Added PPOBrain export
-- `quantumnematode/brain/arch/dtypes.py` - Added BrainType.PPO enum
-- `quantumnematode/utils/config_loader.py` - Added PPOBrainConfig handling
+- `elegans/brain/arch/ppo.py` - Complete PPO implementation (~400 lines)
+- `elegans/brain/arch/__init__.py` - Added PPOBrain export
+- `elegans/brain/arch/dtypes.py` - Added BrainType.PPO enum
+- `elegans/utils/config_loader.py` - Added PPOBrainConfig handling
 - `scripts/run_simulation.py` - Integrated PPO brain loading
 
 ### Configuration

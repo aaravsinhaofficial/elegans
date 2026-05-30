@@ -182,7 +182,7 @@ The configuration loader SHALL support resolving hybrid quantum cortex brain con
 #### Scenario: Config Import and Type Union
 
 - **WHEN** the config loader module is loaded
-- **THEN** it SHALL import `HybridQuantumCortexBrainConfig` from `quantumnematode.brain.arch`
+- **THEN** it SHALL import `HybridQuantumCortexBrainConfig` from `elegans.brain.arch`
 - **AND** the `BrainConfigType` union SHALL include `HybridQuantumCortexBrainConfig`
 
 #### Scenario: Config Map Registration
@@ -196,7 +196,7 @@ The brain architecture package SHALL export hybrid quantum cortex brain classes.
 
 #### Scenario: Package Exports
 
-- **WHEN** `quantumnematode.brain.arch` package is imported
+- **WHEN** `elegans.brain.arch` package is imported
 - **THEN** `HybridQuantumCortexBrain` and `HybridQuantumCortexBrainConfig` SHALL be available in `__all__`
 - **AND** SHALL be importable via explicit import from the package
 

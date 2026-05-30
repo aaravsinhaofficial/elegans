@@ -23,7 +23,7 @@ ______________________________________________________________________
 - [x] Modify `run_brain()` to append to buffer instead of immediate learning
 - [x] Add buffer clearing logic at episode boundaries
 - **Validation**: Unit test episode data accumulation ✓
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/arch/modular.py` (lines 147-184)
+- **Files**: `packages/elegans/elegans/brain/arch/modular.py` (lines 147-184)
 
 ### Task 1.2: Implement Discounted Return Computation
 
@@ -32,7 +32,7 @@ ______________________________________________________________________
 - [x] Handle terminal states correctly (G_T = r_T)
 - [x] Add input validation for gamma range [0, 1]
 - **Validation**: Unit tests for various reward sequences and gamma values ✓
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/arch/modular.py` (lines 787-822)
+- **Files**: `packages/elegans/elegans/brain/arch/modular.py` (lines 787-822)
 
 ### Task 1.3: Trajectory Parameter-Shift Gradients
 
@@ -41,7 +41,7 @@ ______________________________________________________________________
 - [x] Accumulate gradient contributions: `sum_t (P_+ - P_-) * G_t`
 - [x] Maintain mathematical equivalence to single-step for validation
 - **Validation**: Test gradient linearity property ✓
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/arch/modular.py`
+- **Files**: `packages/elegans/elegans/brain/arch/modular.py`
 
 ### Task 1.4: Integrate Learning Trigger
 
@@ -50,7 +50,7 @@ ______________________________________________________________________
 - [x] Ensure buffer is cleared after update
 - [x] Add timing/logging for trajectory updates
 - **Validation**: Integration test with full episode execution ✓
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/arch/modular.py` (lines 881-969)
+- **Files**: `packages/elegans/elegans/brain/arch/modular.py` (lines 881-969)
 
 ### Task 1.5: Configuration Schema Extension
 
@@ -60,7 +60,7 @@ ______________________________________________________________________
 - [x] Add optional `normalize_returns` via `_normalize_returns()` method
 - [x] Update config validation and error messages
 - **Validation**: Config parsing tests ✓
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/arch/modular.py` (lines 128-131)
+- **Files**: `packages/elegans/elegans/brain/arch/modular.py` (lines 128-131)
 
 ### Task 1.6: Testing Suite for Trajectory Learning
 
@@ -75,7 +75,7 @@ ______________________________________________________________________
 - [x] Test: `test_episode_buffer_clearing()` - verify buffer cleanup
 - [x] Test: `test_trajectory_gradient_with_varying_returns()` - gradient math
 - **Validation**: All tests pass ✓
-- **Files**: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_modular.py` (lines 466-650+)
+- **Files**: `packages/elegans/tests/elegans_tests/brain/arch/test_modular.py` (lines 466-650+)
 
 ### Task 1.7: Documentation for Trajectory Learning
 
@@ -84,7 +84,7 @@ ______________________________________________________________________
 - [x] Document mathematical background (parameter-shift + returns)
 - [x] Update CLAUDE.md with trajectory learning patterns (not needed - dormant feature)
 - **Validation**: Documentation included in modular.py docstring ✓
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/arch/modular.py` (lines 1-68)
+- **Files**: `packages/elegans/elegans/brain/arch/modular.py` (lines 1-68)
 
 ### Task 1.8: Example Configuration
 
@@ -100,7 +100,7 @@ ______________________________________________________________________
 - [x] Update feature registry to map modules → extractors
 - [x] Add backward compatibility alias: `CHEMOTAXIS = APPETITIVE` (not done - kept separate)
 - **Note**: Kept CHEMOTAXIS as separate module (uses combined gradient), APPETITIVE uses food-only gradient
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/modules.py` (lines 306-319)
+- **Files**: `packages/elegans/elegans/brain/modules.py` (lines 306-319)
 
 ### Task 2.2: Implement Appetitive Feature Extraction
 
@@ -111,7 +111,7 @@ ______________________________________________________________________
 - [x] Register in feature extraction mapping
 - [x] Ensure biologically accurate: only use gradient data, no external state
 - **Validation**: Unit tests for feature encoding, value ranges ✓
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/modules.py` (lines 156-210)
+- **Files**: `packages/elegans/elegans/brain/modules.py` (lines 156-210)
 
 ### Task 2.3: Implement Aversive Feature Extraction
 
@@ -121,13 +121,13 @@ ______________________________________________________________________
 - [x] Use RZ = 0.0
 - [x] Register in feature extraction mapping
 - **Validation**: Unit tests for feature encoding, value ranges ✓
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/modules.py` (lines 213-267)
+- **Files**: `packages/elegans/elegans/brain/modules.py` (lines 213-267)
 
 ### Task 2.4: Gradient Mode Configuration
 
 - [x] Add `use_separated_gradients: bool` to environment config
 - [x] Default to false for backward compatibility
-- **Files**: `packages/quantum-nematode/quantumnematode/utils/config_loader.py` (line 164)
+- **Files**: `packages/elegans/elegans/utils/config_loader.py` (line 164)
 
 ### Task 2.5: Split Gradient Computation in Environment
 
@@ -135,7 +135,7 @@ ______________________________________________________________________
 - [x] Track food_vector_x, food_vector_y independently
 - [x] Track predator_vector_x, predator_vector_y independently
 - [x] Pass both gradient sets to BrainParams
-- **Files**: `packages/quantum-nematode/quantumnematode/agent/agent.py` (lines 129-156, 356+)
+- **Files**: `packages/elegans/elegans/agent/agent.py` (lines 129-156, 356+)
 
 ### Task 2.6: BrainParams Extension for Split Gradients
 
@@ -144,7 +144,7 @@ ______________________________________________________________________
 - [x] Add `predator_gradient_strength: float | None`
 - [x] Add `predator_gradient_direction: float | None`
 - [x] Maintain backward compatibility with existing gradient fields
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/arch/_brain.py` (lines 137-150+)
+- **Files**: `packages/elegans/elegans/brain/arch/_brain.py` (lines 137-150+)
 
 ### Task 2.7: Testing Suite for Modular Architecture
 
@@ -157,7 +157,7 @@ ______________________________________________________________________
 - [x] Test: `test_aversive_ry_bounded()` - verify value ranges
 - [x] Test: `test_aversive_rz_bounded()` - verify value ranges
 - **Validation**: All tests pass ✓
-- **Files**: `packages/quantum-nematode/tests/quantumnematode_tests/brain/test_modules.py` (lines 566-742)
+- **Files**: `packages/elegans/tests/elegans_tests/brain/test_modules.py` (lines 566-742)
 
 ### Task 2.8: Example Configuration
 
@@ -168,7 +168,7 @@ ______________________________________________________________________
 
 - [x] Add biological context (C. elegans appetitive vs aversive learning) in module docstrings
 - [x] Document feature extraction in appetitive_features() and aversive_features()
-- **Files**: `packages/quantum-nematode/quantumnematode/brain/modules.py`
+- **Files**: `packages/elegans/elegans/brain/modules.py`
 
 ## Phase 3: Integration and Benchmarking (After Phase 2 - 1 day)
 

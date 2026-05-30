@@ -702,7 +702,7 @@ A future direction could combine:
 
 - **Behavioral abstraction** (current approach) for overall foraging strategy
 - **Selective cellular models** for specific circuits where mechanism matters (e.g., AFD thermosensory neurons, ASH nociceptors)
-- **Quantum-inspired algorithms**: Apply quantum variational circuits (from Quantum Nematode) to optimize parameters in cellular models
+- **Learned policies as priors**: Use brain policies trained in elegans to initialize or constrain parameters in cellular models
 
 **References:**
 
@@ -713,7 +713,7 @@ ______________________________________________________________________
 
 ## Integration with External Projects
 
-Understanding how Quantum Nematode relates to other C. elegans modeling efforts guides collaboration and integration strategies.
+Understanding how elegans relates to other C. elegans modeling efforts guides collaboration and integration strategies.
 
 ### OpenWorm: Cellular Biophysics Simulation
 
@@ -726,12 +726,12 @@ Understanding how Quantum Nematode relates to other C. elegans modeling efforts 
 - **3D body simulation**: Soft-body physics for realistic locomotion in fluid environment
 - **Tool**: Geppetto platform for multi-scale simulation
 
-**Relationship to Quantum Nematode**:
+**Relationship to elegans**:
 
-- **Complementary**: OpenWorm focuses on "how biology works" (bottom-up from cells); Quantum Nematode focuses on "how to optimize behavior" (top-down from algorithms)
-- **Integration Opportunity**: Export optimized policies from Quantum Nematode → control OpenWorm's simulated muscles
+- **Complementary**: OpenWorm focuses on "how biology works" (bottom-up from cells); elegans focuses on "how to optimize behavior" (top-down from algorithms)
+- **Integration Opportunity**: Export optimized policies from elegans → control OpenWorm's simulated muscles
 - **Validation**: Compare behavioral outputs from both approaches (do they match?)
-- **Data Sharing**: OpenWorm's connectome data could seed quantum circuit topology; behavioral benchmarks could be shared
+- **Data Sharing**: OpenWorm's connectome data could inform brain network topology; behavioral benchmarks could be shared
 
 ### WormBot: Embodied Robotics
 
@@ -742,19 +742,19 @@ Understanding how Quantum Nematode relates to other C. elegans modeling efforts 
 - **Hardware platform**: Soft robotic body or wheeled platforms
 - **Sensors**: Chemical sensors (e.g., gas sensors for odor detection), contact sensors, IMUs
 - **Actuators**: Motors for locomotion, controllable movement
-- **Control**: Need control policies (this is where Quantum Nematode contributes)
+- **Control**: Need control policies (this is where elegans contributes)
 
-**Relationship to Quantum Nematode**:
+**Relationship to elegans**:
 
-- **Deployment Platform**: WormBot serves as embodied validation testbed for Quantum Nematode policies
+- **Deployment Platform**: WormBot serves as embodied validation testbed for elegans policies
 - **Sim-to-Real Transfer**: Test whether simulation-trained brains work on physical robots
 - **Real-World Benchmarks**: Physical foraging tasks, obstacle navigation, multi-robot coordination
-- **Hardware Constraints**: Quantum Nematode policies must run on WormBot's onboard computers (CPU, microcontroller)
+- **Hardware Constraints**: elegans policies must run on WormBot's onboard computers (CPU, microcontroller)
 
 **Integration Workflow**:
 
-1. Train brain in Quantum Nematode simulation
-2. Export policy (neural network weights, quantum circuit parameters)
+1. Train brain in elegans simulation
+2. Export policy (neural network weights)
 3. Load onto WormBot controller
 4. Test in real environment (laboratory arena with chemical sources, obstacles)
 5. Measure: Does performance match simulation? What degrades in sim-to-real transfer?
@@ -768,11 +768,11 @@ Understanding how Quantum Nematode relates to other C. elegans modeling efforts 
 - **Horvitz Lab (MIT)**: Apoptosis, cell lineage, behavior
 - **Lockery Lab (Oregon)**: Quantitative behavior, foraging, computational modeling
 
-**Relationship to Quantum Nematode**:
+**Relationship to elegans**:
 
-- **Hypothesis Generation**: Quantum Nematode models generate testable biological predictions
+- **Hypothesis Generation**: elegans models generate testable biological predictions
 - **Experimental Validation**: Labs design and execute experiments to test predictions
-- **Data Sharing**: Labs provide behavioral datasets; Quantum Nematode provides analysis tools
+- **Data Sharing**: Labs provide behavioral datasets; elegans provides analysis tools
 - **Iterative Refinement**: Experimental results → model updates → new predictions
 
 ______________________________________________________________________

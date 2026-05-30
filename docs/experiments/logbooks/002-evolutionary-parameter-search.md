@@ -80,7 +80,7 @@ Evolutionary optimization will find parameters achieving higher success rates th
 
 ### Implementation
 
-Created `scripts/run_evolution.py` and `quantumnematode/optimizers/evolutionary.py` with:
+Created `scripts/run_evolution.py` and `elegans/optimizers/evolutionary.py` with:
 
 - **CMA-ES**: Covariance Matrix Adaptation Evolution Strategy (via `cma` library)
 - **Genetic Algorithm**: Tournament selection, uniform crossover, Gaussian mutation

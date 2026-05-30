@@ -14,8 +14,6 @@ Rename all brain architectures to use paradigm prefix + algorithm naming.
 
 | Old Name | New Name | Config key |
 |----------|----------|------------|
-| ModularBrain | QVarCircuitBrain | qvarcircuit |
-| QModularBrain | QQLearningBrain | qqlearning |
 | MLPBrain | MLPReinforceBrain | mlpreinforce |
 | PPOBrain | MLPPPOBrain | mlpppo |
 | QMLPBrain | MLPDQNBrain | mlpdqn |
@@ -61,9 +59,7 @@ ______________________________________________________________________
 ## Backlog
 
 - Hierarchical benchmark categories (from OpenSpec remaining tasks)
-- Quantum thermotaxis (get thermotaxis working with QVarCircuit or other quantum brain)
 - Run new benchmarks for all important scenarios with new brain names
-- QSNN (quantum spiking neural network) brain architecture
 - Pixel visualization theme
 
 ______________________________________________________________________
@@ -74,4 +70,4 @@ ______________________________________________________________________
 - Multi-sensory environment foundation (health, predator types, mechanosensation)
 - PPO brain architecture
 - Spiking brain rewrite (STDP → surrogate gradients)
-- CMA-ES evolutionary optimization for quantum circuits
+- CMA-ES evolutionary optimization for classical brains

@@ -72,16 +72,16 @@ Create benchmark configurations and validation:
 
 Core implementation:
 
-- `quantumnematode/env/temperature.py` - NEW: TemperatureField, TemperatureZone, TemperatureZoneThresholds
-- `quantumnematode/env/env.py` - ThermotaxisParams, temperature methods, apply_temperature_effects()
-- `quantumnematode/brain/modules.py` - \_thermotaxis_core(), SENSORY_MODULES[THERMOTAXIS]
-- `quantumnematode/dtypes.py` - TemperatureSpot type alias
-- `quantumnematode/utils/config_loader.py` - ThermotaxisConfig class
+- `elegans/env/temperature.py` - NEW: TemperatureField, TemperatureZone, TemperatureZoneThresholds
+- `elegans/env/env.py` - ThermotaxisParams, temperature methods, apply_temperature_effects()
+- `elegans/brain/modules.py` - \_thermotaxis_core(), SENSORY_MODULES[THERMOTAXIS]
+- `elegans/dtypes.py` - TemperatureSpot type alias
+- `elegans/utils/config_loader.py` - ThermotaxisConfig class
 
 Agent integration:
 
-- `quantumnematode/agent/agent.py` - BrainParams population, reset_environment() preservation
-- `quantumnematode/agent/runners.py` - apply_temperature_effects() in step loop
+- `elegans/agent/agent.py` - BrainParams population, reset_environment() preservation
+- `elegans/agent/runners.py` - apply_temperature_effects() in step loop
 
 Scripts:
 

@@ -46,7 +46,7 @@ pre-commit install
 pre-commit run --all-files
 
 # Run tests
-uv run pytest packages/quantum-nematode/tests/
+uv run pytest packages/elegans/tests/
 ```
 
 ## Workflow Configuration
@@ -78,4 +78,4 @@ If tests fail:
 
 1. Check the workflow logs in GitHub Actions
 2. Download test artifacts for detailed error information
-3. Run tests locally: `uv run pytest packages/quantum-nematode/tests/ -v`
+3. Run tests locally: `uv run pytest packages/elegans/tests/ -v`

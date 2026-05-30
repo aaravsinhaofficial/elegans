@@ -419,6 +419,6 @@ Each component will have comprehensive unit tests:
 
 ## References
 
-- Current implementation: `packages/quantum-nematode/quantumnematode/agent.py`
+- Current implementation: `packages/elegans/elegans/agent.py`
 - Related specs: `brain-architecture`, `configuration-system`
 - Test coverage report: Currently ~0% for agent module

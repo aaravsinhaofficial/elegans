@@ -1,6 +1,6 @@
-# Contributing to Quantum Nematode Simulation
+# Contributing to elegans
 
-Thank you for your interest in contributing to the Quantum Nematode Simulation project! This guide will help you get started with development and contributing to the project.
+Thank you for your interest in contributing to the elegans simulation project! This guide will help you get started with development and contributing to the project.
 
 ## 🚀 Development Setup
 
@@ -24,48 +24,24 @@ cd nematode
 
 ### 3. Install Dependencies
 
-Choose the appropriate installation based on your development needs:
-
-#### For Quantum Hardware Development (QPU)
-
 ```bash
-uv sync --extra qpu
+uv sync --extra torch --extra pixel
 ```
 
-#### For CPU-only Development
+Available extras:
 
-```bash
-uv sync --extra cpu
-```
-
-#### For GPU Development
-
-```bash
-uv sync --extra gpu
-```
-
-#### For Classical ML Brain Development
-
-```bash
-uv sync [OTHER_EXTRAS] --extra torch
-```
-
-> ⚠️ **Note**: Only the `cpu` and `qpu` extras conflict and cannot be installed together.
+- `torch` — PyTorch for classical and spiking neural network brains
+- `pixel` — Pygame-based pixel renderer
 
 ### 4. Environment Configuration
 
-Copy the environment template and configure your settings:
+Copy the environment template:
 
 ```bash
 cp .env.template .env
 ```
 
-Edit `.env` to include your API keys and configuration:
-
-```env
-IBM_QUANTUM_API_KEY=your-ibm-quantum-api-key-here
-IBM_QUANTUM_BACKEND=ibm_brisbane  # Optional: specify backend
-```
+Edit `.env` as needed for your local configuration.
 
 ## 🛠️ Development Tools
 
@@ -110,33 +86,23 @@ convention = "numpy"
 
 ### Brain Architectures
 
-The project supports 12 brain architectures across quantum, hybrid, classical, and biologically-inspired categories:
+The project supports the following brain architectures:
 
-**Quantum:**
+**Classical (MLP):**
 
-1. **QVarCircuitBrain** (`qvarcircuit`): Variational quantum circuit with modular design
-2. **QQLearningBrain** (`qqlearning`): Quantum Q-learning with variational circuits
-3. **QRCBrain** (`qrc`): Quantum reservoir computing with data re-uploading
-4. **QSNNReinforceBrain** (`qsnnreinforce`): Quantum spiking neural network with REINFORCE
-5. **QSNNPPOBrain** (`qsnnppo`): Quantum spiking neural network with PPO
-
-**Hybrid (quantum + classical):**
-
-6. **HybridQuantumBrain** (`hybridquantum`): QSNN reflex + classical cortex + classical critic — best quantum architecture (96.9% on pursuit predators)
-7. **HybridClassicalBrain** (`hybridclassical`): Classical ablation control for HybridQuantum
-8. **HybridQuantumCortexBrain** (`hybridquantumcortex`): QSNN reflex + QSNN cortex + classical critic — experimental (halted)
-
-**Classical:**
-
-09. **MLPReinforceBrain** (`mlpreinforce`): MLP with policy gradients (REINFORCE)
-10. **MLPDQNBrain** (`mlpdqn`): MLP with Deep Q-Network
-11. **MLPPPOBrain** (`mlpppo`): MLP actor-critic with PPO — best classical architecture
+1. **MLPReinforceBrain** (`mlpreinforce`): MLP with policy gradients (REINFORCE)
+2. **MLPDQNBrain** (`mlpdqn`): MLP with Deep Q-Network
+3. **MLPPPOBrain** (`mlpppo`): MLP actor-critic with PPO — best classical architecture
 
 **Biologically-Inspired:**
 
-12. **SpikingReinforceBrain** (`spikingreinforce`): LIF spiking neural network with surrogate gradients
+4. **SpikingReinforceBrain** (`spikingreinforce`): LIF spiking neural network with surrogate gradients
 
-Each brain architecture follows a common interface defined in `quantumnematode.brain.arch`.
+**Hybrid:**
+
+5. **HybridClassicalBrain** (`hybridclassical`): Classical MLP reflex + classical cortex MLP + classical critic with mode-gated fusion and 3-stage curriculum
+
+Each brain architecture follows a common interface defined in `elegans.brain.arch`.
 
 ## 🔧 Development Workflows
 
@@ -172,7 +138,7 @@ uv run pytest -m nightly -v
 uv run pytest -m nightly -k "foraging_small" -v
 ```
 
-Benchmark ranges are defined in `packages/quantum-nematode/tests/quantumnematode_tests/e2e_benchmarks.json`. When updating configs or training parameters, you may need to update these ranges based on new experiment results.
+Benchmark ranges are defined in `packages/elegans/tests/elegans_tests/e2e_benchmarks.json`. When updating configs or training parameters, you may need to update these ranges based on new experiment results.
 
 ### Running Simulations
 
@@ -181,18 +147,18 @@ Benchmark ranges are defined in `packages/quantum-nematode/tests/quantumnematode
 ##### Testing with Dynamic Foraging Environment
 
 ```bash
-# Best quantum brain (hybrid quantum)
-uv run ./scripts/run_simulation.py --runs 5 --config ./configs/examples/hybridquantum_foraging_small.yml --theme emoji
-
 # Best classical brain (MLP PPO)
 uv run ./scripts/run_simulation.py --runs 5 --config ./configs/examples/mlpppo_foraging_small.yml --theme emoji
+
+# Spiking brain on foraging
+uv run ./scripts/run_simulation.py --runs 5 --config ./configs/examples/spikingreinforce_foraging_small.yml --theme emoji
 ```
 
 ##### Testing with Predators in Dynamic Foraging Environment
 
 ```bash
-# Hybrid quantum on predator evasion
-uv run ./scripts/run_simulation.py --runs 5 --config ./configs/examples/hybridquantum_pursuit_predators_small.yml --theme emoji
+# MLP PPO on predator evasion
+uv run ./scripts/run_simulation.py --runs 5 --config ./configs/examples/mlpppo_predators_small.yml --theme emoji
 
 # Spiking brain on predator evasion
 uv run ./scripts/run_simulation.py --runs 5 --config ./configs/examples/spikingreinforce_predators_small.yml --theme emoji
@@ -209,7 +175,7 @@ Track any simulation run automatically with the `--track-experiment` flag:
 ```bash
 # Run with experiment tracking
 uv run ./scripts/run_simulation.py \
-  --config configs/examples/qvarcircuit_foraging_medium.yml \
+  --config configs/examples/mlpppo_foraging_medium.yml \
   --runs 50 \
   --track-experiment
 ```
@@ -263,7 +229,7 @@ uv run scripts/benchmark_submit.py submit <experiment-id> \
 ```bash
 # Run and submit as benchmark in one step
 uv run scripts/run_simulation.py \
-  --config configs/examples/qvarcircuit_foraging_medium.yml \
+  --config configs/examples/mlpppo_foraging_medium.yml \
   --runs 50 \
   --save-benchmark \
   --benchmark-notes "Your optimization approach"
@@ -313,7 +279,7 @@ done
 # 2. Submit all sessions together
 uv run scripts/benchmark_submit.py \
     --experiments experiments/* \
-    --category foraging_medium/quantum \
+    --category foraging_medium/classical \
     --contributor "Jane Doe" \
     --github "janedoe" \
     --notes "Tuned learning rate schedule with adaptive exploration"
@@ -322,7 +288,7 @@ uv run scripts/benchmark_submit.py \
 uv run scripts/benchmark_submit.py regenerate
 
 # 4. Create PR
-git add benchmarks/foraging_medium/quantum/*.json
+git add benchmarks/foraging_medium/classical/*.json
 git add artifacts/experiments/
 git add README.md docs/nematodebench/LEADERBOARD.md
 git commit -m "Add benchmark: Adaptive exploration for foraging medium"
@@ -338,7 +304,7 @@ Check current benchmark standings:
 uv run scripts/benchmark_submit.py leaderboard
 
 # View specific category
-uv run scripts/benchmark_submit.py leaderboard --category foraging_medium/quantum
+uv run scripts/benchmark_submit.py leaderboard --category foraging_medium/classical
 
 # Regenerate leaderboard documentation
 uv run scripts/benchmark_submit.py regenerate
@@ -356,15 +322,15 @@ docs/experiments/
 ├── templates/
 │   └── experiment.md            # Template for new logbooks
 └── logbooks/
-    ├── 001-quantum-predator-optimization.md
+    ├── 001-quantum-predator-optimization.md  (historical)
     ├── 002-evolutionary-parameter-search.md
     ├── 003-spiking-brain-optimization.md
     ├── ...
-    ├── 008-quantum-brain-evaluation.md
     └── supporting/              # Detailed appendix data per logbook
-        ├── 003/
-        └── 008/
 ```
+
+Logbooks numbered 001 and 008 document earlier quantum-architecture experimentation
+and are preserved as historical records.
 
 **Key distinction from auto-tracking:**
 
@@ -388,18 +354,18 @@ To create a new logbook:
 For parameter optimization without gradient-based learning, use the evolution script:
 
 ```bash
-# CMA-ES optimization (recommended for quantum circuits)
+# CMA-ES optimization
 uv run python scripts/run_evolution.py \
-  --config configs/examples/evolution_qvarcircuit_foraging_small.yml \
+  --config configs/examples/evolution_mlpreinforce_foraging_small.yml \
   --algorithm cmaes \
   --generations 50 \
   --population 20 \
   --episodes 15 \
   --parallel 4
 
-# Genetic Algorithm (more stable convergence)
+# Genetic Algorithm
 uv run python scripts/run_evolution.py \
-  --config configs/examples/evolution_qvarcircuit_foraging_small.yml \
+  --config configs/examples/evolution_mlpreinforce_foraging_small.yml \
   --algorithm ga \
   --generations 50 \
   --population 30 \
@@ -417,7 +383,7 @@ Resume from checkpoint:
 
 ```bash
 uv run python scripts/run_evolution.py \
-  --config configs/examples/evolution_qvarcircuit_foraging_small.yml \
+  --config configs/examples/evolution_mlpreinforce_foraging_small.yml \
   --resume evolution_results/20251209_123456/checkpoint_gen20.pkl \
   --generations 50
 ```
@@ -426,8 +392,8 @@ uv run python scripts/run_evolution.py \
 
 #### Adding a New Brain Architecture
 
-1. Create a new file in `packages/quantum-nematode/quantumnematode/brain/arch/`
-2. Inherit from appropriate base class (`QuantumBrain` or `ClassicalBrain`)
+1. Create a new file in `packages/elegans/elegans/brain/arch/`
+2. Inherit from the appropriate base class (e.g. `ClassicalBrain`)
 3. Implement required methods:
    - `run_brain()`: Execute brain and return actions
    - `learn()`: Update parameters based on rewards
@@ -436,13 +402,13 @@ uv run python scripts/run_evolution.py \
 Example structure:
 
 ```python
-from quantumnematode.brain.arch import QuantumBrain
+from elegans.brain.arch import ClassicalBrain
 
-class MyNewBrain(QuantumBrain):
+class MyNewBrain(ClassicalBrain):
     def run_brain(self, params, reward=None, **kwargs):
         # Implement brain execution logic
         pass
-    
+
     def learn(self, params, reward, **kwargs):
         # Implement learning logic
         pass
@@ -451,7 +417,7 @@ class MyNewBrain(QuantumBrain):
 4. Add configuration class:
 
 ```python
-from quantumnematode.brain.arch.dtypes import BrainConfig
+from elegans.brain.arch.dtypes import BrainConfig
 
 class MyNewBrainConfig(BrainConfig):
     # Define configuration parameters
@@ -461,16 +427,9 @@ class MyNewBrainConfig(BrainConfig):
 5. Update `__init__.py` files to export new classes
 6. Add tests in the appropriate test directory
 
-#### Adding New Quantum Modules
-
-1. Define module in `quantumnematode.brain.modules`
-2. Add feature extraction logic
-3. Update `DEFAULT_MODULES` mapping
-4. Test with existing brain architectures
-
 #### Adding New Environment Features
 
-1. Extend `quantumnematode.env` classes (base class: `BaseEnvironment`, main implementation: `DynamicForagingEnvironment`)
+1. Extend `elegans.env` classes (base class: `BaseEnvironment`, main implementation: `DynamicForagingEnvironment`)
 2. Ensure compatibility with `BrainParams` interface
 3. Add visualization support for new features
 4. Update environment state encoding for brain input
@@ -480,7 +439,7 @@ class MyNewBrainConfig(BrainConfig):
 Example for adding a new foraging feature:
 
 ```python
-# In quantumnematode/env/dynamic_foraging.py
+# In elegans/env/dynamic_foraging.py
 class ExtendedForagingEnvironment(DynamicForagingEnvironment):
     def __init__(self, temperature_variation: bool = False, **kwargs):
         super().__init__(**kwargs)
@@ -507,13 +466,13 @@ class ExtendedForagingEnvironment(DynamicForagingEnvironment):
    ```python
    def compute_gradient(params: dict[str, float]) -> list[float]:
        """
-       Compute parameter gradients using parameter-shift rule.
-       
+       Compute parameter gradients.
+
        Parameters
        ----------
        params : dict[str, float]
-           Parameter values for quantum circuit.
-           
+           Parameter values.
+
        Returns
        -------
        list[float]
@@ -533,7 +492,7 @@ class ExtendedForagingEnvironment(DynamicForagingEnvironment):
 4. **Logging**: Use structured logging
 
    ```python
-   from quantumnematode.logging_config import logger
+   from elegans.logging_config import logger
 
    logger.info(f"Training episode {episode} completed with reward {reward}")
    ```
@@ -543,20 +502,19 @@ class ExtendedForagingEnvironment(DynamicForagingEnvironment):
 ### Unit Tests
 
 - Test individual functions and methods
-- Use meaningful test names: `test_parameter_shift_gradients_with_valid_params`
-- Mock external dependencies (Qiskit backends, etc.)
+- Use meaningful test names: `test_policy_gradient_with_valid_params`
+- Mock external dependencies
 
 ### Integration Tests
 
 - Test complete workflows
 - Use small configurations for faster execution
-- Test both classical and quantum backends
 
 ### Performance Tests
 
 - Benchmark critical paths
-- Monitor memory usage for large circuits
-- Test scalability with different qubit counts
+- Monitor memory usage
+- Test scalability with network size
 
 ## 🚀 Contribution Areas
 
@@ -569,23 +527,17 @@ class ExtendedForagingEnvironment(DynamicForagingEnvironment):
    - Social foraging behaviors (multi-agent)
    - Realistic chemotaxis modeling
 
-2. **Quantum Hardware Integration**
+2. **Advanced Learning Algorithms**
 
-   - Add support for new quantum backends
-   - Implement noise-aware training for foraging tasks
-   - Add hardware-specific optimizations
-
-3. **Advanced Learning Algorithms**
-
-   - Quantum natural gradients for foraging
+   - SOTA RL baselines (SAC, TD3)
    - Meta-learning across environment variations
    - Transfer learning from simple to complex foraging
 
-4. **Visualization and Analysis**
+3. **Visualization and Analysis**
 
    - Real-time foraging trajectory visualization
    - Satiety and efficiency heatmaps
-   - Comparative analysis tools (quantum vs classical)
+   - Comparative analysis tools across architectures
 
 ### Medium Priority
 
@@ -652,25 +604,23 @@ class ExtendedForagingEnvironment(DynamicForagingEnvironment):
 
 ## 🔬 Research Directions
 
-### Quantum Machine Learning in Foraging
+### Bio-inspired Reinforcement Learning
 
-- **Quantum Advantage in Foraging**: Identify scenarios where quantum algorithms excel at multi-objective foraging tasks
-- **Noise Resilience**: Develop training methods robust to quantum hardware noise in dynamic environments
-- **Hybrid Algorithms**: Explore quantum-classical hybrid approaches for foraging strategy optimization
-- **Entanglement in Decision-Making**: Study role of quantum entanglement in balancing exploration vs exploitation
+- **Multi-objective Foraging**: Balancing food intake, survival, and exploration
+- **Hybrid Architectures**: Reflex/cortex/critic decompositions and modular policies
+- **Spiking Networks**: Surrogate gradient learning in biologically realistic neurons
 
 ### Biological Modeling
 
 - **Neural Modeling**: More accurate modeling of C. elegans chemosensory neurons and interneurons
-- **Behavioral Patterns**: Implementation of realistic nematode foraging behaviors (area-restricted search, klinokinesis)
+- **Behavioral Patterns**: Realistic nematode foraging behaviors (area-restricted search, klinokinesis)
 - **Multi-scale Modeling**: From molecular signaling to behavioral strategies
 - **Satiety and Homeostasis**: Realistic modeling of internal state management
 
 ### Algorithm Development
 
-- **Novel Quantum Algorithms**: Development of new quantum learning algorithms for sequential decision-making
 - **Optimization Techniques**: Advanced parameter optimization methods for foraging
-- **Scalability**: Methods for larger quantum systems and complex environments
+- **Scalability**: Methods for larger networks and complex environments
 - **Transfer Learning**: Strategies for adapting from simple to complex foraging scenarios
 
 ## 🤝 Community
@@ -691,4 +641,4 @@ This project is licensed under the Apache License 2.0. See [LICENSE](LICENSE) fo
 
 ______________________________________________________________________
 
-Thank you for contributing to the Quantum Nematode Simulation project! Your contributions help advance the field of quantum machine learning and computational biology.
+Thank you for contributing to the elegans simulation project! Your contributions help advance the field of bio-inspired reinforcement learning and computational biology.

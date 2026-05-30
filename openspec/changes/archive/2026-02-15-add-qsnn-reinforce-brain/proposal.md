@@ -32,8 +32,8 @@ QSNN (Quantum Spiking Neural Network) addresses both problems: trainable quantum
 
 **Code Changes:**
 
-- New: `quantumnematode/brain/arch/qsnnreinforce.py` (QSNNReinforceBrain, QSNNReinforceBrainConfig)
-- New: `quantumnematode/brain/arch/_qlif_layers.py` (QLIFSurrogateSpike, shared QLIF circuit execution)
+- New: `elegans/brain/arch/qsnnreinforce.py` (QSNNReinforceBrain, QSNNReinforceBrainConfig)
+- New: `elegans/brain/arch/_qlif_layers.py` (QLIFSurrogateSpike, shared QLIF circuit execution)
 - Modify: `brain/arch/dtypes.py` (add QSNN_REINFORCE to BrainType enum)
 - Modify: `brain/arch/__init__.py` (export new classes)
 - Modify: `utils/config_loader.py` (add to BRAIN_CONFIG_MAP)

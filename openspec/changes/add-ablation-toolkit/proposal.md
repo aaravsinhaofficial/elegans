@@ -93,8 +93,8 @@ Generate markdown reports:
 
 **Affected Code:**
 
-- `packages/quantum-nematode/quantumnematode/analysis/ablation.py` - NEW: Ablation framework
-- `packages/quantum-nematode/quantumnematode/analysis/__init__.py` - NEW: Analysis module
+- `packages/elegans/elegans/analysis/ablation.py` - NEW: Ablation framework
+- `packages/elegans/elegans/analysis/__init__.py` - NEW: Analysis module
 - `scripts/run_ablation.py` - NEW: CLI for ablation studies
 
 **Dependencies:**

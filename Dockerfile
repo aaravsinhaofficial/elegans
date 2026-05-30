@@ -9,14 +9,14 @@ RUN pip install --no-cache-dir uv
 
 # Copy the requirements file into the container at /app
 COPY pyproject.toml uv.lock /app/
-COPY packages/quantum-nematode/pyproject.toml /app/packages/quantum-nematode/pyproject.toml
+COPY packages/elegans/pyproject.toml /app/packages/elegans/pyproject.toml
 
 # Install project dependencies
-RUN uv sync --no-install-project --extra gpu
+RUN uv sync --no-install-project --extra torch --extra pixel
 
 # Copy local project
-COPY packages/quantum-nematode /app/packages/quantum-nematode
+COPY packages/elegans /app/packages/elegans
 COPY scripts /app/scripts
 
 # Install project
-RUN uv sync --extra gpu
+RUN uv sync --extra torch --extra pixel

@@ -2,7 +2,7 @@
 
 ## 1. Create Surrogate Gradient Infrastructure
 
-- [x] 1.1 Create `packages/quantum-nematode/quantumnematode/brain/arch/_spiking_layers.py`
+- [x] 1.1 Create `packages/elegans/elegans/brain/arch/_spiking_layers.py`
 - [x] 1.2 Implement `SurrogateGradientSpike` custom autograd function with sigmoid surrogate
 - [x] 1.3 Implement `LIFLayer` module with forward/backward pass and stateful membrane potential
 - [x] 1.4 Implement `SpikingPolicyNetwork` multi-layer architecture with timestep simulation

@@ -8,6 +8,9 @@ was implemented (pre-Phase 0 completion).
 - These benchmarks **lack per-run seed tracking** and cannot be reproduced exactly
 - They will be **removed** once re-run with the new tracking system
 - Do not use these as reference for new submissions
+- All `quantum/` subdirectories below are **historical**: the quantum brain
+  architectures have since been removed from the codebase. These rows are preserved
+  for archival reference and cannot be re-run on the current code.
 
 ## Migration Status
 

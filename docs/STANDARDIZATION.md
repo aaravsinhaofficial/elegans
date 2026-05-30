@@ -12,7 +12,7 @@ ______________________________________________________________________
 
 **Rationale**:
 
-- Our environment uses domain-specific multi-modal Pydantic params (`BrainParams` with quantum rotation fields RX/RY/RZ, thermotaxis, mechanosensation) that don't map cleanly to Gymnasium's `Box`/`Dict` observation spaces.
+- Our environment uses domain-specific multi-modal Pydantic params (`BrainParams` with sensory fields covering thermotaxis, mechanosensation, and gradient perception) that don't map cleanly to Gymnasium's `Box`/`Dict` observation spaces.
 - Biological fidelity features (AFD neuron simulation, satiety system, health/HP model) are tightly integrated with custom state management.
 - We don't currently use any Gymnasium-dependent libraries (Stable-Baselines3, RLlib, CleanRL). Our brain architectures have their own training loops.
 - Migration cost is high (~19 files in `env/` module plus extensive tests) with no immediate benefit.
@@ -64,7 +64,7 @@ ______________________________________________________________________
 - Hierarchical benchmark categories (from OpenSpec remaining tasks)
 - Statistical testing framework (confidence intervals, significance tests, effect sizes)
 - Improved export formats and visualizations
-- Spiking as a separate brain class alongside quantum/classical
+- Spiking as a separate brain class alongside classical
 
 ______________________________________________________________________
 
@@ -72,6 +72,6 @@ ______________________________________________________________________
 
 | Area | Decision | Framework | Reason |
 |------|----------|-----------|--------|
-| Environment | Keep custom | — | Domain-specific multi-modal sensing, quantum params |
+| Environment | Keep custom | — | Domain-specific multi-modal sensing |
 | Configuration | Keep custom | Pydantic + YAML | Type-safe, mature, no sweep needs |
 | Benchmarking | Enhance custom | NematodeBench | Domain-specific metrics, no standard fits |

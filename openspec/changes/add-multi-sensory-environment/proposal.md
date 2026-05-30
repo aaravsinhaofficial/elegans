@@ -143,12 +143,12 @@ When thermotaxis is enabled, bias food spawning toward safe temperature zones:
 
 **Affected Code:**
 
-- `packages/quantum-nematode/quantumnematode/env/env.py` - Health system, predator types
-- `packages/quantum-nematode/quantumnematode/brain/arch/_brain.py` - BrainParams extensions
-- `packages/quantum-nematode/quantumnematode/brain/modules.py` - Module renaming, mechanosensation
-- `packages/quantum-nematode/quantumnematode/agent/agent.py` - RewardConfig extensions
-- `packages/quantum-nematode/quantumnematode/benchmark/convergence.py` - Multi-objective scoring
-- `packages/quantum-nematode/quantumnematode/experiment/metadata.py` - SimulationResult extensions
+- `packages/elegans/elegans/env/env.py` - Health system, predator types
+- `packages/elegans/elegans/brain/arch/_brain.py` - BrainParams extensions
+- `packages/elegans/elegans/brain/modules.py` - Module renaming, mechanosensation
+- `packages/elegans/elegans/agent/agent.py` - RewardConfig extensions
+- `packages/elegans/elegans/benchmark/convergence.py` - Multi-objective scoring
+- `packages/elegans/elegans/experiment/metadata.py` - SimulationResult extensions
 
 **Breaking Changes:**
 

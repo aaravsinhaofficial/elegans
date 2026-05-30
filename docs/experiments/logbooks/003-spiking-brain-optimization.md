@@ -61,8 +61,8 @@ Parameters: `τ_m=20.0`, `v_threshold=1.0`, `v_reset=0.0`, `v_rest=0.0`
 
 ### Code Changes
 
-- `quantumnematode/brain/arch/spiking.py` - Complete rewrite with surrogate gradients
-- `quantumnematode/brain/arch/_spiking_layers.py` - LIF neurons, surrogate gradients
+- `elegans/brain/arch/spiking.py` - Complete rewrite with surrogate gradients
+- `elegans/brain/arch/_spiking_layers.py` - LIF neurons, surrogate gradients
 - Config files: Added decay parameters and population coding options
 
 ### Configuration

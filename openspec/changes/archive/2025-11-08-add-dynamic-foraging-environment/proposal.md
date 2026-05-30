@@ -28,19 +28,19 @@ The current simulation environment supports only single-food-source navigation i
 
 - **Core Implementation**:
 
-  - [`quantumnematode/env.py`](../../../packages/quantum-nematode/quantumnematode/env.py) - New `DynamicForagingEnvironment` class and `BaseEnvironment` refactoring
-  - [`quantumnematode/agent.py`](../../../packages/quantum-nematode/quantumnematode/agent.py) - Extended reward calculation for multi-food scenarios and exploration bonus
-  - [`quantumnematode/utils/config_loader.py`](../../../packages/quantum-nematode/quantumnematode/utils/config_loader.py) - New `DynamicEnvironmentConfig` and `SatietyConfig` classes
+  - [`elegans/env.py`](../../../packages/elegans/elegans/env.py) - New `DynamicForagingEnvironment` class and `BaseEnvironment` refactoring
+  - [`elegans/agent.py`](../../../packages/elegans/elegans/agent.py) - Extended reward calculation for multi-food scenarios and exploration bonus
+  - [`elegans/utils/config_loader.py`](../../../packages/elegans/elegans/utils/config_loader.py) - New `DynamicEnvironmentConfig` and `SatietyConfig` classes
 
 - **Supporting Systems**:
 
-  - [`quantumnematode/report/dtypes.py`](../../../packages/quantum-nematode/quantumnematode/report/dtypes.py) - New metrics for foraging efficiency and distance efficiency
+  - [`elegans/report/dtypes.py`](../../../packages/elegans/elegans/report/dtypes.py) - New metrics for foraging efficiency and distance efficiency
   - [`configs/examples/`](../../../configs/examples/) - Three new preset configuration files (dynamic_small.yml, dynamic_medium.yml, dynamic_large.yml)
   - [`scripts/run_simulation.py`](../../../scripts/run_simulation.py) - Environment initialization logic for dynamic vs static mode
 
 - **Rendering**:
 
-  - [`quantumnematode/env.py`](../../../packages/quantum-nematode/quantumnematode/env.py) - Viewport rendering methods with agent-centered camera
+  - [`elegans/env.py`](../../../packages/elegans/elegans/env.py) - Viewport rendering methods with agent-centered camera
 
 ### Migration Path
 

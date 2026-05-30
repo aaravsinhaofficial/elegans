@@ -49,5 +49,5 @@
 
 - [x] Create `test_hybridquantum.py` with tests for: config validation (valid defaults, invalid training_stage, invalid shots, etc.), brain instantiation (all components created, correct dimensions), QSNN forward pass (reflex logits shape and range), cortex forward pass (output splitting into action_biases + mode_logits), fusion mechanism (mode gating math, stage 1 bypass), stage-aware optimizer activity (correct optimizers active per stage), REINFORCE update (loss decreases, weights change), PPO buffer (fills and triggers update correctly), PPO update (loss computation, gradient clipping), episode reset (QSNN state cleared, buffers cleared correctly), brain registration (factory creates correct type, config loader resolves), weight save/load (round-trip save then load produces identical weights, shape mismatch raises ValueError, missing file raises FileNotFoundError, stage 2 without weights logs warning)
 - [x] Run `uv run pre-commit run -a` and fix any ruff/pyright violations
-- [x] Run `uv run pytest tests/quantumnematode_tests/brain/arch/test_hybridquantum.py -v` — all tests pass
+- [x] Run `uv run pytest tests/elegans_tests/brain/arch/test_hybridquantum.py -v` — all tests pass
 - [x] Run `uv run pytest` — full test suite passes with no regressions

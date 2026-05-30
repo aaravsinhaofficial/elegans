@@ -30,8 +30,8 @@ Additionally, this serves as a **stepping stone to quantum advantage research**:
 
 - **Affected specs**: `brain-architecture` (new optimization paradigm)
 - **Affected code**:
-  - `quantumnematode/optimizers/` - New evolutionary optimizer module
-  - `quantumnematode/brain/arch/` - Parameter get/set interfaces
+  - `elegans/optimizers/` - New evolutionary optimizer module
+  - `elegans/brain/arch/` - Parameter get/set interfaces
   - `scripts/` - New evolution script
   - `configs/` - Evolution configuration examples
 - **New dependencies**: `cma` (CMA-ES implementation)

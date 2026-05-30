@@ -64,9 +64,9 @@ Document validated optimization approaches for each architecture:
 
 **Affected Code:**
 
-- `packages/quantum-nematode/quantumnematode/brain/arch/ppo.py` (new, ~400 lines)
-- `packages/quantum-nematode/quantumnematode/brain/arch/__init__.py` (add export)
-- `packages/quantum-nematode/quantumnematode/validation/` (new module)
+- `packages/elegans/elegans/brain/arch/ppo.py` (new, ~400 lines)
+- `packages/elegans/elegans/brain/arch/__init__.py` (add export)
+- `packages/elegans/elegans/validation/` (new module)
 - `data/chemotaxis/` (new data directory)
 - `docs/nematodebench/` (new documentation)
 - `docs/OPTIMIZATION_METHODS.md` (new documentation)

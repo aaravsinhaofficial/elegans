@@ -80,7 +80,7 @@ Chemotaxis index (CI) is the standard metric in C. elegans research for quantify
 ### Architecture
 
 ```text
-quantumnematode/validation/
+elegans/validation/
 ├── __init__.py
 ├── chemotaxis.py      # CI calculation and metrics
 └── datasets.py        # Dataset loading and benchmark

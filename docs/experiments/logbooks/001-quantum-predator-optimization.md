@@ -250,9 +250,9 @@ KEY INSIGHT: Learning actively harms quantum circuits with sparse rewards.
 
 ### Code Files Modified
 
-- `quantumnematode/brain/modules.py`
-- `quantumnematode/brain/arch/dual_circuit.py`
-- `quantumnematode/brain/arch/modular.py`
+- `elegans/brain/modules.py`
+- `elegans/brain/arch/dual_circuit.py`
+- `elegans/brain/arch/modular.py`
 
 ## Appendix: Hyperparameters That Work
 

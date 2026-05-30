@@ -40,10 +40,10 @@ The experiment JSON includes `per_run_results` array with seed and metrics for e
 
 ### 3. Seeding Infrastructure
 
-The system uses a centralized seeding module (`quantumnematode/utils/seeding.py`):
+The system uses a centralized seeding module (`elegans/utils/seeding.py`):
 
 ```python
-from quantumnematode.utils.seeding import generate_seed, set_global_seed, get_rng
+from elegans.utils.seeding import generate_seed, set_global_seed, get_rng
 
 # Auto-generate cryptographically random seed
 seed = generate_seed()  # Uses secrets.randbelow(2**32)
@@ -161,7 +161,7 @@ These may cause larger variance:
 
 - **GPU non-determinism** - Atomic operations, parallel reduction
 - **Library updates** - Different NumPy/PyTorch versions
-- **Hardware differences** - CPU vs GPU vs QPU, different GPU models
+- **Hardware differences** - CPU vs GPU, different GPU models
 
 ### Acceptable Variance
 

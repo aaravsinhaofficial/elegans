@@ -76,8 +76,8 @@ This is a **complete architectural rewrite** of the spiking neural network imple
 
 **Affected Code:**
 
-- `packages/quantum-nematode/quantumnematode/brain/arch/spiking.py` (complete rewrite, ~700 lines)
-- `packages/quantum-nematode/quantumnematode/brain/arch/_spiking_layers.py` (new file, ~150 lines)
+- `packages/elegans/elegans/brain/arch/spiking.py` (complete rewrite, ~700 lines)
+- `packages/elegans/elegans/brain/arch/_spiking_layers.py` (new file, ~150 lines)
 - `configs/examples/spiking_foraging_small.yml` (update parameters)
 - `configs/examples/spiking_foraging_medium.yml` (update parameters)
 - `configs/examples/spiking_foraging_large.yml` (update parameters)

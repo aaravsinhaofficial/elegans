@@ -10,8 +10,8 @@ ______________________________________________________________________
 
 ### 1.1 Create Analysis Module
 
-- [ ] Create `packages/quantum-nematode/quantumnematode/analysis/__init__.py`
-- [ ] Create `packages/quantum-nematode/quantumnematode/analysis/ablation.py`
+- [ ] Create `packages/elegans/elegans/analysis/__init__.py`
+- [ ] Create `packages/elegans/elegans/analysis/ablation.py`
 
 ### 1.2 Define Ablation Configuration
 

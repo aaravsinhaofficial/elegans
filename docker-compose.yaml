@@ -1,6 +1,6 @@
 services:
-  quantum-nematode:
-    container_name: quantum-nematode
+  elegans:
+    container_name: elegans
     environment:
       - PYTHONUNBUFFERED=1
     tty: true

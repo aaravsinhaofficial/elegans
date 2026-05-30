@@ -12,7 +12,7 @@ ______________________________________________________________________
 
 ### 1.1 Create Temperature Module
 
-- [x] Create `packages/quantum-nematode/quantumnematode/env/temperature.py`
+- [x] Create `packages/elegans/elegans/env/temperature.py`
 - [x] Define `TemperatureField` dataclass with fields:
   - `grid_size: int`
   - `base_temperature: float` (default 20.0, cultivation temperature)
@@ -24,7 +24,7 @@ ______________________________________________________________________
 
 ### 1.2 Temperature Computation
 
-Uses shared types from `quantumnematode/dtypes.py`: `GridPosition`, `GradientPolar`, `GradientVector`, `TemperatureSpot`
+Uses shared types from `elegans/dtypes.py`: `GridPosition`, `GradientPolar`, `GradientVector`, `TemperatureSpot`
 
 - [x] Implement `get_temperature(position: GridPosition) -> float`
   - Linear gradient component based on direction and strength
@@ -342,21 +342,21 @@ This section documents all files touched during thermotaxis implementation to se
 
 | File | Changes |
 |------|---------|
-| `quantumnematode/env/temperature.py` | **NEW** - TemperatureField class, TemperatureZone enum, TemperatureZoneThresholds |
-| `quantumnematode/env/env.py` | ThermotaxisParams dataclass, temperature_field attribute, get_temperature(), get_temperature_gradient(), get_temperature_zone(), apply_temperature_effects(), get_temperature_comfort_score(), reset_thermotaxis(), \_is_in_toxic_zone(), \_get_zone_background_style(), \_render_rich() override |
-| `quantumnematode/env/theme.py` | Added predator foreground styles, temperature zone background styles, toxic zone background style to DarkColorRichStyleConfig |
-| `quantumnematode/brain/modules.py` | \_thermotaxis_core() function, SENSORY_MODULES registry entry for THERMOTAXIS |
-| `quantumnematode/dtypes.py` | TemperatureSpot type alias (shared types already existed) |
-| `quantumnematode/utils/config_loader.py` | ThermotaxisConfig class, to_params() method, DynamicEnvironmentConfig.thermotaxis field |
-| `quantumnematode/agent/agent.py` | \_create_brain_params() thermotaxis state population, reset_environment() config preservation |
-| `quantumnematode/agent/runners.py` | apply_temperature_effects() call in step loop, HP depletion check, temperature_history in EpisodeData, track_temperature() call |
-| `quantumnematode/agent/tracker.py` | temperature_history field, track_temperature() method, temperature_history property |
-| `quantumnematode/experiment/metadata.py` | survival_score and temperature_comfort_score in PerRunResult, avg/post-convergence fields in ResultsMetadata |
-| `quantumnematode/experiment/tracker.py` | Multi-objective metrics calculation and aggregation |
-| `quantumnematode/benchmark/convergence.py` | Hierarchical multi-objective composite scoring formula |
-| `quantumnematode/report/dtypes.py` | temperature_history in SimulationResult and EpisodeTrackingData |
-| `quantumnematode/report/plots.py` | temperature_progression.png plot generation |
-| `quantumnematode/report/csv_export.py` | temperature_history.csv export, temperature metrics in foraging_summary.csv |
+| `elegans/env/temperature.py` | **NEW** - TemperatureField class, TemperatureZone enum, TemperatureZoneThresholds |
+| `elegans/env/env.py` | ThermotaxisParams dataclass, temperature_field attribute, get_temperature(), get_temperature_gradient(), get_temperature_zone(), apply_temperature_effects(), get_temperature_comfort_score(), reset_thermotaxis(), \_is_in_toxic_zone(), \_get_zone_background_style(), \_render_rich() override |
+| `elegans/env/theme.py` | Added predator foreground styles, temperature zone background styles, toxic zone background style to DarkColorRichStyleConfig |
+| `elegans/brain/modules.py` | \_thermotaxis_core() function, SENSORY_MODULES registry entry for THERMOTAXIS |
+| `elegans/dtypes.py` | TemperatureSpot type alias (shared types already existed) |
+| `elegans/utils/config_loader.py` | ThermotaxisConfig class, to_params() method, DynamicEnvironmentConfig.thermotaxis field |
+| `elegans/agent/agent.py` | \_create_brain_params() thermotaxis state population, reset_environment() config preservation |
+| `elegans/agent/runners.py` | apply_temperature_effects() call in step loop, HP depletion check, temperature_history in EpisodeData, track_temperature() call |
+| `elegans/agent/tracker.py` | temperature_history field, track_temperature() method, temperature_history property |
+| `elegans/experiment/metadata.py` | survival_score and temperature_comfort_score in PerRunResult, avg/post-convergence fields in ResultsMetadata |
+| `elegans/experiment/tracker.py` | Multi-objective metrics calculation and aggregation |
+| `elegans/benchmark/convergence.py` | Hierarchical multi-objective composite scoring formula |
+| `elegans/report/dtypes.py` | temperature_history in SimulationResult and EpisodeTrackingData |
+| `elegans/report/plots.py` | temperature_progression.png plot generation |
+| `elegans/report/csv_export.py` | temperature_history.csv export, temperature metrics in foraging_summary.csv |
 
 ### Script Files
 

@@ -1,6 +1,6 @@
 # NematodeBench
 
-NematodeBench is the official benchmark system for the Quantum Nematode project. It provides a standardized framework for evaluating neural architectures in biologically-inspired navigation tasks.
+NematodeBench is the official benchmark system for the elegans project. It provides a standardized framework for evaluating neural architectures in biologically-inspired navigation tasks.
 
 ## Documentation
 

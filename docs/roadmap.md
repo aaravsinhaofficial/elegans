@@ -1,6 +1,6 @@
-# Quantum Nematode Project Roadmap
+# elegans Project Roadmap
 
-**Vision**: Map all behaviors of *Caenorhabditis elegans* through comparative architecture analysis, with focus on quantum computational approaches, to discover fundamental principles of biological intelligence and demonstrate quantum advantages in cognitively-relevant tasks.
+**Vision**: Map all behaviors of *Caenorhabditis elegans* through comparative architecture analysis to discover fundamental principles of biological intelligence using classical and biologically-inspired neural architectures.
 
 **Version**: 2.0
 
@@ -10,11 +10,23 @@
 
 ______________________________________________________________________
 
-> **Disclaimer**: This roadmap describes a research program with hypotheses to be tested, not established results. Many claims about quantum advantages, biological insights, and scaling properties are research questions requiring empirical validation. Outcomes may differ significantly from projections as evidence accumulates. The adaptive decision gates throughout this document reflect our commitment to evidence-driven pivots when hypotheses are not supported by experimental results.
+> **Historical context**: Earlier revisions of this roadmap included a major
+> research thrust on quantum machine learning (quantum variational circuits,
+> QSNN, hybrid quantum-classical brains, IBM Quantum hardware deployment, and a
+> "Phase 6: Quantum Frontiers"). That work has been removed from the project;
+> the quantum sections below have been deleted and remaining references to
+> quantum architectures (e.g. `QVarCircuitBrain`, `QQLearningBrain`, QPU
+> benchmarks) describe earlier project state and are no longer actionable.
+> Treat quantum-related language elsewhere in this file as historical context
+> rather than current direction.
 
 ______________________________________________________________________
 
-**Note**: This roadmap aims for world-class scientific impact through rigorous methodology, external validation, and transformative discoveries at the intersection of quantum computing, neuroscience, and artificial intelligence.
+> **Disclaimer**: This roadmap describes a research program with hypotheses to be tested, not established results. Many claims about biological insights and scaling properties are research questions requiring empirical validation. Outcomes may differ significantly from projections as evidence accumulates. The adaptive decision gates throughout this document reflect our commitment to evidence-driven pivots when hypotheses are not supported by experimental results.
+
+______________________________________________________________________
+
+**Note**: This roadmap aims for scientific impact through rigorous methodology, external validation, and discoveries at the intersection of computational neuroscience and bio-inspired AI.
 
 ______________________________________________________________________
 
@@ -30,7 +42,6 @@ ______________________________________________________________________
     - [Phase 3: Learning & Memory](#phase-3-learning--memory-q3-q4-2026)
     - [Phase 4: Evolution & Adaptation](#phase-4-evolution--adaptation-q4-2026---q1-2027)
     - [Phase 5: Social Complexity](#phase-5-social-complexity-q1-q2-2027)
-    - [Phase 6: Quantum Frontiers](#phase-6-quantum-frontiers-q2-q3-2027)
     - [Phase 7: Scaling & Real-World](#phase-7-scaling--real-world-q3-q4-2027)
     - [Phase 8: Universality & Impact](#phase-8-universality--impact-q4-2027---q2-2028)
 05. [Adaptive Roadmap Philosophy](#adaptive-roadmap-philosophy)
@@ -54,7 +65,6 @@ ______________________________________________________________________
 | **3** | Q3 - Q4 2026 | Learning & Memory | STAM/ITAM/LTAM, associative learning paradigms, oxygen sensing |
 | **4** | Q4 2026 - Q1 2027 | Evolution & Adaptation | Baldwin Effect, evolutionary dynamics comparison |
 | **5** | Q1 - Q2 2027 | Social Complexity | Multi-agent infrastructure, emergent behaviors |
-| **6** | Q2 - Q3 2027 | Quantum Frontiers | Advanced quantum algorithms, hardware deployment |
 | **7** | Q3 - Q4 2027 | Scaling & Real-World | Large environments, neuromorphic, WormBot |
 | **8** | Q4 2027 - Q2 2028 | Universality & Impact | Cross-organism transfer, unified theory |
 
@@ -62,7 +72,7 @@ ______________________________________________________________________
 
 ## Executive Summary
 
-The Quantum Nematode project aims to achieve breakthrough discoveries at the intersection of quantum computing, neuroscience, and artificial intelligence by:
+The elegans project aims to achieve breakthrough discoveries at the intersection of quantum computing, neuroscience, and artificial intelligence by:
 
 1. **Comparative Architecture Analysis**: Systematically comparing quantum (QVarCircuitBrain, QQLearningBrain), classical (MLPReinforceBrain, MLPDQNBrain, MLPPPOBrain), and biologically-realistic (SpikingReinforceBrain) architectures across increasingly complex C. elegans behaviors
 
@@ -754,81 +764,6 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-### Phase 6: Quantum Frontiers (Q2-Q3 2027)
-
-> **Note**: This phase involves advanced quantum computing concepts (VQC, QAOA, error mitigation, hardware deployment). The technical claims and feasibility assessments in this section should be reviewed by domain experts in quantum computing and quantum machine learning before implementation.
-
-**Goal**: Push boundaries of quantum algorithms, deploy on real hardware, and demonstrate quantum advantages on biologically-relevant tasks.
-
-#### Deliverables
-
-1. **Advanced Quantum Algorithms**
-
-   - **Variational Quantum Circuits (VQC)**: Continue developing parameterized quantum circuits optimized via evolution (building on Phase 0 success)
-   - **Quantum Approximate Optimization Algorithm (QAOA)**: Explore whether multi-objective foraging can be framed as combinatorial optimization (research-level question)
-   - **Quantum Neural Networks (QNN)**: Data reuploading circuits, hybrid quantum-classical architectures
-   - **Quantum Reinforcement Learning**: Quantum policy representations, exploration of quantum-enhanced value estimation
-   - **Quantum Natural Gradient (QNG) variants**: Momentum-QNG, Conjugate QNG (CQNG) with dynamic hyperparameters, QNG with geodesic corrections for faster convergence
-   - **Quantum kernel methods**: Quantum Policy Gradient in RKHS, sparse non-parametric policies with tunable expressiveness
-
-2. **Quantum Error Mitigation**
-
-   - **Q-CTRL Fire Opal Integration**: Error suppression for NISQ devices
-   - **Zero-noise extrapolation**: Estimate noiseless results from noisy runs
-   - **Probabilistic error cancellation**: Mitigate gate errors
-   - **Noise-robust circuit design**: Shorter circuits, native gate sets, error-aware compilation
-
-3. **Real Quantum Hardware Deployment**
-
-   - **IBM Quantum**: Monthly benchmarks on ibm_sherbrooke, ibm_kyiv, or latest backends
-   - **IonQ**: Trapped-ion quantum computers (if accessible)
-   - **Hardware performance tracking**: Noise levels, gate fidelities, decoherence times
-   - **Hardware-specific optimization**: Topology-aware circuit mapping, qubit selection
-
-4. **Theoretical Quantum Advantage Analysis**
-
-   - Mathematical analysis: Identify structural features of foraging tasks that may benefit from quantum computation
-   - Explore potential advantages: Grover-like search in large state spaces, quantum parallelism for multi-objective optimization
-   - Note: Formal complexity-theoretic proofs (BQP vs. P) are unlikely for RL tasks, but empirical advantages may be demonstrable
-
-5. **Quantum-Classical Hybrid Ensembles**
-
-   - Voting ensembles: Quantum + classical models vote on actions
-   - Hierarchical decision-making: Quantum for strategy, classical for tactics (or vice versa)
-   - Adaptive switching: Use quantum when uncertain, classical when confident
-   - Meta-learning: Learn which model to trust in which context
-
-6. **Quantum Interpretability**
-
-   - Visualize quantum state evolution during decision-making
-   - Track entanglement entropy: How much are qubits correlated?
-   - Gate importance: Which quantum gates are critical for performance?
-   - Hypothesis: "Entanglement enables [X] computational capability"
-
-#### Metrics Focus
-
-- **Quantum advantage**: Demonstrate quantum > classical on specific task with statistical significance
-- **Hardware viability**: Real QPU performance vs. simulation (noise gap)
-- **Error mitigation efficacy**: Performance improvement from error suppression
-
-#### Phase 6 Exit Criteria
-
-- ✅ VQC and QAOA (if applicable) implemented and benchmarked on foraging tasks
-- ✅ Real quantum hardware deployment successful: Achieves **>50% of classical baseline performance** on at least 1 task
-- ✅ Quantum error mitigation (Fire Opal or similar) improves real hardware performance by ≥20%
-- ✅ Monthly IBM Quantum benchmarks operational (automated deployment and tracking pipeline)
-- ✅ At least 1 quantum advantage claim validated on physical QPU (not just simulation)
-- ✅ Quantum advantage demonstrated on ≥1 biologically-relevant task with p < 0.01 statistical significance OR compelling explanation of why quantum doesn't provide advantages
-- ✅ Theoretical framework published linking quantum computational principles to intelligent behavior
-
-#### Go/No-Go Decision
-
-**GO if**: Quantum hardware achieves ≥50% classical performance OR reveals insights into quantum computation despite performance gaps.
-**PIVOT if**: Hardware too noisy for useful computation → Focus on quantum-inspired classical algorithms (variational methods, evolution strategies applied to classical nets).
-**STOP if**: No theoretical or empirical quantum advantage after extensive testing → Conclude quantum not suitable for this domain, publish comprehensive negative result.
-
-______________________________________________________________________
-
 ### Phase 7: Scaling & Real-World (Q3-Q4 2027)
 
 > **Note**: This phase involves neuromorphic hardware deployment (Intel Loihi) and embodied robotics (WormBot). Neuromorphic expertise and robotics integration experience recommended before implementation.
@@ -1050,18 +985,6 @@ Throughout all phases, the following validation activities occur continuously:
 
 **Partnerships**: Establish MOUs with 2-3 C. elegans labs (e.g., Bargmann Lab at Rockefeller, Sengupta Lab at Brandeis, Horvitz Lab at MIT)
 
-### Quantum Hardware Validation (Every Phase)
-
-**Objective**: Regularly benchmark on real quantum devices to track hardware progress and algorithm robustness.
-
-- **Phase 0**: First successful QPU run (QVarCircuitBrain on IBM Quantum)
-- **Phase 1-4**: Monthly benchmarks on available backends (track noise, fidelity, queue times)
-- **Phase 5-6**: Weekly benchmarks as algorithm complexity increases
-- **Phase 6**: Daily benchmarks during intensive quantum algorithm development
-- **Phase 7-8**: Production deployment pipeline (automated QPU testing in CI/CD)
-
-**Hardware Partners**: IBM Quantum, Q-CTRL (Fire Opal), IonQ (if accessible), Rigetti (if accessible)
-
 ### Embodied Testing (Phases 2+)
 
 **Objective**: Validate that simulation-trained policies transfer to physical robots.
@@ -1227,12 +1150,12 @@ ______________________________________________________________________
 
 **Differentiation**:
 
-- Quantum Nematode: Neural computation paradigms, behavioral optimization, quantum ML
+- elegans: Neural computation paradigms, behavioral optimization, quantum ML
 - OpenWorm: Cellular-level simulation, muscle physics, connectome-based modeling
 
 **Integration Points**:
 
-1. Export optimized policies from Quantum Nematode → control OpenWorm's simulated muscles
+1. Export optimized policies from elegans → control OpenWorm's simulated muscles
 2. Import OpenWorm's connectome data → seed quantum circuit topology
 3. Validate: Do optimized behaviors match OpenWorm's biophysical predictions?
 
@@ -1250,29 +1173,15 @@ ______________________________________________________________________
 
 **Integration Points**:
 
-1. Deploy Quantum Nematode-optimized policies on WormBot hardware
+1. Deploy elegans-optimized policies on WormBot hardware
 2. Test sim-to-real transfer (does simulation learning work on physical robot?)
 3. Real-world benchmarks: Chemical sensing (if available), obstacle navigation, multi-robot coordination
 
 **Collaboration Opportunities**:
 
 - WormBot provides embodied validation testbed
-- Quantum Nematode provides optimized control policies
+- elegans provides optimized control policies
 - Joint experiments on real-world foraging tasks
-
-### Quantum Computing Ecosystem
-
-**IBM Quantum**: Hardware provider, Qiskit framework, access to real QPUs
-
-**Q-CTRL**: Quantum error suppression (Fire Opal), circuit optimization
-
-**Relationship**: **Technology partners**
-
-**Engagement**:
-
-- Regular benchmarking on IBM Quantum hardware
-- Quantum algorithm development using Qiskit ecosystem
-- Potential joint publications on quantum advantage in RL
 
 ### Neuroscience Community
 
@@ -1282,7 +1191,7 @@ ______________________________________________________________________
 
 **Collaboration Model**:
 
-1. Quantum Nematode generates biological predictions from model analysis
+1. elegans generates biological predictions from model analysis
 2. Neuroscience lab designs and executes experiments
 3. Co-authored publications validating (or refuting) predictions
 4. Iterative refinement: Experimental results → model updates → new predictions
@@ -1306,12 +1215,6 @@ Beyond Phase 8 (2027+), potential research directions include:
 - Example: Behavioral foraging + detailed AFD neuron biophysics for thermotaxis
 - Validation: Does behavioral optimization match cellular-level predictions?
 
-### 2. Quantum-Classical Computational Comparisons
-
-- Systematic benchmarking of quantum-inspired vs. purely classical algorithms
-- Identify task features where quantum representations provide measurable advantages
-- Develop theoretical frameworks explaining when and why quantum approaches help (or don't)
-
 ### 3. Clinical Applications
 
 - Neurological disease models: C. elegans models of Alzheimer's, Parkinson's
@@ -1324,13 +1227,6 @@ Beyond Phase 8 (2027+), potential research directions include:
 - Compositional reasoning: Combine learned modules for novel tasks
 - Meta-learning: Learning to learn across domains
 
-### 5. Quantum Advantage for AI
-
-- Beyond C. elegans: Quantum advantages in general RL, NLP, computer vision?
-- Theoretical foundations: When does quantum help? (BQP vs. P for AI tasks)
-- Hardware roadmap: What quantum devices enable practical AI applications?
-
-______________________________________________________________________
 
 ## Technical Debt & Maintenance
 

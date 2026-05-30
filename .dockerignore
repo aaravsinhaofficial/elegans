@@ -2,7 +2,7 @@
 *
 
 # Allow specific directories and files
-!/packages/quantum-nematode
+!/packages/elegans
 !/scripts
 !/pyproject.toml
 !/uv.lock

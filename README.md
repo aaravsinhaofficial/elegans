@@ -1,4 +1,4 @@
-# 🪱 Quantum Nematode
+# 🪱 elegans
 
 [![Pre-commit](https://github.com/SyntheticBrains/nematode/workflows/Pre-commit/badge.svg)](https://github.com/SyntheticBrains/nematode/actions/workflows/pre-commit.yml)
 [![Tests](https://github.com/SyntheticBrains/nematode/workflows/Tests/badge.svg)](https://github.com/SyntheticBrains/nematode/actions/workflows/tests.yml)
@@ -9,57 +9,44 @@
   <img src="./docs/assets/images/demo.gif" alt="nematode simulation demo" />
 </p>
 
-This project simulates a simplified nematode (C. elegans) navigating dynamic foraging environments to find food while managing satiety, using either a **quantum variational circuit** or a **classical neural network** as its decision-making brain. It leverages [Qiskit](https://qiskit.org) to simulate quantum behavior and integrates classical logic for realistic foraging dynamics.
+This project simulates a simplified nematode (C. elegans) navigating dynamic foraging environments to find food while managing satiety, using classical neural network policies as its decision-making brain. It supports a range of reinforcement learning and biologically-inspired architectures for research into bio-inspired sequential decision-making.
 
 ## 🧪 Features
 
 - ✅ **Dynamic Foraging Environment**: Realistic multi-food foraging with satiety management and distance efficiency tracking
 - ✅ **Predator Evasion**: Multi-objective learning with random-moving predators and gradient-based danger perception
-- ✅ **Modular Quantum Brain**: Parameterized quantum circuits with 2+ qubits for decision-making
-- ✅ **Classical ML Alternatives**: REINFORCE, PPO, DQN, and spiking neural network brain architectures
-- ✅ **Quantum Learning**: Parameter-shift rule for gradient-based optimization
-- ✅ **Hardware Support**: Classical simulation (AerSimulator) and real quantum hardware (IBM QPU)
+- ✅ **Classical RL Brains**: REINFORCE, PPO, DQN policy/value architectures
+- ✅ **Spiking Neural Networks**: Biologically realistic LIF neurons with surrogate gradient learning
+- ✅ **Hybrid Architectures**: Reflex + cortex + critic decompositions
 - ✅ **Comprehensive Tracking**: Per-run and session-level metrics, plots, and CSV exports
 - ✅ **Interactive Workflows**: CLI scripts with flexible configuration
 - 🚧 **Expandable Framework**: Modular design for research and experimentation
 
 ## 🧠 Brain Architectures
 
-Choose from 12 brain architectures spanning quantum, classical, hybrid, and biologically-inspired approaches:
+Choose from the following brain architectures:
 
-**Quantum:**
+**Classical (MLP):**
 
-- **QVarCircuitBrain** (qvarcircuit): Quantum variational circuit with modular sensory processing and parameter-shift rule gradients
-- **QRCBrain** (qrc): Quantum reservoir computing with data re-uploading circuits and classical readout
-- **QSNNReinforceBrain** (qsnnreinforce): Quantum spiking neural network (QLIF neurons) with surrogate gradient REINFORCE
-- **QSNNPPOBrain** (qsnnppo): QLIF quantum spiking network with PPO training (experimental — [architecturally incompatible](docs/experiments/logbooks/supporting/008/qsnnppo-optimization.md))
-- **QQLearningBrain** (qqlearning): Hybrid quantum-classical Q-learning with experience replay
-
-**Hybrid (Quantum + Classical):**
-
-- **HybridQuantumBrain** (hybridquantum): QSNN reflex + classical cortex MLP + classical critic with mode-gated fusion and 3-stage curriculum ([96.9%](docs/experiments/logbooks/supporting/008/hybridquantum-optimization.md) on pursuit predators)
-- **HybridClassicalBrain** (hybridclassical): Classical ablation control for HybridQuantum — replaces QSNN reflex with small classical MLP ([96.3%](docs/experiments/logbooks/supporting/008/hybridclassical-ablation.md) on pursuit predators)
-- **HybridQuantumCortexBrain** (hybridquantumcortex): QSNN reflex + QSNN cortex (grouped sensory QLIF) + classical critic with 4-stage curriculum ([halted](docs/experiments/logbooks/supporting/008/hybridquantumcortex-optimization.md) — [40.9%](docs/experiments/logbooks/supporting/008/hybridquantumcortex-optimization.md) on 2-predator)
-
-**Classical:**
-
-- **MLPPPOBrain** (mlpppo): Classical actor-critic with Proximal Policy Optimization (clipped objective, GAE)
-- **MLPReinforceBrain** (mlpreinforce): Classical multi-layer perceptron with policy gradients (REINFORCE)
-- **MLPDQNBrain** (mlpdqn): Classical MLP with Deep Q-Network (DQN) learning
+- **MLPPPOBrain** (`mlpppo`): Classical actor-critic with Proximal Policy Optimization (clipped objective, GAE)
+- **MLPReinforceBrain** (`mlpreinforce`): Classical multi-layer perceptron with policy gradients (REINFORCE)
+- **MLPDQNBrain** (`mlpdqn`): Classical MLP with Deep Q-Network (DQN) learning
 
 **Biologically-Inspired:**
 
-- **SpikingReinforceBrain** (spikingreinforce): Biologically realistic spiking neural network with LIF neurons and surrogate gradient learning
+- **SpikingReinforceBrain** (`spikingreinforce`): Biologically realistic spiking neural network with LIF neurons and surrogate gradient learning
 
-For full architecture comparison and benchmarks, see [quantum-architectures.md](docs/research/quantum-architectures.md) and [logbook 008](docs/experiments/logbooks/008-quantum-brain-evaluation.md).
+**Hybrid:**
+
+- **HybridClassicalBrain** (`hybridclassical`): Small classical MLP reflex + classical cortex MLP + classical critic with mode-gated fusion and a 3-stage curriculum
 
 Select the brain architecture when running simulations:
 
 ```bash
-uv run ./scripts/run_simulation.py --brain hybridquantum     # Best quantum (96.9% pursuit predators)
 uv run ./scripts/run_simulation.py --brain mlpppo            # Best classical (PPO actor-critic)
+uv run ./scripts/run_simulation.py --brain mlpreinforce      # Classical REINFORCE
 uv run ./scripts/run_simulation.py --brain spikingreinforce  # Biologically realistic (LIF spiking)
-uv run ./scripts/run_simulation.py --brain qvarcircuit       # Quantum variational circuit
+uv run ./scripts/run_simulation.py --brain hybridclassical   # Hybrid reflex + cortex + critic
 ```
 
 ## 🚀 Quick Start
@@ -72,19 +59,13 @@ Install [uv](https://github.com/astral-sh/uv) for dependency management:
 brew install uv
 ```
 
-Install the project (choose one based on your needs):
+Install the project:
 
 ```bash
-# For CPU simulation (recommended for beginners)
-uv sync --extra cpu --extra pixel --extra torch
+# Core install with PyTorch and the pixel renderer
+uv sync --extra torch --extra pixel
 
-# For quantum hardware access (requires IBM Quantum account)
-uv sync --extra qpu --extra pixel
-
-# For GPU acceleration (local installation)
-uv sync --extra gpu --extra pixel --extra torch
-
-# For GPU acceleration (Docker with NVIDIA GPU support)
+# Docker (with NVIDIA GPU support if available)
 docker compose up --build
 ```
 
@@ -92,11 +73,9 @@ docker compose up --build
 
 ### 2. Configure Environment (Optional)
 
-If using quantum hardware, set up your IBM Quantum API key:
-
 ```bash
 cp .env.template .env
-# Edit .env to add your IBM_QUANTUM_API_KEY
+# Edit .env as needed for local configuration
 ```
 
 ### 3. Run a Simulation
@@ -104,30 +83,24 @@ cp .env.template .env
 **Command Line Examples:**
 
 ```bash
-# Hybrid quantum brain — QSNN reflex + classical cortex (best quantum: 96.9% on pursuit predators)
-uv run ./scripts/run_simulation.py --log-level DEBUG --show-last-frame-only --track-per-run --runs 50 --config ./configs/examples/hybridquantum_foraging_small.yml --theme emoji
-
 # Classical PPO brain (best classical: actor-critic with GAE)
 uv run ./scripts/run_simulation.py --log-level DEBUG --show-last-frame-only --track-per-run --runs 50 --config ./configs/examples/mlpppo_foraging_medium.yml --theme emoji
 
 # Spiking neural network brain (biologically realistic LIF neurons)
 uv run ./scripts/run_simulation.py --log-level DEBUG --show-last-frame-only --track-per-run --runs 50 --config ./configs/examples/spikingreinforce_foraging_small.yml --theme emoji
 
-# Quantum variational circuit brain
-uv run ./scripts/run_simulation.py --log-level DEBUG --show-last-frame-only --track-per-run --runs 50 --config ./configs/examples/qvarcircuit_foraging_medium.yml --theme emoji
-
-# Quantum hardware (IBM QPU) with dynamic foraging
-uv run ./scripts/run_simulation.py --log-level DEBUG --show-last-frame-only --track-per-run --runs 1 --config ./configs/examples/qvarcircuit_foraging_small.yml --theme emoji --device qpu
+# Hybrid classical brain (reflex + cortex + critic)
+uv run ./scripts/run_simulation.py --log-level DEBUG --show-last-frame-only --track-per-run --runs 50 --config ./configs/examples/hybridclassical_foraging_small.yml --theme emoji
 ```
 
-**Docker GPU Examples:**
+**Docker Examples:**
 
 ```bash
-# Run dynamic foraging with MLP brain and GPU acceleration
-docker-compose exec quantum-nematode uv run ./scripts/run_simulation.py --log-level DEBUG --show-last-frame-only --track-per-run --runs 50 --config ./configs/examples/mlpreinforce_foraging_medium.yml --theme emoji
+# Run dynamic foraging with MLP brain
+docker-compose exec elegans uv run ./scripts/run_simulation.py --log-level DEBUG --show-last-frame-only --track-per-run --runs 50 --config ./configs/examples/mlpreinforce_foraging_medium.yml --theme emoji
 
 # Interactive Docker shell for development
-docker-compose exec quantum-nematode bash
+docker-compose exec elegans bash
 ```
 
 ## ❓ How It Works
@@ -142,24 +115,13 @@ docker-compose exec quantum-nematode bash
 6. **Learning**: Brain parameters are updated based on reward feedback
 7. **Repeat**: Process continues until all foods are collected, satiety reaches zero (starvation), or maximum steps reached
 
-### Quantum Learning Process
-
-The project supports multiple quantum learning approaches:
-
-- **Quantum Feature Encoding**: Environmental data encoded as qubit rotations
-- **Parameterized Quantum Circuits**: Trainable quantum gates for decision-making
-- **Surrogate Gradient Descent**: Differentiable QLIF (Quantum LIF) neurons enabling backpropagation through quantum spiking layers — used by the highest-performing hybrid architectures
-- **Parameter-Shift Rule**: Analytical quantum gradient computation for variational circuits
-- **Evolutionary Optimization**: CMA-ES and genetic algorithms as gradient-free alternatives
-- **Entanglement**: Quantum correlations between different sensory modules
-
 ### Spiking Neural Network
 
 The spiking brain architecture provides biologically realistic neural computation with modern gradient-based learning:
 
 - **Leaky Integrate-and-Fire (LIF) Neurons**: Membrane potential dynamics with spike generation
 - **Surrogate Gradient Descent**: Differentiable spike approximation enabling backpropagation
-- **Policy Gradient Learning (REINFORCE)**: Same proven algorithm as MLPBrain
+- **Policy Gradient Learning (REINFORCE)**: Same proven algorithm as the MLP brains
 - **Population Coding**: Gaussian tuning curves for improved input discrimination
 
 **Key Features:**
@@ -196,7 +158,7 @@ The predator evasion system adds a challenging multi-objective learning task whe
 
 ## 🏆 Top Benchmarks
 
-Track and compare performance across different brain architectures and optimization strategies. The benchmark system helps identify effective approaches and advances the state-of-the-art in quantum navigation.
+Track and compare performance across different brain architectures and optimization strategies. The benchmark system helps identify effective approaches and advances the state-of-the-art in bio-inspired navigation.
 
 ### Quick Start with Benchmarks
 
@@ -228,24 +190,12 @@ uv run scripts/benchmark_submit.py regenerate
 | mlpppo | 0.835 ± 0.007 | 96.7% ± 1.3% | 0.93 ± 0.01 | 0.95 ± 0.05 | 0.47 ± 0.02 | 12 | @chrisjz | 2025-12-28 |
 | mlpreinforce | 0.810 ± 0.014 | 95.1% ± 1.9% | 0.91 ± 0.02 | 0.99 ± 0.03 | 0.39 ± 0.04 | 12 | @chrisjz | 2025-12-29 |
 
-#### Foraging Small - Quantum
-
-| Brain | Score | Success Rate | Learning Speed | Stability | Distance Efficiency | Sessions | Contributor | Date |
-|---|---|---|---|---|---|---|---|---|
-| qvarcircuit | 0.835 ± 0.006 | 99.8% ± 0.6% | 0.80 ± 0.00 | 0.99 ± 0.04 | 0.46 ± 0.01 | 12 | @chrisjz | 2025-12-29 |
-
 #### Predator Small - Classical
 
 | Brain | Score | Success Rate | Learning Speed | Stability | Distance Efficiency | Sessions | Contributor | Date |
 |---|---|---|---|---|---|---|---|---|
 | mlpppo | 0.728 ± 0.029 | 83.3% ± 2.9% | 0.92 ± 0.02 | 0.62 ± 0.05 | 0.51 ± 0.02 | 12 | @chrisjz | 2025-12-29 |
 | mlpreinforce | 0.624 ± 0.123 | 73.4% ± 10.9% | 0.84 ± 0.09 | 0.52 ± 0.19 | 0.39 ± 0.07 | 12 | @chrisjz | 2025-12-29 |
-
-#### Predator Small - Quantum
-
-| Brain | Score | Success Rate | Learning Speed | Stability | Distance Efficiency | Sessions | Contributor | Date |
-|---|---|---|---|---|---|---|---|---|
-| qvarcircuit | 0.611 ± 0.054 | 76.1% ± 2.1% | 0.93 ± 0.04 | 0.47 ± 0.04 | 0.45 ± 0.01 | 12 | @chrisjz | 2025-12-29 |
 
 See [BENCHMARKS.md](BENCHMARKS.md) for complete leaderboards and submission guidelines.
 
@@ -303,7 +253,6 @@ Success rate: 60.00%
 
 ## 🧰 Built With
 
-- **[Qiskit](https://qiskit.org/)**: Quantum computing framework
 - **[PyTorch](https://pytorch.org/)**: Classical neural networks
 - **[uv](https://github.com/astral-sh/uv)**: Modern Python dependency management
 - **[Pydantic](https://pydantic.dev/)**: Data validation and settings
@@ -313,10 +262,10 @@ Success rate: 60.00%
 
 This project serves as a platform for exploring:
 
-- **Quantum Machine Learning**: Investigating quantum advantages in learning tasks
+- **Bio-inspired RL**: Reinforcement learning in ecologically-valid foraging environments
 - **Biological Modeling**: Simplified models of neural decision-making
-- **Hybrid Algorithms**: Combining quantum and classical computation
-- **NISQ Applications**: Near-term quantum computing applications
+- **Hybrid Architectures**: Reflex/cortex/critic decompositions and modular policies
+- **Spiking Networks**: Surrogate gradient learning in biologically realistic neurons
 
 ## 🗺️ Roadmap
 
@@ -331,19 +280,16 @@ See [docs/roadmap.md](docs/roadmap.md) for the comprehensive project roadmap.
 - **Learning & Memory**: Associative learning systems (STAM, ITAM, LTAM) with biological timescales
 - **Evolution & Breeding**: Genetic algorithms, Baldwin effect, co-evolution of predators and prey
 - **Multi-Agent Scenarios**: Cooperative and competitive foraging with pheromone communication and emergent behaviors
-- **Advanced Quantum Algorithms**: VQE, QAOA, quantum error mitigation, and hardware deployment
 - **Real-World Validation**: WormBot deployment, C. elegans lab collaborations, cross-organism transfer (Drosophila, zebrafish)
 
 ### Research Applications
 
 This platform enables research in:
 
-- Quantum advantages in reinforcement learning and biologically-relevant navigation tasks
-- Bio-inspired quantum algorithms for multi-objective decision-making
-- Comparative analysis of quantum, classical, and spiking neural architectures
-- Hybrid quantum-classical computation in ecologically-valid environments
-- Near-term quantum device applications (NISQ algorithms with error mitigation)
-- Theoretical foundations linking quantum mechanics to biological neural computation
+- Bio-inspired reinforcement learning on biologically-relevant navigation tasks
+- Multi-objective decision-making (foraging vs. survival)
+- Comparative analysis of classical and spiking neural architectures
+- Hybrid reflex/cortex computation in ecologically-valid environments
 - Universal computational principles transferable across organisms (C. elegans → Drosophila → zebrafish) and domains (foraging → robotics)
 
 ## 🤝 Contributing
@@ -352,7 +298,6 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ### Areas We Need Help With
 
-- **Quantum Algorithm Development**: New quantum learning techniques for foraging
 - **Foraging Environment Extensions**: Social behaviors, food quality, temperature gradients
 - **Multi-Agent Scenarios**: Cooperative and competitive foraging dynamics
 - **Visualization Tools**: Real-time learning analysis and environment rendering
@@ -365,8 +310,5 @@ This project is licensed under the Apache License 2.0. See [LICENSE](LICENSE) fo
 
 ## 🙏 Acknowledgments
 
-- **[Q-CTRL](https://q-ctrl.com/)**: For providing quantum hardware access with Fire Opal performance management tools to suppress quantum hardware errors and optimize quantum circuits
 - **[OpenSpec](https://github.com/Fission-AI/OpenSpec)**: For providing the OpenSpec framework for structured, spec-driven AI development
 - **C. elegans Research Community**: For inspiring this computational model
-- **Qiskit Team**: For providing excellent quantum computing tools
-- **Quantum ML Community**: For advancing the field of quantum machine learning

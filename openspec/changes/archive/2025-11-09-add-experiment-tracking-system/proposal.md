@@ -36,11 +36,11 @@ To enable reproducible research, facilitate collaboration, and showcase project 
 
 - **Core Implementation**:
 
-  - [`quantumnematode/experiment/`](../../../packages/quantum-nematode/quantumnematode/experiment/) - New module for experiment tracking (NEW)
+  - [`elegans/experiment/`](../../../packages/elegans/elegans/experiment/) - New module for experiment tracking (NEW)
     - `metadata.py` - Experiment metadata models (ExperimentMetadata, BenchmarkMetadata)
     - `storage.py` - JSON-based experiment storage and retrieval
     - `tracker.py` - Experiment tracking integration with simulation runs
-  - [`quantumnematode/benchmark/`](../../../packages/quantum-nematode/quantumnematode/benchmark/) - New module for benchmark management (NEW)
+  - [`elegans/benchmark/`](../../../packages/elegans/elegans/benchmark/) - New module for benchmark management (NEW)
     - `submission.py` - Benchmark submission workflow and validation
     - `leaderboard.py` - Leaderboard generation and formatting
     - `query.py` - Benchmark querying and comparison tools

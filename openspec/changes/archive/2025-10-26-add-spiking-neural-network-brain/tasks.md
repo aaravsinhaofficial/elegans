@@ -4,7 +4,7 @@
 
 ### 1. Spiking Neural Network Brain Class
 
-- [ ] Create `packages/quantum-nematode/quantumnematode/brain/arch/spiking.py`
+- [ ] Create `packages/elegans/elegans/brain/arch/spiking.py`
 - [ ] Implement `SpikingBrain` class inheriting from `ClassicalBrain` protocol
 - [ ] Define spiking neuron models (Leaky Integrate-and-Fire)
 - [ ] Implement network topology and connectivity patterns
@@ -28,7 +28,7 @@
 
 ### 4. Configuration and Integration
 
-- [ ] Update `quantumnematode/brain/__init__.py` to export `SpikingBrain`
+- [ ] Update `elegans/brain/__init__.py` to export `SpikingBrain`
 - [ ] Add spiking brain configuration schema to support YAML configs
 - [ ] Create example configuration files for spiking neural networks
 - [ ] Update CLI argument parsing to support `--brain spiking` option
@@ -38,7 +38,7 @@
 
 ### 5. Unit Tests
 
-- [ ] Create test file `packages/quantum-nematode/tests/brain/arch/test_spiking.py`
+- [ ] Create test file `packages/elegans/tests/brain/arch/test_spiking.py`
 - [ ] Test neuron model dynamics and spike generation
 - [ ] Test synaptic plasticity and weight updates
 - [ ] Test input encoding and output decoding mechanisms

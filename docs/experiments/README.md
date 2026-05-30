@@ -41,14 +41,14 @@ This project has complementary systems for tracking experiments:
 
 | # | Title | Status | Summary |
 |---|-------|--------|---------|
-| 001 | [Quantum Predator Optimization](logbooks/001-quantum-predator-optimization.md) | completed | Gradient-based learning approaches |
+| 001 | [Quantum Predator Optimization](logbooks/001-quantum-predator-optimization.md) | historical | Gradient-based learning on legacy quantum brains (architectures since removed) |
 | 002 | [Evolutionary Parameter Search](logbooks/002-evolutionary-parameter-search.md) | completed | CMA-ES and GA optimization |
 | 003 | [Spiking Brain Optimization](logbooks/003-spiking-brain-optimization.md) | completed | Surrogate gradients, LIF neurons, decay schedules |
 | 004 | [PPO Brain Implementation](logbooks/004-ppo-brain-implementation.md) | completed | SOTA RL baseline, actor-critic, 98.5% foraging, 93% predators |
 | 005 | [Health System Predator Scaling](logbooks/005-health-system-predator-scaling.md) | completed | Health system enables better evasion learning via survival + richer rewards |
 | 006 | [Unified Sensory Modules](logbooks/006-unified-sensory-modules.md) | completed | Biologically-inspired 4-feature architecture matches legacy 2-feature performance |
 | 007 | [PPO Thermotaxis Baselines](logbooks/007-ppo-thermotaxis-baselines.md) | completed | PPO baselines for 9 thermotaxis configs (3 sizes × 3 tasks), 84-98% post-conv |
-| 008 | [Quantum Brain Evaluation](logbooks/008-quantum-brain-evaluation.md) | in_progress | QRC failed (0% success), evaluating QSNN and other quantum architectures |
+| 008 | [Quantum Brain Evaluation](logbooks/008-quantum-brain-evaluation.md) | historical | Final evaluation of legacy quantum brain architectures (since removed) |
 
 ## How to Use Logbooks
 
@@ -79,12 +79,6 @@ Reference specific experiments by session ID:
 ```
 
 ## Key Findings Summary
-
-### Experiment 001: Quantum Circuit Limitations
-
-- 2-qubit circuits max ~31% success with gradient learning
-- Learning actively degrades good initializations
-- Combined gradient (chemotaxis) works; separated gradients fail
 
 ### Experiment 002: Evolutionary Approach
 

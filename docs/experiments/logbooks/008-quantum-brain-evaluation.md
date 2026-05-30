@@ -314,8 +314,8 @@ The local learning signal is simply too weak for this task. Dense gradient infor
 
 ### File Locations
 
-- QSNN implementation: `packages/quantum-nematode/quantumnematode/brain/arch/qsnnreinforce.py`
-- QSNN tests: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_qsnnreinforce.py`
+- QSNN implementation: `packages/elegans/elegans/brain/arch/qsnnreinforce.py`
+- QSNN tests: `packages/elegans/tests/elegans_tests/brain/arch/test_qsnnreinforce.py`
 - QSNN configs: `configs/examples/qsnnreinforce_*.yml`
 
 ______________________________________________________________________
@@ -632,8 +632,8 @@ The hybrid brain beats the apples-to-apples MLP PPO baseline by +25.3 points and
 
 ### File Locations
 
-- Implementation: `packages/quantum-nematode/quantumnematode/brain/arch/hybridquantum.py`
-- Tests: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_hybridquantum.py`
+- Implementation: `packages/elegans/elegans/brain/arch/hybridquantum.py`
+- Tests: `packages/elegans/tests/elegans_tests/brain/arch/test_hybridquantum.py`
 - Stage 1 config: `configs/examples/hybridquantum_foraging_small.yml`
 - Stage 2 config: `configs/examples/hybridquantum_pursuit_predators_small.yml`
 - Stage 3 config: `configs/examples/hybridquantum_pursuit_predators_small_finetune.yml`
@@ -718,8 +718,8 @@ The QSNN earns ~1.5x more trust than the classical MLP, yet task performance is 
 
 ### File Locations
 
-- Implementation: `packages/quantum-nematode/quantumnematode/brain/arch/hybridclassical.py`
-- Tests: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_hybridclassical.py`
+- Implementation: `packages/elegans/elegans/brain/arch/hybridclassical.py`
+- Tests: `packages/elegans/tests/elegans_tests/brain/arch/test_hybridclassical.py`
 - Stage 1 config: `configs/examples/hybridclassical_foraging_small.yml`
 - Stage 2 config: `configs/examples/hybridclassical_pursuit_predators_small.yml`
 - Stage 3 config: `configs/examples/hybridclassical_pursuit_predators_small_finetune.yml`
@@ -1026,20 +1026,20 @@ Experiment results: `artifacts/logbooks/008/hybridquantumcortex_foraging_small/`
 
 ### File Locations
 
-- QRC implementation: `packages/quantum-nematode/quantumnematode/brain/arch/qrc.py`
+- QRC implementation: `packages/elegans/elegans/brain/arch/qrc.py`
 - QRC configs: `configs/examples/qrc_*.yml`
-- QSNN implementation: `packages/quantum-nematode/quantumnematode/brain/arch/qsnnreinforce.py`
-- QSNN tests: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_qsnnreinforce.py`
+- QSNN implementation: `packages/elegans/elegans/brain/arch/qsnnreinforce.py`
+- QSNN tests: `packages/elegans/tests/elegans_tests/brain/arch/test_qsnnreinforce.py`
 - QSNN configs: `configs/examples/qsnnreinforce_*.yml`
-- QSNN-PPO implementation: `packages/quantum-nematode/quantumnematode/brain/arch/qsnnppo.py`
-- QSNN-PPO tests: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_qsnnppo.py`
+- QSNN-PPO implementation: `packages/elegans/elegans/brain/arch/qsnnppo.py`
+- QSNN-PPO tests: `packages/elegans/tests/elegans_tests/brain/arch/test_qsnnppo.py`
 - QSNN-PPO configs: `configs/examples/qsnnppo_*.yml`
-- HybridQuantum implementation: `packages/quantum-nematode/quantumnematode/brain/arch/hybridquantum.py`
-- HybridQuantum tests: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_hybridquantum.py`
+- HybridQuantum implementation: `packages/elegans/elegans/brain/arch/hybridquantum.py`
+- HybridQuantum tests: `packages/elegans/tests/elegans_tests/brain/arch/test_hybridquantum.py`
 - HybridQuantum configs: `configs/examples/hybridquantum_*.yml`
-- HybridClassical implementation: `packages/quantum-nematode/quantumnematode/brain/arch/hybridclassical.py`
-- HybridClassical tests: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_hybridclassical.py`
+- HybridClassical implementation: `packages/elegans/elegans/brain/arch/hybridclassical.py`
+- HybridClassical tests: `packages/elegans/tests/elegans_tests/brain/arch/test_hybridclassical.py`
 - HybridClassical configs: `configs/examples/hybridclassical_*.yml`
-- HybridQuantumCortex implementation: `packages/quantum-nematode/quantumnematode/brain/arch/hybridquantumcortex.py`
-- HybridQuantumCortex tests: `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_hybridquantumcortex.py`
+- HybridQuantumCortex implementation: `packages/elegans/elegans/brain/arch/hybridquantumcortex.py`
+- HybridQuantumCortex tests: `packages/elegans/tests/elegans_tests/brain/arch/test_hybridquantumcortex.py`
 - HybridQuantumCortex configs: `configs/examples/hybridquantumcortex_*.yml`

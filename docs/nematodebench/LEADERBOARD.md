@@ -7,15 +7,14 @@ Auto-generated leaderboard for NematodeBench benchmark submissions.
 
 For submission guidelines, see [SUBMISSION_GUIDE.md](SUBMISSION_GUIDE.md).
 
+> **Historical note**: Earlier versions of this leaderboard included results from
+> quantum brain architectures (e.g. `qvarcircuit`). Those architectures have been
+> removed from the codebase; their prior rows are preserved in
+> `benchmarks/legacy/README.md` and the `benchmarks/*/quantum/` JSON dirs.
+
 ## Categories
 
 ### Foraging Small (≤20x20)
-
-#### Quantum Architectures
-
-| Brain | Score | Success Rate | Learning Speed | Stability | Distance Efficiency | Sessions | Contributor | Date |
-|---|---|---|---|---|---|---|---|---|
-| qvarcircuit | 0.835 ± 0.006 | 99.8% ± 0.6% | 0.80 ± 0.00 | 0.99 ± 0.04 | 0.46 ± 0.01 | 12 | @chrisjz | 2025-12-29 |
 
 #### Classical Architectures
 
@@ -26,31 +25,17 @@ For submission guidelines, see [SUBMISSION_GUIDE.md](SUBMISSION_GUIDE.md).
 
 ### Foraging Medium (≤50x50)
 
-#### Quantum Architectures
-
-_No NematodeBench submissions yet._
-
 #### Classical Architectures
 
 _No NematodeBench submissions yet._
 
 ### Foraging Large (>50x50)
 
-#### Quantum Architectures
-
-_No NematodeBench submissions yet._
-
 #### Classical Architectures
 
 _No NematodeBench submissions yet._
 
 ### Predator Small (≤20x20)
-
-#### Quantum Architectures
-
-| Brain | Score | Success Rate | Learning Speed | Stability | Distance Efficiency | Sessions | Contributor | Date |
-|---|---|---|---|---|---|---|---|---|
-| qvarcircuit | 0.611 ± 0.054 | 76.1% ± 2.1% | 0.93 ± 0.04 | 0.47 ± 0.04 | 0.45 ± 0.01 | 12 | @chrisjz | 2025-12-29 |
 
 #### Classical Architectures
 
@@ -61,19 +46,11 @@ _No NematodeBench submissions yet._
 
 ### Predator Medium (≤50x50)
 
-#### Quantum Architectures
-
-_No NematodeBench submissions yet._
-
 #### Classical Architectures
 
 _No NematodeBench submissions yet._
 
 ### Predator Large (>50x50)
-
-#### Quantum Architectures
-
-_No NematodeBench submissions yet._
 
 #### Classical Architectures
 

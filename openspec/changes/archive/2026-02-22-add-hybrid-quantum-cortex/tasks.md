@@ -1,17 +1,17 @@
 ## 0. Extract Shared Hybrid Brain Infrastructure (Prerequisite)
 
-- [x] 0.1 Create `packages/quantum-nematode/quantumnematode/brain/arch/_hybrid_common.py` with shared infrastructure extracted from `hybridquantum.py`: `_CortexRolloutBuffer` class, `_fuse()` mode-gated fusion, `_cortex_forward()` and `_cortex_value()` classical cortex forward passes, `_init_cortex()` MLP initialization with orthogonal init, `_get_cortex_lr()` and `_update_cortex_learning_rate()` LR scheduling, cortex weight persistence helpers, PPO update logic, shared constants/defaults
+- [x] 0.1 Create `packages/elegans/elegans/brain/arch/_hybrid_common.py` with shared infrastructure extracted from `hybridquantum.py`: `_CortexRolloutBuffer` class, `_fuse()` mode-gated fusion, `_cortex_forward()` and `_cortex_value()` classical cortex forward passes, `_init_cortex()` MLP initialization with orthogonal init, `_get_cortex_lr()` and `_update_cortex_learning_rate()` LR scheduling, cortex weight persistence helpers, PPO update logic, shared constants/defaults
 - [x] 0.2 Refactor `hybridquantum.py` to import shared code from `_hybrid_common.py` instead of defining it inline — verify all existing tests pass after refactor
 - [x] 0.3 Refactor `hybridclassical.py` to import shared code from `_hybrid_common.py` instead of its duplicated copies — verify all existing tests pass after refactor
 - [x] 0.4 Run full test suite (`uv run pytest`) and lint (`uv run pre-commit run -a`) to confirm no regressions from the extraction refactor
 
 ## 1. Brain Type Registration
 
-- [x] 1.1 Add `HYBRID_QUANTUM_CORTEX = "hybridquantumcortex"` to the `BrainType` enum in `packages/quantum-nematode/quantumnematode/brain/arch/dtypes.py`
+- [x] 1.1 Add `HYBRID_QUANTUM_CORTEX = "hybridquantumcortex"` to the `BrainType` enum in `packages/elegans/elegans/brain/arch/dtypes.py`
 - [x] 1.2 Add `BrainType.HYBRID_QUANTUM_CORTEX` to the `QUANTUM_BRAIN_TYPES` set in `dtypes.py`
-- [x] 1.3 Add `HybridQuantumCortexBrain` and `HybridQuantumCortexBrainConfig` to `__all__` in `packages/quantum-nematode/quantumnematode/brain/arch/__init__.py`
-- [x] 1.4 Add factory dispatch for `BrainType.HYBRID_QUANTUM_CORTEX` in `packages/quantum-nematode/quantumnematode/utils/brain_factory.py` — follow the `HYBRID_QUANTUM` pattern (import, validate config type, instantiate brain)
-- [x] 1.5 Add `HybridQuantumCortexBrainConfig` to `packages/quantum-nematode/quantumnematode/utils/config_loader.py`: import it, add to the `BrainConfigType` union, and add `"hybridquantumcortex": HybridQuantumCortexBrainConfig` entry to `BRAIN_CONFIG_MAP`
+- [x] 1.3 Add `HybridQuantumCortexBrain` and `HybridQuantumCortexBrainConfig` to `__all__` in `packages/elegans/elegans/brain/arch/__init__.py`
+- [x] 1.4 Add factory dispatch for `BrainType.HYBRID_QUANTUM_CORTEX` in `packages/elegans/elegans/utils/brain_factory.py` — follow the `HYBRID_QUANTUM` pattern (import, validate config type, instantiate brain)
+- [x] 1.5 Add `HybridQuantumCortexBrainConfig` to `packages/elegans/elegans/utils/config_loader.py`: import it, add to the `BrainConfigType` union, and add `"hybridquantumcortex": HybridQuantumCortexBrainConfig` entry to `BRAIN_CONFIG_MAP`
 
 ## 2. Configuration Schema
 
@@ -20,7 +20,7 @@
 
 ## 3. Core Brain Implementation
 
-- [x] 3.1 Create `packages/quantum-nematode/quantumnematode/brain/arch/hybridquantumcortex.py` with `HybridQuantumCortexBrain` class extending `ClassicalBrain`, importing shared infrastructure from `_hybrid_common.py` (rollout buffer, fusion, LR scheduling, weight persistence helpers)
+- [x] 3.1 Create `packages/elegans/elegans/brain/arch/hybridquantumcortex.py` with `HybridQuantumCortexBrain` class extending `ClassicalBrain`, importing shared infrastructure from `_hybrid_common.py` (rollout buffer, fusion, LR scheduling, weight persistence helpers)
 - [x] 3.2 Implement QSNN reflex initialization (`_init_reflex_weights`) — identical to `HybridQuantumBrain._init_qsnn_weights()`: W_sh, W_hm, theta_hidden, theta_motor with `WEIGHT_INIT_SCALE`, `requires_grad_(True)`
 - [x] 3.3 Implement grouped sensory QLIF cortex initialization (`_init_cortex_qsnn`): create per-group weight matrices `W_group[i]` with shape `(module_feature_dim, cortex_neurons_per_group)`, hidden weights `W_cortex_sh` with shape `(total_sensory_neurons, cortex_hidden_neurons)`, output weights `W_cortex_ho` with shape `(cortex_hidden_neurons, cortex_output_neurons)`, and theta parameters for hidden and output layers
 - [x] 3.4 Implement classical critic initialization (`_init_critic`) — import the critic MLP initialization from `_hybrid_common.py` (sensory_dim → hidden → hidden → 1, orthogonal init with gain=sqrt(2), zero biases)
@@ -74,7 +74,7 @@
 
 ## 10. Tests
 
-- [x] 10.1 Create `packages/quantum-nematode/tests/quantumnematode_tests/brain/arch/test_hybridquantumcortex.py` with unit tests for: brain instantiation, config validation, grouped sensory QLIF forward pass, cortex output shape, mode-gated fusion, action selection
+- [x] 10.1 Create `packages/elegans/tests/elegans_tests/brain/arch/test_hybridquantumcortex.py` with unit tests for: brain instantiation, config validation, grouped sensory QLIF forward pass, cortex output shape, mode-gated fusion, action selection
 - [x] 10.2 Add tests for stage-aware training: verify reflex-only in stage 1, cortex+critic only in stage 2, all in stage 3/4, correct optimizer activity per stage
 - [x] 10.3 Add tests for weight persistence: save/load roundtrip for reflex and cortex weights, shape mismatch error handling
 - [x] 10.4 Add tests for REINFORCE+GAE: verify loss computation with detached advantages, verify fallback to pure REINFORCE when `use_gae_advantages=false`

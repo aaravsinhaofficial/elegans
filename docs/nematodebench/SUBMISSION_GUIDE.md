@@ -28,12 +28,12 @@ See [Optimization Methods](../OPTIMIZATION_METHODS.md) for guidance on which opt
 
 ```bash
 # Clone and install
-git clone https://github.com/YOUR_FORK/quantum-nematode.git
-cd quantum-nematode
+git clone https://github.com/YOUR_FORK/elegans.git
+cd elegans
 uv sync
 
 # Verify installation
-uv run python -c "from quantumnematode import brain; print('OK')"
+uv run python -c "from elegans import brain; print('OK')"
 ```
 
 ## Step 2: Prepare Your Configuration
@@ -44,7 +44,7 @@ Create or modify a configuration file in `configs/examples/`:
 # configs/examples/my_brain_foraging_medium.yml
 max_steps: 1000
 brain:
-  name: mlpppo  # or mlpreinforce, qvarcircuit, spikingreinforce, etc.
+  name: mlpppo  # or mlpreinforce, spikingreinforce, hybridclassical, etc.
   config:
     hidden_dim: 128
     # ... your hyperparameters

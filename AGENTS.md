@@ -1,23 +1,22 @@
-# Quantum Nematode — AI Assistant Instructions
+# elegans — AI Assistant Instructions
 
 ## Project Overview
 
-Quantum Nematode simulates a simplified C. elegans navigating dynamic environments to find food, using quantum variational circuits and classical ML alternatives. Research platform for quantum machine learning.
+elegans simulates a simplified C. elegans navigating dynamic environments to find food, using classical and biologically-inspired neural network policies. Research platform for bio-inspired reinforcement learning and spiking neural networks.
 
 ## Tech Stack
 
 - Python 3.12 (strictly >=3.12,\<3.13)
-- Quantum: Qiskit 1.0+, Qiskit-Aer 0.17+, Qiskit-IBMRuntime 0.40+ (QPU)
 - Classical ML: PyTorch 2.7+
 - Config: Pydantic 2.11.4+, PyYAML 6.0+
 - Viz: Matplotlib 3.10+, Rich 13.0+
-- Optimization: CMA 4.0+ (evolutionary), custom gradient methods (PSR)
+- Optimization: CMA 4.0+ (evolutionary), custom gradient methods
 - Tooling: uv, Ruff, Pyright, pytest, pre-commit
 - Docker with NVIDIA Container Toolkit for GPU support
 
 ## Common Commands
 
-- Install: `uv sync --extra cpu --extra torch`
+- Install: `uv sync --extra torch --extra pixel`
 - Test (unit/integration): `uv run pytest`
 - Test (smoke): `uv run pytest -m smoke -v`
 - Test (nightly E2E): `uv run pytest -m nightly -v`
@@ -26,17 +25,17 @@ Quantum Nematode simulates a simplified C. elegans navigating dynamic environmen
 
 ## Key Directories
 
-- `packages/quantum-nematode/quantumnematode/` — Main source code
-  - `brain/arch/` — 12 brain architectures: qvarcircuit, qqlearning, qrc, qsnnreinforce, qsnnppo, hybridquantum, hybridclassical, hybridquantumcortex, mlpreinforce, mlpdqn, mlpppo, spikingreinforce
+- `packages/elegans/elegans/` — Main source code
+  - `brain/arch/` — Brain architectures: mlpreinforce, mlpdqn, mlpppo, spikingreinforce, hybridclassical
   - `env/` — Environment simulation
   - `agent/` — Agent orchestration, rewards, metrics
   - `experiment/` — Experiment tracking and benchmarking
-  - `optimizers/` — Learning algorithms (PSR, CMA-ES)
+  - `optimizers/` — Learning algorithms (CMA-ES, gradient-based)
 - `scripts/` — CLI entry points (run_simulation.py, run_evolution.py, benchmark_submit.py)
 - `configs/examples/` — YAML config files (`[{prefix}_]{brain}_{environment}_{size}[_{postfix}].yml`)
   - Prefixes: `evolution` (for evolutionary optimization configs)
   - Postfixes: `sensory` (unified sensory modules), `finetune`, etc.
-  - Example: `evolution_qvarcircuit_foraging_small.yml`, `mlpppo_predators_small.yml`
+  - Example: `mlpppo_predators_small.yml`
 - `tests/` — Three-tier testing (unit, smoke, nightly)
 - `benchmarks/` — Submitted benchmark results
 - `openspec/` — Spec-driven development framework

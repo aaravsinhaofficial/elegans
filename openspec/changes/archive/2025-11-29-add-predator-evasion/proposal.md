@@ -24,13 +24,13 @@ This change introduces biologically realistic predator avoidance based on C. ele
 
 - **Affected specs**: environment-simulation, configuration-system, benchmark-management, experiment-tracking
 - **Affected code**:
-  - `packages/quantum-nematode/quantumnematode/env.py` - Add Predator class and predator support to DynamicForagingEnvironment
-  - `packages/quantum-nematode/quantumnematode/config_loader.py` - Extend configuration schema with predator settings and restructured foraging config
-  - `packages/quantum-nematode/quantumnematode/agent/metrics.py` - Add predator-specific metrics
-  - `packages/quantum-nematode/quantumnematode/agent/reward_calculator.py` - Add proximity penalty calculation
-  - `packages/quantum-nematode/quantumnematode/report/plots.py` - Add predator-specific plots
-  - `packages/quantum-nematode/quantumnematode/report/csv_export.py` - Include predator metrics in exports
-  - `packages/quantum-nematode/quantumnematode/benchmark/categorization.py` - Add predator benchmark categories
+  - `packages/elegans/elegans/env.py` - Add Predator class and predator support to DynamicForagingEnvironment
+  - `packages/elegans/elegans/config_loader.py` - Extend configuration schema with predator settings and restructured foraging config
+  - `packages/elegans/elegans/agent/metrics.py` - Add predator-specific metrics
+  - `packages/elegans/elegans/agent/reward_calculator.py` - Add proximity penalty calculation
+  - `packages/elegans/elegans/report/plots.py` - Add predator-specific plots
+  - `packages/elegans/elegans/report/csv_export.py` - Include predator metrics in exports
+  - `packages/elegans/elegans/benchmark/categorization.py` - Add predator benchmark categories
   - `configs/examples/` - Add example configurations with predators enabled
 - **Backward compatibility**: All predator features default to disabled; existing configurations work unchanged
 - **Breaking changes**: None - all changes are additive with sensible defaults

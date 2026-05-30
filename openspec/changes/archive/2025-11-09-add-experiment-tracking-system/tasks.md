@@ -2,7 +2,7 @@
 
 ## 1. Core Data Models and Storage
 
-- [x] 1.1 Create `quantumnematode/experiment/` module directory
+- [x] 1.1 Create `elegans/experiment/` module directory
 - [x] 1.2 Implement `ExperimentMetadata` Pydantic model with all required fields
 - [x] 1.3 Implement `EnvironmentMetadata`, `BrainMetadata`, `ResultsMetadata`, `SystemMetadata` models
 - [x] 1.4 Implement `BenchmarkMetadata` model for benchmark-specific fields
@@ -68,7 +68,7 @@
 
 ## 7. Benchmark Categorization
 
-- [x] 7.1 Create `quantumnematode/benchmark/` module directory
+- [x] 7.1 Create `elegans/benchmark/` module directory
 - [x] 7.2 Implement category detection logic
 - [x] 7.3 Map environment types to categories (static, dynamic_small, dynamic_medium, dynamic_large)
 - [x] 7.4 Map brain types to quantum/classical classification

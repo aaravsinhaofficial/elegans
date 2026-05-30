@@ -14,7 +14,7 @@ context: |
   algorithms, and NISQ applications.
 
   ## Architecture
-  - UV workspace: packages/quantum-nematode is the core package
+  - UV workspace: packages/elegans is the core package
   - 11 pluggable brain architectures in brain/arch/: qvarcircuit, qqlearning,
     qrc, qsnnreinforce, qsnnppo, hybridquantum, hybridclassical, mlpreinforce,
     mlpdqn, mlpppo, spikingreinforce

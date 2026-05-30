@@ -36,4 +36,4 @@
 ## 7. Validation
 
 - [x] 7.1 Run `uv run pre-commit run -a` and fix any ruff/pyright violations
-- [x] 7.2 Run `uv run pytest tests/quantumnematode_tests/brain/arch/test_qsnnreinforce.py -v` — all tests pass
+- [x] 7.2 Run `uv run pytest tests/elegans_tests/brain/arch/test_qsnnreinforce.py -v` — all tests pass

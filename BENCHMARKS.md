@@ -1,6 +1,6 @@
-# Quantum Nematode Benchmarks
+# elegans Benchmarks
 
-Official benchmarks for the Quantum Nematode project, powered by [NematodeBench](docs/nematodebench/).
+Official benchmarks for the elegans project, powered by [NematodeBench](docs/nematodebench/).
 
 ## Quick Links
 
@@ -14,7 +14,7 @@ Official benchmarks for the Quantum Nematode project, powered by [NematodeBench]
 
 ## Overview
 
-NematodeBench is a standardized framework for evaluating neural architectures in biologically-inspired navigation tasks. Benchmarks are organized by environment type (static maze, dynamic foraging, predator evasion) and brain architecture class (quantum, classical).
+NematodeBench is a standardized framework for evaluating neural architectures in biologically-inspired navigation tasks. Benchmarks are organized by environment type (static maze, dynamic foraging, predator evasion) and brain architecture.
 
 ### Requirements
 
@@ -59,17 +59,21 @@ See the [Submission Guide](docs/nematodebench/SUBMISSION_GUIDE.md) for detailed 
 
 ## Categories
 
-Benchmarks are organized into 14 categories:
+Active benchmark categories cover classical brain architectures across the standard
+environment sizes:
 
-| Environment | Quantum | Classical |
-|-------------|---------|-----------|
-| Static Maze | `static_maze/quantum` | `static_maze/classical` |
-| Foraging Small (≤20x20) | `foraging_small/quantum` | `foraging_small/classical` |
-| Foraging Medium (≤50x50) | `foraging_medium/quantum` | `foraging_medium/classical` |
-| Foraging Large (>50x50) | `foraging_large/quantum` | `foraging_large/classical` |
-| Predator Small (≤20x20) | `predator_small/quantum` | `predator_small/classical` |
-| Predator Medium (≤50x50) | `predator_medium/quantum` | `predator_medium/classical` |
-| Predator Large (>50x50) | `predator_large/quantum` | `predator_large/classical` |
+| Environment | Category |
+|-------------|----------|
+| Static Maze | `static_maze/classical` |
+| Foraging Small (≤20x20) | `foraging_small/classical` |
+| Foraging Medium (≤50x50) | `foraging_medium/classical` |
+| Foraging Large (>50x50) | `foraging_large/classical` |
+| Predator Small (≤20x20) | `predator_small/classical` |
+| Predator Medium (≤50x50) | `predator_medium/classical` |
+| Predator Large (>50x50) | `predator_large/classical` |
+
+Historical `quantum` subdirectories under `benchmarks/` are preserved as a record of
+earlier experiments and are no longer accepting new submissions.
 
 ## External Submissions
 

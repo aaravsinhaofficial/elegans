@@ -1,53 +1,18 @@
 # Optimization Methods for Brain Architectures
 
-This document provides guidance on which optimization methods work best for each brain architecture in the Quantum Nematode project.
+This document provides guidance on which optimization methods work best for each brain architecture in the elegans project.
 
 ## Summary Table
 
 | Architecture | Primary Method | Secondary Method | Success Rate | Notes |
 |-------------|----------------|------------------|--------------|-------|
-| ModularBrain | CMA-ES | Parameter-shift | 88% | Evolution best for quantum |
-| QModularBrain | CMA-ES | Parameter-shift | 85% | Hybrid quantum-classical |
-| MLPBrain | REINFORCE | Adam + LR schedule | 92% | Classic policy gradient |
-| PPOBrain | Clipped PPO | Adam | 97% | Actor-critic with GAE |
-| QMLPBrain | REINFORCE | Adam | 75% | Gradient-based works |
-| SpikingBrain | Surrogate + REINFORCE | Adam | 63-78% | Surrogate gradients |
+| MLPReinforceBrain | REINFORCE | Adam + LR schedule | 92% | Classic policy gradient |
+| MLPPPOBrain | Clipped PPO | Adam | 97% | Actor-critic with GAE |
+| MLPDQNBrain | DQN | Adam | 75% | Value-based, off-policy |
+| SpikingReinforceBrain | Surrogate + REINFORCE | Adam | 63-78% | Surrogate gradients |
+| HybridClassicalBrain | REINFORCE (per-stage) | Adam | — | Curriculum-driven |
 
 ## Detailed Findings
-
-### Quantum Architectures (ModularBrain, QModularBrain)
-
-#### Recommended: CMA-ES (Covariance Matrix Adaptation Evolution Strategy)
-
-The December 2025 experiments demonstrated that evolutionary optimization significantly outperforms gradient-based methods for quantum circuits:
-
-| Method | Success Rate | Variance |
-|--------|-------------|----------|
-| CMA-ES | 88% | Low |
-| Parameter-shift gradients | 22% | High |
-
-#### Why CMA-ES works better
-
-1. **Shot noise resilience** - Quantum measurements have inherent stochasticity. CMA-ES uses population-based sampling that naturally averages over this noise.
-
-2. **Barren plateau avoidance** - Gradient-based methods can get stuck in barren plateaus where gradients vanish. CMA-ES explores the landscape globally.
-
-3. **Hyperparameter robustness** - CMA-ES self-adapts its covariance matrix, requiring less tuning than learning rates for gradient methods.
-
-#### Configuration
-
-```yaml
-brain:
-  name: qvarcircuit  # formerly 'modular'
-  config:
-    # No learning_rate needed - uses evolution
-
-optimization:
-  method: cmaes
-  population_size: 20
-  sigma: 0.5  # Initial step size
-  max_generations: 500
-```
 
 ### Classical Neural Networks (MLPReinforceBrain)
 
@@ -71,7 +36,7 @@ The standard REINFORCE algorithm with a learned baseline works well for classica
 
 ```yaml
 brain:
-  name: mlpreinforce  # formerly 'mlp'
+  name: mlpreinforce
   config:
     hidden_dim: 64
     num_hidden_layers: 2
@@ -102,7 +67,7 @@ PPO uses the clipped surrogate objective with GAE for advantage estimation. Dece
 
 ```yaml
 brain:
-  name: mlpppo  # formerly 'ppo'
+  name: mlpppo
   config:
     actor_hidden_dim: 64
     critic_hidden_dim: 64
@@ -132,7 +97,7 @@ Spiking networks require special handling due to non-differentiable spike functi
 
 ```yaml
 brain:
-  name: spikingreinforce  # formerly 'spiking'
+  name: spikingreinforce
   config:
     hidden_size: 64
     num_steps: 10
@@ -149,26 +114,20 @@ brain:
 Use this decision tree to choose an optimization method:
 
 ```text
-Is the brain quantum-based (QVarCircuitBrain, QQLearningBrain)?
-├── YES → Use CMA-ES
-│         - Evolution handles shot noise naturally
-│         - Avoids barren plateaus
-│         - Self-adapting hyperparameters
+Is it a spiking network?
+├── YES → Use Surrogate Gradients + REINFORCE
+│         - Surrogate enables backprop through spikes
+│         - REINFORCE handles non-differentiable reward
 │
-└── NO → Is it a spiking network?
-         ├── YES → Use Surrogate Gradients + REINFORCE
-         │         - Surrogate enables backprop through spikes
-         │         - REINFORCE handles non-differentiable reward
+└── NO → Classical MLP/PPO
+         ├── Want best performance? → PPO (Recommended)
+         │   - 97% success rate on foraging
+         │   - Fast convergence (~14 episodes)
+         │   - Stable training with clipped objective
          │
-         └── NO → Classical MLP/PPO
-                  ├── Want best performance? → PPO (Recommended)
-                  │   - 97% success rate on foraging
-                  │   - Fast convergence (~14 episodes)
-                  │   - Stable training with clipped objective
-                  │
-                  └── Want simplicity? → REINFORCE with baseline
-                      - Single network, fewer hyperparameters
-                      - 92% success on foraging
+         └── Want simplicity? → REINFORCE with baseline
+             - Single network, fewer hyperparameters
+             - 92% success on foraging
 ```
 
 ## Hyperparameter Recommendations
@@ -177,12 +136,12 @@ Is the brain quantum-based (QVarCircuitBrain, QQLearningBrain)?
 
 | Architecture | Recommended LR | Range |
 |-------------|----------------|-------|
-| MLPBrain | 0.001 | 0.0001 - 0.01 |
-| PPOBrain | 0.0003 | 0.0001 - 0.001 |
-| SpikingBrain | 0.001 | 0.0001 - 0.01 |
-| QMLPBrain | 0.01 | 0.001 - 0.1 |
+| MLPReinforceBrain | 0.001 | 0.0001 - 0.01 |
+| MLPPPOBrain | 0.0003 | 0.0001 - 0.001 |
+| SpikingReinforceBrain | 0.001 | 0.0001 - 0.01 |
+| MLPDQNBrain | 0.001 | 0.0001 - 0.01 |
 
-### CMA-ES Parameters
+### CMA-ES Parameters (evolutionary optimization)
 
 | Parameter | Recommended | Notes |
 |-----------|-------------|-------|
@@ -194,17 +153,11 @@ Is the brain quantum-based (QVarCircuitBrain, QQLearningBrain)?
 
 | Architecture | Entropy Coef | Notes |
 |-------------|--------------|-------|
-| MLPBrain | 0.01 | Encourages exploration |
-| PPOBrain | 0.01 | Standard value |
-| SpikingBrain | 0.005 | Less needed with spikes |
+| MLPReinforceBrain | 0.01 | Encourages exploration |
+| MLPPPOBrain | 0.01 | Standard value |
+| SpikingReinforceBrain | 0.005 | Less needed with spikes |
 
 ## Common Pitfalls
-
-### Quantum Circuits
-
-1. **Using gradients on noisy hardware** - Parameter-shift gradients amplify shot noise
-2. **Learning rate too high** - Quantum parameters are angles, small changes matter
-3. **Not using enough shots** - Low shot counts increase variance
 
 ### Classical Networks
 
@@ -224,32 +177,13 @@ Is the brain quantum-based (QVarCircuitBrain, QQLearningBrain)?
 
 | Method | Architecture | Success | Learning Speed |
 |--------|-------------|---------|----------------|
-| Clipped PPO | PPOBrain | 97% | 14 episodes |
-| CMA-ES | ModularBrain | 88% | 120 episodes |
-| REINFORCE | MLPBrain | 92% | 85 episodes |
-| Surrogate | SpikingBrain | 78% | 150 episodes |
-| Param-shift | ModularBrain | 22% | - (unstable) |
+| Clipped PPO | MLPPPOBrain | 97% | 14 episodes |
+| REINFORCE | MLPReinforceBrain | 92% | 85 episodes |
+| Surrogate | SpikingReinforceBrain | 78% | 150 episodes |
 
 ### Predator Evasion Task (Small, 20x20)
 
 | Method | Architecture | Success | Survival |
 |--------|-------------|---------|----------|
-| CMA-ES | ModularBrain | 75% | 82% |
-| REINFORCE | MLPBrain | 84% | 88% |
-| Surrogate | SpikingBrain | 63% | 71% |
-
-## Key Insight: Why CMA-ES for Quantum
-
-The most significant finding from our experiments is that **evolutionary optimization outperforms gradient-based methods by 4x for quantum circuits** (88% vs 22% success rate).
-
-This is because:
-
-1. **Quantum measurements are stochastic** - Each circuit evaluation returns different results due to quantum shot noise. Gradient estimates become extremely noisy.
-
-2. **Parameter-shift rule doubles evaluations** - The parameter-shift method requires 2 circuit evaluations per parameter, amplifying the noise problem.
-
-3. **Barren plateaus** - Deep quantum circuits exhibit vanishing gradients in most of the parameter space.
-
-4. **CMA-ES is noise-tolerant** - Evolution uses population-based sampling that naturally averages over noise, and doesn't require gradient computation.
-
-For researchers new to quantum ML: **start with CMA-ES** for any quantum architecture, then only try gradient methods if you have a specific reason.
+| REINFORCE | MLPReinforceBrain | 84% | 88% |
+| Surrogate | SpikingReinforceBrain | 63% | 71% |

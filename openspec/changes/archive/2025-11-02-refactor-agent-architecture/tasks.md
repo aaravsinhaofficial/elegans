@@ -4,8 +4,8 @@
 
 ### Task 1.1: Create DTOs for component interfaces ✅ COMPLETE (EpisodeResult REMOVED)
 
-- [x] Create `StepResult` dataclass in `quantumnematode/agent.py`
-- [x] Create `FoodConsumptionResult` dataclass in `quantumnematode/agent.py`
+- [x] Create `StepResult` dataclass in `elegans/agent.py`
+- [x] Create `FoodConsumptionResult` dataclass in `elegans/agent.py`
 - [x] ~~Create `EpisodeResult` dataclass~~ (created then removed - not needed)
 - [x] Add type hints and docstrings
 - [x] Validate with pyright and ruff
@@ -29,13 +29,13 @@
 
 ### Task 2.1: Implement SatietyManager ✅
 
-- [x] Create `SatietyManager` class in new file `quantumnematode/satiety.py`
+- [x] Create `SatietyManager` class in new file `elegans/satiety.py`
 - [x] Implement `__init__` with SatietyConfig
 - [x] Implement `decay_satiety()` method with clamping at 0.0
 - [x] Implement `restore_satiety(amount)` method with clamping at 1.0
 - [x] Implement `is_starved()` method
 - [x] Add `current_satiety` read-only property
-- [x] Write comprehensive unit tests (18 tests) in `tests/quantumnematode_tests/test_satiety.py`
+- [x] Write comprehensive unit tests (18 tests) in `tests/elegans_tests/test_satiety.py`
 - [x] Achieve >95% coverage for SatietyManager (100% achieved)
 
 **Dependencies**: Task 1.1
@@ -44,13 +44,13 @@
 
 ### Task 2.2: Implement MetricsTracker ✅
 
-- [x] Create `MetricsTracker` class in new file `quantumnematode/metrics.py`
+- [x] Create `MetricsTracker` class in new file `elegans/metrics.py`
 - [x] Implement `__init__` with counter initialization
 - [x] Implement `track_episode_completion(success, steps, total_reward)` method
 - [x] Implement `track_food_collection(distance_efficiency)` method
 - [x] Implement `track_step(reward)` method
 - [x] Implement `calculate_metrics(total_runs)` returning PerformanceMetrics
-- [x] Write comprehensive unit tests (20 tests) in `tests/quantumnematode_tests/test_metrics.py`
+- [x] Write comprehensive unit tests (20 tests) in `tests/elegans_tests/test_metrics.py`
 - [x] Achieve >95% coverage for MetricsTracker (100% achieved)
 
 **Dependencies**: Task 1.1
@@ -59,13 +59,13 @@
 
 ### Task 2.3: Implement EpisodeRenderer [NOT IMPLEMENTED - RENDERING INLINE]
 
-- [ ] Create `EpisodeRenderer` class in new file `quantumnematode/rendering.py`
+- [ ] Create `EpisodeRenderer` class in new file `elegans/rendering.py`
 - [ ] Implement `__init__` with rendering configuration
 - [ ] Implement `render_frame(env, step, max_steps, text)` method
 - [ ] Implement `render_if_needed(env, step, max_steps, show_last_frame_only)` method
 - [ ] Implement `clear_screen()` method
 - [ ] Support headless mode (enabled=False)
-- [ ] Write unit tests (~6 tests) in `tests/quantumnematode_tests/test_rendering.py`
+- [ ] Write unit tests (~6 tests) in `tests/elegans_tests/test_rendering.py`
 - [ ] Achieve >90% coverage for EpisodeRenderer
 
 **Dependencies**: Task 1.1
@@ -75,13 +75,13 @@
 
 ### Task 2.4: Implement FoodConsumptionHandler ✅ COMPLETE (DIFFERENT INTERFACE)
 
-- [x] Create `FoodConsumptionHandler` class in new file `quantumnematode/food_handler.py`
+- [x] Create `FoodConsumptionHandler` class in new file `elegans/food_handler.py`
 - [x] Implement `__init__(env, satiety_manager)` with dependency injection
 - [x] Implement `check_and_consume_food(agent_pos)` returning FoodConsumptionResult
 - [x] Add logic to detect environment type (static vs dynamic)
 - [x] Implement distance efficiency calculation for dynamic environments
 - [x] Implement satiety restoration integration
-- [ ] Write unit tests (~10 tests) in `tests/quantumnematode_tests/test_food_handler.py`
+- [ ] Write unit tests (~10 tests) in `tests/elegans_tests/test_food_handler.py`
 - [ ] Test both static and dynamic environment behaviors
 - [ ] Achieve >95% coverage for FoodConsumptionHandler
 
@@ -95,9 +95,9 @@
 ### Task 3.0: Create RewardCalculator ✅
 
 - [x] Extract reward calculation logic to break circular dependency
-- [x] Create `RewardCalculator` class in `quantumnematode/reward_calculator.py`
+- [x] Create `RewardCalculator` class in `elegans/reward_calculator.py`
 - [x] Implement reward calculation for maze and foraging environments
-- [x] Write comprehensive unit tests (11 tests) in `tests/quantumnematode_tests/test_reward_calculator.py`
+- [x] Write comprehensive unit tests (11 tests) in `tests/elegans_tests/test_reward_calculator.py`
 - [x] Achieve 90.67% coverage for RewardCalculator
 
 **Dependencies**: None
@@ -106,12 +106,12 @@
 
 ### Task 3.1: Implement StepProcessor ✅ COMPLETE (NOT INTEGRATED)
 
-- [x] Create `StepProcessor` class in new file `quantumnematode/step_processor.py`
+- [x] Create `StepProcessor` class in new file `elegans/step_processor.py`
 - [x] Implement `__init__(brain, env, reward_calculator, food_handler, satiety_manager)` with DI
 - [x] Implement `prepare_brain_params(gradient_strength, gradient_direction, previous_action)` method
 - [x] Implement `process_step(gradient_strength, gradient_direction, previous_action, previous_reward)` returning StepResult
 - [x] Ensure stateless design (no episode state retained)
-- [x] Write unit tests (11 tests) in `tests/quantumnematode_tests/test_step_processor.py`
+- [x] Write unit tests (11 tests) in `tests/elegans_tests/test_step_processor.py`
 - [x] Test with mocked brain, env, food_handler, satiety_manager, reward_calculator
 - [x] Achieve 96.55% coverage for StepProcessor
 
@@ -122,14 +122,14 @@
 
 ### Task 3.2: Implement StandardEpisodeRunner ✅ COMPLETE (SIMPLIFIED INTERFACE)
 
-- [x] Create `StandardEpisodeRunner` class in new file `quantumnematode/runners.py`
+- [x] Create `StandardEpisodeRunner` class in new file `elegans/runners.py`
 - [x] Implement `__init__()` with no-argument constructor (simplified from planned DI)
 - [x] Implement `run(agent, reward_config, max_steps, **kwargs)` returning list[tuple] (changed from EpisodeResult)
 - [x] Implement episode loop with direct agent method delegation
 - [x] Implement termination logic (goal reached, max steps, starvation)
 - [x] Integrate inline rendering (instead of via renderer component)
 - [x] Integrate metrics tracking by calling agent.calculate_metrics()
-- [x] Write unit tests (7 tests) in `tests/quantumnematode_tests/test_runners.py`
+- [x] Write unit tests (7 tests) in `tests/elegans_tests/test_runners.py`
 - [x] Test episode termination scenarios
 - [x] Achieve 100% coverage for StandardEpisodeRunner
 
@@ -140,13 +140,13 @@
 
 ### Task 3.3: Implement ManyworldsEpisodeRunner ✅ COMPLETE (SIMPLIFIED INTERFACE)
 
-- [x] Create `ManyworldsEpisodeRunner` class in `quantumnematode/runners.py`
+- [x] Create `ManyworldsEpisodeRunner` class in `elegans/runners.py`
 - [x] Implement `__init__()` with no-argument constructor (simplified from planned DI)
 - [x] Implement `run(agent, reward_config, manyworlds_config, max_steps, **kwargs)` returning list[tuple] (changed from EpisodeResult)
 - [x] Implement branching logic with probability-weighted trajectories
 - [x] Implement trajectory selection (highest reward)
 - [x] Integrate inline rendering for the selected trajectory
-- [x] Write unit tests (4 tests) in `tests/quantumnematode_tests/test_runners.py`
+- [x] Write unit tests (4 tests) in `tests/elegans_tests/test_runners.py`
 - [x] Test branching and trajectory selection
 - [x] Achieve 53% coverage for runners.py (ManyworldsEpisodeRunner tested)
 

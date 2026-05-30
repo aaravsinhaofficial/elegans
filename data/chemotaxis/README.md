@@ -55,7 +55,7 @@ Where:
 
 ## Usage
 
-The validation module (`quantumnematode.validation`) uses this data to:
+The validation module (`elegans.validation`) uses this data to:
 
 1. Calculate chemotaxis metrics from simulated trajectories
 2. Compare agent CI against biological ranges
@@ -64,7 +64,7 @@ The validation module (`quantumnematode.validation`) uses this data to:
 ### Example
 
 ```python
-from quantumnematode.validation import (
+from elegans.validation import (
     calculate_chemotaxis_metrics,
     ChemotaxisValidationBenchmark,
 )

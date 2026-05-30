@@ -28,7 +28,7 @@ QSNNReinforceBrain achieved 67% success on foraging but failed on predator evasi
 
 **Code Changes:**
 
-- New: `quantumnematode/brain/arch/qsnnppo.py` (QSNNPPOBrain, QSNNPPOBrainConfig, QSNNRolloutBuffer, QSNNPPOCritic)
+- New: `elegans/brain/arch/qsnnppo.py` (QSNNPPOBrain, QSNNPPOBrainConfig, QSNNRolloutBuffer, QSNNPPOCritic)
 - Modify: `brain/arch/dtypes.py` (add QSNN_PPO to BrainType enum, QUANTUM_BRAIN_TYPES, BRAIN_TYPES)
 - Modify: `brain/arch/__init__.py` (export new classes)
 - Modify: `utils/config_loader.py` (add to BRAIN_CONFIG_MAP)

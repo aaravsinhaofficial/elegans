@@ -10,7 +10,7 @@ ______________________________________________________________________
 
 ### 1.1 Create PPO Brain Architecture
 
-- [x] Create `packages/quantum-nematode/quantumnematode/brain/arch/ppo.py`
+- [x] Create `packages/elegans/elegans/brain/arch/ppo.py`
 - [x] Implement `PPOBrainConfig` dataclass with hyperparameters
 - [x] Implement `RolloutBuffer` class for experience collection
 - [x] Implement GAE advantage computation
@@ -59,9 +59,9 @@ ______________________________________________________________________
 
 ### 2.1 Create Validation Module Structure
 
-- [x] Create `packages/quantum-nematode/quantumnematode/validation/__init__.py`
-- [x] Create `packages/quantum-nematode/quantumnematode/validation/chemotaxis.py`
-- [x] Create `packages/quantum-nematode/quantumnematode/validation/datasets.py`
+- [x] Create `packages/elegans/elegans/validation/__init__.py`
+- [x] Create `packages/elegans/elegans/validation/chemotaxis.py`
+- [x] Create `packages/elegans/elegans/validation/datasets.py`
 
 **Validation**: Module imports without errors
 
@@ -186,7 +186,7 @@ ______________________________________________________________________
 
 ### 5.1 Create Seeding Infrastructure
 
-- [x] Create `packages/quantum-nematode/quantumnematode/utils/seeding.py`
+- [x] Create `packages/elegans/elegans/utils/seeding.py`
 - [x] Implement `generate_seed()` using `secrets.randbelow(2**32)`
 - [x] Implement `set_global_seed(seed: int)` for numpy/torch
 - [x] Implement `get_rng(seed: int | None)` for seeded RNG creation
