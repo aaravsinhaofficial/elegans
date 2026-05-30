@@ -7,8 +7,7 @@ from quantumnematode.agent import (
     RewardConfig,
     SatietyConfig,
 )
-from quantumnematode.brain.arch.qvarcircuit import QVarCircuitBrain, QVarCircuitBrainConfig
-from quantumnematode.brain.modules import ModuleName
+from quantumnematode.brain.arch.mlpreinforce import MLPReinforceBrain, MLPReinforceBrainConfig
 from quantumnematode.env import DynamicForagingEnvironment, ForagingParams
 
 
@@ -102,11 +101,8 @@ class TestQuantumNematodeAgentInitialization:
     @pytest.fixture
     def qvarcircuit_brain(self):
         """Create a simple modular brain for testing."""
-        config = QVarCircuitBrainConfig(
-            modules={ModuleName.CHEMOTAXIS: [0, 1]},
-            num_layers=1,
-        )
-        return QVarCircuitBrain(config=config, shots=50)
+        config = MLPReinforceBrainConfig()
+        return MLPReinforceBrain(config=config, input_dim=2, num_actions=4)
 
     def test_agent_init_with_default_env(self, qvarcircuit_brain):
         """Test agent initialization creates default dynamic environment."""
@@ -159,11 +155,8 @@ class TestQuantumNematodeAgentGoalDistance:
     @pytest.fixture
     def qvarcircuit_brain(self):
         """Create a simple modular brain for testing."""
-        config = QVarCircuitBrainConfig(
-            modules={ModuleName.CHEMOTAXIS: [0, 1]},
-            num_layers=1,
-        )
-        return QVarCircuitBrain(config=config, shots=50)
+        config = MLPReinforceBrainConfig()
+        return MLPReinforceBrain(config=config, input_dim=2, num_actions=4)
 
 
 class TestQuantumNematodeAgentReset:
@@ -172,11 +165,8 @@ class TestQuantumNematodeAgentReset:
     @pytest.fixture
     def qvarcircuit_brain(self):
         """Create a simple modular brain for testing."""
-        config = QVarCircuitBrainConfig(
-            modules={ModuleName.CHEMOTAXIS: [0, 1]},
-            num_layers=1,
-        )
-        return QVarCircuitBrain(config=config, shots=50)
+        config = MLPReinforceBrainConfig()
+        return MLPReinforceBrain(config=config, input_dim=2, num_actions=4)
 
     def test_reset_environment_maze(self, qvarcircuit_brain):
         """Test resetting maze environment."""
@@ -243,11 +233,8 @@ class TestQuantumNematodeAgentMetrics:
     @pytest.fixture
     def qvarcircuit_brain(self):
         """Create a simple modular brain for testing."""
-        config = QVarCircuitBrainConfig(
-            modules={ModuleName.CHEMOTAXIS: [0, 1]},
-            num_layers=1,
-        )
-        return QVarCircuitBrain(config=config, shots=50)
+        config = MLPReinforceBrainConfig()
+        return MLPReinforceBrain(config=config, input_dim=2, num_actions=4)
 
     def test_calculate_metrics_basic(self, qvarcircuit_brain):
         """Test basic metrics calculation."""

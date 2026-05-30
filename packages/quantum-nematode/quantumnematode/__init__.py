@@ -1,1 +1,1 @@
-"""The quantum nematode package."""
+"""The elegans package."""

@@ -382,7 +382,3 @@ class MLPDQNBrain(ClassicalBrain):
     def action_set(self, actions: list[Action]) -> None:
         self._action_set = actions
 
-
-# Deprecated aliases (backward compatibility)
-QMLPBrain = MLPDQNBrain
-QMLPBrainConfig = MLPDQNBrainConfig

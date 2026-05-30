@@ -13,20 +13,12 @@ from quantumnematode.agent import (
 )
 from quantumnematode.brain.arch import (
     HybridClassicalBrainConfig,
-    HybridQuantumBrainConfig,
-    HybridQuantumCortexBrainConfig,
     MLPDQNBrainConfig,
     MLPPPOBrainConfig,
     MLPReinforceBrainConfig,
-    QQLearningBrainConfig,
-    QRCBrainConfig,
-    QSNNPPOBrainConfig,
-    QSNNReinforceBrainConfig,
-    QVarCircuitBrainConfig,
     SpikingReinforceBrainConfig,
 )
 from quantumnematode.brain.arch.dtypes import BRAIN_NAME_ALIASES
-from quantumnematode.brain.modules import Modules
 from quantumnematode.dtypes import TemperatureSpot
 from quantumnematode.env.env import (
     DEFAULT_COMFORT_REWARD,
@@ -83,17 +75,10 @@ if TYPE_CHECKING:
     from quantumnematode.env.theme import Theme
 
 BrainConfigType = (
-    QVarCircuitBrainConfig
-    | MLPReinforceBrainConfig
+    MLPReinforceBrainConfig
     | MLPPPOBrainConfig
     | MLPDQNBrainConfig
-    | QQLearningBrainConfig
-    | QRCBrainConfig
-    | QSNNPPOBrainConfig
-    | QSNNReinforceBrainConfig
     | HybridClassicalBrainConfig
-    | HybridQuantumBrainConfig
-    | HybridQuantumCortexBrainConfig
     | SpikingReinforceBrainConfig
 )
 
@@ -102,18 +87,11 @@ MovementPattern = Literal["random", "stationary", "pursuit"]
 
 # Mapping of brain names to their config classes
 BRAIN_CONFIG_MAP: dict[str, type[BrainConfigType]] = {
-    "qvarcircuit": QVarCircuitBrainConfig,
-    "qqlearning": QQLearningBrainConfig,
     "mlpreinforce": MLPReinforceBrainConfig,
     "mlpppo": MLPPPOBrainConfig,
     "mlpdqn": MLPDQNBrainConfig,
     "spikingreinforce": SpikingReinforceBrainConfig,
-    "qrc": QRCBrainConfig,
-    "qsnnppo": QSNNPPOBrainConfig,
-    "qsnnreinforce": QSNNReinforceBrainConfig,
-    "hybridquantum": HybridQuantumBrainConfig,
     "hybridclassical": HybridClassicalBrainConfig,
-    "hybridquantumcortex": HybridQuantumCortexBrainConfig,
 }
 
 
@@ -512,15 +490,12 @@ class SimulationConfig(BaseModel):
     seed: int | None = None
     brain: BrainContainerConfig | None = None
     max_steps: int | None = None
-    shots: int | None = None
     body_length: int | None = None
-    qubits: int | None = None
     learning_rate: LearningRateConfig | None = None
     gradient: GradientConfig | None = None
     parameter_initializer: ParameterInitializerConfig | None = None
     reward: RewardConfig | None = None
     satiety: SatietyConfig | None = None
-    modules: Modules | None = None
     manyworlds_mode: ManyworldsModeConfig | None = None
     environment: EnvironmentConfig | None = None
 

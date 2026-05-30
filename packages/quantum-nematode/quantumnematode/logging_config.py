@@ -1,4 +1,4 @@
-"""Logging configuration for the Quantum Nematode package."""
+"""Logging configuration for the elegans package."""
 
 import logging
 import os
@@ -50,8 +50,5 @@ else:
         format="%(asctime)s - %(levelname)s - %(message)s",
         level=logging.WARNING,
     )
-
-# Suppress debug logs from Qiskit
-logging.getLogger("qiskit").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)

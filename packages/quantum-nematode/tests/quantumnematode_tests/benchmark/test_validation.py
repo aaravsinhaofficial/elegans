@@ -37,7 +37,7 @@ def basic_experiment(reward_metadata: RewardMetadata) -> ExperimentMetadata:
         git_branch="main",
         git_dirty=False,
         environment=EnvironmentMetadata(grid_size=50, num_foods=20),
-        brain=BrainMetadata(type="modular", qubits=4, learning_rate=0.01),
+        brain=BrainMetadata(type="mlpreinforce", learning_rate=0.01),
         reward=reward_metadata,
         learning_rate=LearningRateMetadata(
             method="static",
@@ -52,12 +52,12 @@ def basic_experiment(reward_metadata: RewardMetadata) -> ExperimentMetadata:
         ),
         system=SystemMetadata(
             python_version="3.12.0",
-            qiskit_version="1.0.0",
+            
             device_type="cpu",
         ),
         benchmark=BenchmarkMetadata(
             contributor="Test User",
-            category="dynamic_medium_quantum",
+            category="foraging_medium",
         ),
     )
 

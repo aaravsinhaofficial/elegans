@@ -336,7 +336,6 @@ def export_tracking_data_to_csv(  # pragma: no cover
     tracking_data: TrackingData,
     brain_type: BrainType,
     data_dir: Path,
-    qubits: int | None = None,
     file_prefix: str = "",
 ) -> None:
     """
@@ -346,7 +345,6 @@ def export_tracking_data_to_csv(  # pragma: no cover
         tracking_data (TrackingData): Tracking data containing brain history.
         brain_type (BrainType): Type of the brain.
         data_dir (Path): Directory to save the CSV files.
-        qubits (int | None): Number of qubits if applicable.
         file_prefix (str): Prefix for the output file names.
     """
     data_dir.mkdir(parents=True, exist_ok=True)
@@ -368,7 +366,6 @@ def export_tracking_data_to_csv(  # pragma: no cover
         data_dir,
         file_prefix,
         brain_type,
-        qubits,
     )
 
     # Export step-by-step data for each run
@@ -382,7 +379,6 @@ def _export_session_tracking_data(  # noqa: PLR0913
     data_dir: Path,
     file_prefix: str,
     brain_type: BrainType,
-    qubits: int | None,
 ) -> None:
     """Export session-level tracking data (last value per run)."""
     # Create metadata file
@@ -393,8 +389,6 @@ def _export_session_tracking_data(  # noqa: PLR0913
         writer = csv.writer(csvfile)
         writer.writerow(["attribute", "value"])
         writer.writerow(["brain_type", brain_type.value])
-        if qubits is not None:
-            writer.writerow(["qubits", qubits])
         writer.writerow(["total_runs", len(runs)])
 
     # Process each key and create appropriate CSV structure

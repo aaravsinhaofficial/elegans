@@ -112,34 +112,22 @@ def extract_brain_metadata(
     """
     brain_config = config.get("config", {})
 
-    # Extract common parameters
-    qubits = config.get("qubits")
-    shots = config.get("shots")
-
-    # Learning rate: prioritize brain-specific LR over global LR config
-    # Some brains (spiking, mlp) have their own internal optimizer with LR in brain config
+    # Learning rate: prioritize brain-specific LR over global LR config.
     brain_learning_rate = brain_config.get("learning_rate")
     learning_rate_config = config.get("learning_rate")
     learning_rate = None
     if brain_learning_rate is not None:
-        # Use brain-specific learning rate (for spiking, mlp, etc.)
         learning_rate = brain_learning_rate
     elif isinstance(learning_rate_config, dict):
-        # Fall back to global learning rate config (for modular, quantum brains)
         learning_rate = learning_rate_config.get("initial_learning_rate", None)
 
-    # Extract architecture-specific parameters
-    num_layers = brain_config.get("num_layers")
     hidden_dim = brain_config.get("hidden_dim")
     num_hidden_layers = brain_config.get("num_hidden_layers")
-    modules = brain_config.get("modules")
 
-    # Extract parameter initializer information
     parameter_initializer = None
     if parameter_initializer_config is not None and isinstance(parameter_initializer_config, dict):
         initializer_type = parameter_initializer_config.get("type")
         if initializer_type is not None:
-            # If manual initialization, capture the parameter values
             manual_values = None
             if initializer_type == "manual":
                 manual_values = parameter_initializer_config.get("manual_parameter_values")
@@ -151,13 +139,9 @@ def extract_brain_metadata(
 
     return BrainMetadata(
         type=brain_type,
-        qubits=qubits,
-        shots=shots,
-        num_layers=num_layers,
         hidden_dim=hidden_dim,
         num_hidden_layers=num_hidden_layers,
         learning_rate=learning_rate,
-        modules=modules,
         parameter_initializer=parameter_initializer,
     )
 
@@ -532,7 +516,6 @@ def capture_experiment_metadata(
     all_results: list[SimulationResult],
     metrics: PerformanceMetrics,  # noqa: ARG001
     device_type: DeviceType,
-    qpu_backend: str | None = None,
     exports_path: str | None = None,
     session_id: str | None = None,
 ) -> ExperimentMetadata:
@@ -554,8 +537,6 @@ def capture_experiment_metadata(
         Performance metrics.
     device_type : DeviceType
         Device type used.
-    qpu_backend : str | None, optional
-        QPU backend name if using quantum hardware.
     exports_path : str | None, optional
         Path to exports directory.
     session_id : str | None, optional
@@ -590,15 +571,13 @@ def capture_experiment_metadata(
     learning_rate_metadata = extract_learning_rate_metadata(config)
     gradient_metadata = extract_gradient_metadata(config)
     results_metadata = aggregate_results_metadata(all_results)
-    system_metadata_dict = capture_system_info(device_type, qpu_backend)
+    system_metadata_dict = capture_system_info(device_type)
 
     # Create SystemMetadata from captured info
     system_metadata = SystemMetadata(
         python_version=str(system_metadata_dict["python_version"]),
-        qiskit_version=str(system_metadata_dict["qiskit_version"]),
         torch_version=system_metadata_dict.get("torch_version"),
         device_type=str(system_metadata_dict["device_type"]),
-        qpu_backend=system_metadata_dict.get("qpu_backend"),
     )
 
     # Extract git context with proper types

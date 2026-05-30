@@ -1,27 +1,16 @@
-"""Module for quantum brain architectures."""
+"""Module for brain architectures."""
 
-from ._brain import Brain, BrainData, BrainParams, ClassicalBrain, QuantumBrain
+from ._brain import Brain, BrainData, BrainParams, ClassicalBrain
 from .hybridclassical import HybridClassicalBrain, HybridClassicalBrainConfig
-from .hybridquantum import HybridQuantumBrain, HybridQuantumBrainConfig
-from .hybridquantumcortex import HybridQuantumCortexBrain, HybridQuantumCortexBrainConfig
-from .mlpdqn import MLPDQNBrain, MLPDQNBrainConfig, QMLPBrain, QMLPBrainConfig
+from .mlpdqn import MLPDQNBrain, MLPDQNBrainConfig
 from .mlpppo import MLPPPOBrain, MLPPPOBrainConfig, PPOBrain, PPOBrainConfig
 from .mlpreinforce import MLPBrain, MLPBrainConfig, MLPReinforceBrain, MLPReinforceBrainConfig
-from .qqlearning import QModularBrain, QModularBrainConfig, QQLearningBrain, QQLearningBrainConfig
-from .qrc import QRCBrain, QRCBrainConfig
-from .qsnnppo import QSNNPPOBrain, QSNNPPOBrainConfig
-from .qsnnreinforce import QSNNReinforceBrain, QSNNReinforceBrainConfig
-from .qvarcircuit import ModularBrain, ModularBrainConfig, QVarCircuitBrain, QVarCircuitBrainConfig
 from .spikingreinforce import (
     SpikingBrain,
     SpikingBrainConfig,
     SpikingReinforceBrain,
     SpikingReinforceBrainConfig,
 )
-
-# Backward compatibility aliases
-QSNNBrain = QSNNReinforceBrain
-QSNNBrainConfig = QSNNReinforceBrainConfig
 
 __all__ = [
     "Brain",
@@ -30,10 +19,6 @@ __all__ = [
     "ClassicalBrain",
     "HybridClassicalBrain",
     "HybridClassicalBrainConfig",
-    "HybridQuantumBrain",
-    "HybridQuantumBrainConfig",
-    "HybridQuantumCortexBrain",
-    "HybridQuantumCortexBrainConfig",
     "MLPBrain",
     "MLPBrainConfig",
     "MLPDQNBrain",
@@ -42,27 +27,8 @@ __all__ = [
     "MLPPPOBrainConfig",
     "MLPReinforceBrain",
     "MLPReinforceBrainConfig",
-    "ModularBrain",
-    "ModularBrainConfig",
     "PPOBrain",
     "PPOBrainConfig",
-    "QMLPBrain",
-    "QMLPBrainConfig",
-    "QModularBrain",
-    "QModularBrainConfig",
-    "QQLearningBrain",
-    "QQLearningBrainConfig",
-    "QRCBrain",
-    "QRCBrainConfig",
-    "QSNNBrain",
-    "QSNNBrainConfig",
-    "QSNNPPOBrain",
-    "QSNNPPOBrainConfig",
-    "QSNNReinforceBrain",
-    "QSNNReinforceBrainConfig",
-    "QVarCircuitBrain",
-    "QVarCircuitBrainConfig",
-    "QuantumBrain",
     "SpikingBrain",
     "SpikingBrainConfig",
     "SpikingReinforceBrain",

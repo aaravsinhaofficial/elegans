@@ -261,33 +261,22 @@ class BrainMetadata(BaseModel):
     Attributes
     ----------
     type : str
-        Brain architecture type ("modular", "mlp", "qmodular", "qmlp", "spiking").
-    qubits : int | None
-        Number of qubits (quantum brains only).
-    shots : int | None
-        Number of measurement shots (quantum brains only).
-    num_layers : int | None
-        Number of circuit layers (quantum brains only).
+        Brain architecture type (e.g. "mlpreinforce", "mlpppo", "spikingreinforce",
+        "hybridclassical").
     hidden_dim : int | None
-        Hidden layer dimension (classical brains only).
+        Hidden layer dimension.
     num_hidden_layers : int | None
-        Number of hidden layers (classical brains only).
+        Number of hidden layers.
     learning_rate : float
         Initial learning rate.
-    modules : dict[str, list[int]] | None
-        Module configuration (modular brains only).
     parameter_initializer : ParameterInitializer | None
-        Parameter initialization configuration (quantum brains only).
+        Parameter initialization configuration.
     """
 
     type: str
-    qubits: int | None = None
-    shots: int | None = None
-    num_layers: int | None = None
     hidden_dim: int | None = None
     num_hidden_layers: int | None = None
     learning_rate: float | None = None
-    modules: dict[str, list[int]] | None = None
     parameter_initializer: ParameterInitializer | None = None
 
 
@@ -452,21 +441,15 @@ class SystemMetadata(BaseModel):
     ----------
     python_version : str
         Python version (e.g., "3.12.0").
-    qiskit_version : str
-        Qiskit version.
     torch_version : str | None
         PyTorch version (if installed).
     device_type : str
-        Device type ("cpu", "gpu", or "qpu").
-    qpu_backend : str | None
-        QPU backend name (if using quantum hardware).
+        Device type ("cpu" or "gpu").
     """
 
     python_version: str
-    qiskit_version: str
     torch_version: str | None = None
     device_type: str
-    qpu_backend: str | None = None
 
 
 class BenchmarkMetadata(BaseModel):

@@ -19,16 +19,11 @@ from quantumnematode.brain.arch import (
     MLPDQNBrainConfig,
     MLPPPOBrainConfig,
     MLPReinforceBrainConfig,
-    QQLearningBrainConfig,
-    QVarCircuitBrainConfig,
     SpikingReinforceBrainConfig,
 )
 from quantumnematode.brain.arch.dtypes import (
     BRAIN_NAME_ALIASES,
     DEFAULT_BRAIN_TYPE,
-    DEFAULT_QUBITS,
-    DEFAULT_SHOTS,
-    QUANTUM_BRAIN_TYPES,
     BrainType,
     DeviceType,
 )
@@ -140,7 +135,7 @@ def parse_arguments() -> argparse.Namespace:
         type=str,
         default=DEFAULT_DEVICE.value,
         choices=device_choices,
-        help="Device to use for quantum execution "
+        help="Device to use for execution "
         f"({', '.join(device_choices)}; default: '{DEFAULT_DEVICE.value}').",
     )
     parser.add_argument(
@@ -175,11 +170,6 @@ def parse_arguments() -> argparse.Namespace:
         ],
         help="Maze rendering theme: 'pixel' (default), "
         "'ascii', 'emoji', 'unicode', 'colored_ascii', 'rich', or 'emoji_rich'.",
-    )
-    parser.add_argument(
-        "--optimize",
-        action="store_true",
-        help="Enable Q-CTRL's Fire Opal error suppression techniques on QPUs.",
     )
     parser.add_argument(
         "--track-experiment",
@@ -224,9 +214,7 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
     # Initialize seed for reproducibility (auto-generate if not provided)
     simulation_seed = ensure_seed(args.seed)
     logger.info(f"Using simulation seed: {simulation_seed}")
-    shots = DEFAULT_SHOTS
     body_length = DEFAULT_AGENT_BODY_LENGTH
-    qubits = DEFAULT_QUBITS
     device = DeviceType(args.device.lower())
     show_last_frame_only = args.show_last_frame_only
     learning_rate = DynamicLearningRate()
@@ -239,35 +227,16 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
     manyworlds_mode_config = ManyworldsModeConfig()
     track_per_run = args.track_per_run
     theme = Theme(args.theme)
-    optimize_quantum_performance = args.optimize
 
     match brain_type:
-        case BrainType.QVARCIRCUIT | BrainType.MODULAR:
-            brain_config = QVarCircuitBrainConfig(seed=simulation_seed)
         case BrainType.MLP_REINFORCE | BrainType.MLP:
             brain_config = MLPReinforceBrainConfig(seed=simulation_seed)
         case BrainType.MLP_PPO | BrainType.PPO:
             brain_config = MLPPPOBrainConfig(seed=simulation_seed)
-        case BrainType.MLP_DQN | BrainType.QMLP:
+        case BrainType.MLP_DQN:
             brain_config = MLPDQNBrainConfig(seed=simulation_seed)
-        case BrainType.QQLEARNING | BrainType.QMODULAR:
-            brain_config = QQLearningBrainConfig(seed=simulation_seed)
         case BrainType.SPIKING_REINFORCE | BrainType.SPIKING:
             brain_config = SpikingReinforceBrainConfig(seed=simulation_seed)
-
-    # Authenticate and setup Q-CTRL if needed
-    perf_mgmt = None
-    if device == DeviceType.QPU:
-        from quantumnematode.auth.ibm_quantum import IBMQuantumAuthenticator
-
-        ibmq_authenticator = IBMQuantumAuthenticator()
-
-        if optimize_quantum_performance:
-            catalog = ibmq_authenticator.get_functions_catalog()
-            perf_mgmt = catalog.load("q-ctrl/performance-management")
-            logger.info("Q-CTRL Fire Opal Performance Management loaded successfully")
-        else:
-            ibmq_authenticator.authenticate_runtime_service()
 
     if config_file:
         config = load_simulation_config(config_file)
@@ -292,9 +261,7 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
             brain_type = BrainType(resolved_name)
 
         max_steps = config.max_steps if config.max_steps is not None else max_steps
-        shots = config.shots if config.shots is not None else shots
         body_length = config.body_length if config.body_length is not None else body_length
-        qubits = config.qubits if config.qubits is not None else qubits
 
         # Load learning rate method and parameters if specified
         learning_rate = configure_learning_rate(config)
@@ -320,7 +287,7 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
     # Get grid size from environment config for validation and logging
     grid_size = environment_config.grid_size
 
-    validate_simulation_parameters(grid_size, brain_type, qubits)
+    validate_simulation_parameters(grid_size)
 
     # Set up the timestamp for saving results
     timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
@@ -334,22 +301,15 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
     logger.info(f"Grid size: {grid_size}")
     logger.info(f"Brain type: {brain_type.value}")
     logger.info(f"Body length: {body_length}")
-    logger.info(f"Qubits: {qubits}")
-    logger.info(f"Shots: {shots}")
     logger.info(f"Seed: {simulation_seed}")
 
     # Select the brain architecture
     brain = setup_brain_model(
         brain_type=brain_type,
         brain_config=brain_config,
-        shots=shots,
-        qubits=qubits,
         device=device,
         learning_rate=learning_rate,
-        gradient_method=gradient_method,
-        gradient_max_norm=gradient_max_norm,
         parameter_initializer_config=parameter_initializer_config,
-        perf_mgmt=perf_mgmt,
     )
 
     # Pass session ID to brain for weight export alignment
@@ -669,7 +629,6 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
         manage_simulation_halt(
             max_steps=max_steps,
             brain_type=brain_type,
-            qubits=qubits,
             timestamp=timestamp,
             agent=agent,
             all_results=all_results,
@@ -741,7 +700,6 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
         tracking_data=tracking_data,
         brain_type=brain_type,
         plot_dir=plot_dir,
-        qubits=qubits,
     )
 
     # Export tracking data to CSV files
@@ -749,7 +707,6 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
         tracking_data=tracking_data,
         brain_type=brain_type,
         data_dir=data_dir,
-        qubits=qubits,
     )
 
     # Experiment tracking (opt-in)
@@ -800,8 +757,6 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
                         "config": brain_config.__dict__
                         if hasattr(brain_config, "__dict__")
                         else {},
-                        "qubits": qubits if brain_type in QUANTUM_BRAIN_TYPES else None,
-                        "shots": shots if brain_type in QUANTUM_BRAIN_TYPES else None,
                         "learning_rate": learning_rate.__dict__
                         if hasattr(learning_rate, "__dict__")
                         else {},
@@ -835,7 +790,6 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
                 all_results=all_results,
                 metrics=metrics,
                 device_type=device,
-                qpu_backend=None,  # TODO: Implement extracting QPU backend
                 exports_path=exports_rel_path,
                 session_id=timestamp,
             )
@@ -845,12 +799,6 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
                 experiment_metadata=experiment_metadata,
                 data_dir=data_dir,
             )
-
-            if device == DeviceType.QPU:
-                print(
-                    "Warning: You will need to manually add the QPU backend "
-                    "information to the experiment metadata. Example: `ibm_strasbourg`.",
-                )
 
             # Save experiment to experiments/<id>/ folder structure
             # This creates a self-contained experiment folder for potential benchmark submission
@@ -940,37 +888,20 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915
     return
 
 
-def validate_simulation_parameters(maze_grid_size: int, brain_type: BrainType, qubits: int) -> None:
+def validate_simulation_parameters(maze_grid_size: int) -> None:
     """
     Validate the simulation parameters to ensure they meet the required constraints.
 
     Args:
         maze_grid_size (int): The size of the maze grid.
-        brain_type (str): The type of brain architecture being used.
-        qubits (int): The number of qubits specified for the simulation.
 
     Raises
     ------
         ValueError: If the maze grid size is smaller than the minimum allowed size.
-        ValueError: If the 'qubits' parameter is used with a brain type
-            other than quantum based architectures.
     """
     if maze_grid_size < MIN_GRID_SIZE:
         error_message = (
             f"Grid size must be at least {MIN_GRID_SIZE}. Provided grid size: {maze_grid_size}."
-        )
-        logger.error(error_message)
-        raise ValueError(error_message)
-
-    # Validate qubits parameter for classical brain types
-    if (
-        brain_type in (BrainType.MLP_REINFORCE, BrainType.MLP, BrainType.MLP_DQN, BrainType.QMLP)
-        and qubits != DEFAULT_QUBITS
-    ):
-        error_message = (
-            f"The 'qubits' parameter is only supported by "
-            "quantum brain architectures. "
-            f"Provided brain: {brain_type.value}, qubits: {qubits}."
         )
         logger.error(error_message)
         raise ValueError(error_message)

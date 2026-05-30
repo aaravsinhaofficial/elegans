@@ -65,7 +65,7 @@ def base_experiment(reward_metadata: RewardMetadata) -> ExperimentMetadata:
         ),
         system=SystemMetadata(
             python_version="3.12.0",
-            qiskit_version="1.0.0",
+            
             device_type="cpu",
         ),
     )

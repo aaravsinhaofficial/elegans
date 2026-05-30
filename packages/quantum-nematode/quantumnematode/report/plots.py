@@ -204,7 +204,6 @@ def plot_tracking_data_by_session(  # pragma: no cover  # noqa: C901, PLR0912, P
     tracking_data: TrackingData,
     brain_type: BrainType,
     plot_dir: Path,
-    qubits: int | None = None,
     file_prefix: str = "",
 ) -> None:
     """
@@ -212,16 +211,13 @@ def plot_tracking_data_by_session(  # pragma: no cover  # noqa: C901, PLR0912, P
 
     Args:
         tracking_data (TrackingData): Tracking data containing brain history.
-        brain_type (BrainType): Type of the brain (e.g., "quantum", "classical").
+        brain_type (BrainType): Type of the brain.
         plot_dir (Path): Directory to save the plots.
-        qubits (int | None): Number of qubits if applicable, otherwise None.
         file_prefix (str): Prefix for the output file names.
     """
     plot_dir.mkdir(parents=True, exist_ok=True)
 
-    title_postfix: str = (
-        f" [{brain_type.value} {qubits}Q]" if isinstance(qubits, int) else f" [{brain_type.value}]"
-    )
+    title_postfix: str = f" [{brain_type.value}]"
 
     runs = sorted(tracking_data.brain_data.keys())
     if not runs:

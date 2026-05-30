@@ -2,27 +2,6 @@
 
 from quantumnematode.experiment.metadata import ExperimentMetadata
 
-# Quantum brain type identifiers (canonical + deprecated names)
-QUANTUM_BRAIN_IDS: frozenset[str] = frozenset(
-    {"qvarcircuit", "qqlearning", "modular", "qmodular"},
-)
-
-
-def is_quantum_brain(brain_type: str) -> bool:
-    """Check if brain type is quantum-based.
-
-    Parameters
-    ----------
-    brain_type : str
-        Brain type identifier.
-
-    Returns
-    -------
-    bool
-        True if quantum brain, False if classical.
-    """
-    return brain_type in QUANTUM_BRAIN_IDS
-
 
 def get_environment_category(
     grid_size: int,
@@ -43,10 +22,8 @@ def get_environment_category(
     str
         Environment category (e.g., "foraging_small", "predator_small").
     """
-    # Size category based on grid size
     size_category = "small" if grid_size <= 20 else "medium" if grid_size <= 50 else "large"
 
-    # Predator evasion vs foraging
     if predators_enabled:
         return f"predator_{size_category}"
     return f"foraging_{size_category}"
@@ -63,17 +40,12 @@ def determine_benchmark_category(metadata: ExperimentMetadata) -> str:
     Returns
     -------
     str
-        Benchmark category string (e.g., "foraging_medium_quantum",
-        "predator_small_quantum").
+        Benchmark category string (e.g., "foraging_medium", "predator_small").
     """
-    env_category = get_environment_category(
+    return get_environment_category(
         metadata.environment.grid_size,
         predators_enabled=metadata.environment.predators_enabled,
     )
-
-    brain_class = "quantum" if is_quantum_brain(metadata.brain.type) else "classical"
-
-    return f"{env_category}_{brain_class}"
 
 
 def get_category_directory(category: str) -> str:
@@ -87,13 +59,6 @@ def get_category_directory(category: str) -> str:
     Returns
     -------
     str
-        Relative directory path (e.g., "foraging_medium/quantum").
+        Relative directory path (e.g., "foraging_medium").
     """
-    # Split category into environment and brain class
-    parts = category.rsplit("_", 1)
-    if len(parts) != 2:
-        msg = f"Invalid category format: {category}"
-        raise ValueError(msg)
-
-    env_category, brain_class = parts
-    return f"{env_category}/{brain_class}"
+    return category

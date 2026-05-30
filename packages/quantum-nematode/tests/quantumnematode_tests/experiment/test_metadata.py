@@ -109,64 +109,37 @@ class TestEnvironmentMetadata:
 class TestBrainMetadata:
     """Test BrainMetadata model."""
 
-    def test_create_quantum_brain(self):
-        """Test creating quantum brain metadata."""
-        brain_meta = BrainMetadata(
-            type="modular",
-            qubits=4,
-            shots=1000,
-            learning_rate=0.01,
-        )
-
-        assert brain_meta.type == "modular"
-        assert brain_meta.qubits == 4
-        assert brain_meta.shots == 1000
-        assert brain_meta.learning_rate == 0.01
-
     def test_create_classical_brain(self):
         """Test creating classical brain metadata."""
         brain_meta = BrainMetadata(
-            type="mlp",
+            type="mlpreinforce",
             hidden_dim=128,
             num_hidden_layers=2,
             learning_rate=0.001,
         )
 
-        assert brain_meta.type == "mlp"
-        assert brain_meta.qubits is None
+        assert brain_meta.type == "mlpreinforce"
         assert brain_meta.hidden_dim == 128
         assert brain_meta.num_hidden_layers == 2
 
     def test_create_brain_with_random_initializer(self):
         """Test creating brain metadata with random parameter initializer."""
         brain_meta = BrainMetadata(
-            type="modular",
-            qubits=4,
-            shots=1000,
+            type="mlpreinforce",
             learning_rate=0.01,
             parameter_initializer=ParameterInitializer(type="random_pi"),
         )
 
-        assert brain_meta.type == "modular"
         assert brain_meta.parameter_initializer is not None
         assert brain_meta.parameter_initializer.type == "random_pi"
         assert brain_meta.parameter_initializer.manual_parameter_values is None
 
     def test_create_brain_with_manual_initializer(self):
         """Test creating brain metadata with manual parameter initialization."""
-        manual_params = {
-            "θ_rx1_0": -2.4,
-            "θ_rx1_1": -2.7,
-            "θ_rx2_0": -1.3,
-            "θ_rx2_1": -2.4,
-            "θ_ry1_0": 2.9,
-            "θ_ry1_1": -2.4,
-        }
+        manual_params = {"w_0": -2.4, "w_1": 2.9}
 
         brain_meta = BrainMetadata(
-            type="modular",
-            qubits=2,
-            num_layers=2,
+            type="mlpreinforce",
             learning_rate=1.0,
             parameter_initializer=ParameterInitializer(
                 type="manual",
@@ -177,14 +150,11 @@ class TestBrainMetadata:
         assert brain_meta.parameter_initializer is not None
         assert brain_meta.parameter_initializer.type == "manual"
         assert brain_meta.parameter_initializer.manual_parameter_values == manual_params
-        assert brain_meta.parameter_initializer.manual_parameter_values is not None
-        assert brain_meta.parameter_initializer.manual_parameter_values["θ_rx1_0"] == -2.4
-        assert brain_meta.parameter_initializer.manual_parameter_values["θ_ry1_1"] == -2.4
 
     def test_create_brain_no_initializer(self):
         """Test creating brain metadata without initializer info."""
         brain_meta = BrainMetadata(
-            type="mlp",
+            type="mlpreinforce",
             hidden_dim=64,
             learning_rate=0.001,
         )
@@ -193,20 +163,18 @@ class TestBrainMetadata:
 
     def test_model_dump(self):
         """Test Pydantic model_dump."""
-        brain_meta = BrainMetadata(type="modular", qubits=4, learning_rate=0.01)
+        brain_meta = BrainMetadata(type="mlpreinforce", learning_rate=0.01)
 
         data = brain_meta.model_dump()
         assert isinstance(data, dict)
-        assert data["type"] == "modular"
-        assert data["qubits"] == 4
+        assert data["type"] == "mlpreinforce"
         assert data["learning_rate"] == 0.01
 
     def test_model_dump_with_initializer(self):
         """Test Pydantic model_dump with parameter initializer."""
-        manual_params = {"θ_rx1_0": -2.4, "θ_ry1_0": 2.9}
+        manual_params = {"w_0": -2.4, "w_1": 2.9}
         brain_meta = BrainMetadata(
-            type="modular",
-            qubits=2,
+            type="mlpreinforce",
             learning_rate=1.0,
             parameter_initializer=ParameterInitializer(
                 type="manual",
@@ -218,7 +186,6 @@ class TestBrainMetadata:
         assert data["parameter_initializer"] is not None
         assert data["parameter_initializer"]["type"] == "manual"
         assert data["parameter_initializer"]["manual_parameter_values"] == manual_params
-        assert data["parameter_initializer"]["manual_parameter_values"]["θ_rx1_0"] == -2.4
 
 
 class TestRewardMetadata:
@@ -427,34 +394,18 @@ class TestSystemMetadata:
         """Test creating system metadata."""
         system = SystemMetadata(
             python_version="3.12.0",
-            qiskit_version="1.0.0",
             torch_version="2.1.0",
             device_type="cpu",
         )
 
         assert system.python_version == "3.12.0"
-        assert system.qiskit_version == "1.0.0"
         assert system.torch_version == "2.1.0"
         assert system.device_type == "cpu"
-        assert system.qpu_backend is None
-
-    def test_create_with_qpu(self):
-        """Test creating system metadata with QPU backend."""
-        system = SystemMetadata(
-            python_version="3.12.0",
-            qiskit_version="1.0.0",
-            device_type="qpu",
-            qpu_backend="ibm_brisbane",
-        )
-
-        assert system.device_type == "qpu"
-        assert system.qpu_backend == "ibm_brisbane"
 
     def test_model_dump(self):
         """Test Pydantic model_dump."""
         system = SystemMetadata(
             python_version="3.12.0",
-            qiskit_version="1.0.0",
             device_type="cpu",
         )
 
@@ -522,7 +473,7 @@ class TestExperimentMetadata:
             git_branch="main",
             git_dirty=False,
             environment=EnvironmentMetadata(grid_size=50),
-            brain=BrainMetadata(type="modular", qubits=4, learning_rate=0.01),
+            brain=BrainMetadata(type="mlpreinforce", learning_rate=0.01),
             reward=RewardMetadata(
                 reward_goal=2.0,
                 reward_distance_scale=0.5,
@@ -551,7 +502,6 @@ class TestExperimentMetadata:
             ),
             system=SystemMetadata(
                 python_version="3.12.0",
-                qiskit_version="1.0.0",
                 device_type="cpu",
             ),
         )
@@ -562,7 +512,7 @@ class TestExperimentMetadata:
         assert experiment.git_branch == "main"
         assert experiment.git_dirty is False
         assert experiment.environment.grid_size == 50
-        assert experiment.brain.qubits == 4
+        assert experiment.brain.type == "mlpreinforce"
         assert experiment.reward.reward_goal == 2.0
         assert experiment.reward.penalty_predator_proximity == 0.1
         assert experiment.learning_rate is not None
@@ -607,7 +557,6 @@ class TestExperimentMetadata:
             ),
             system=SystemMetadata(
                 python_version="3.12.0",
-                qiskit_version="1.0.0",
                 device_type="cpu",
             ),
             benchmark=BenchmarkMetadata(
@@ -636,9 +585,8 @@ class TestExperimentMetadata:
                 num_foods=20,
             ),
             brain=BrainMetadata(
-                type="modular",
-                qubits=6,
-                shots=2000,
+                type="mlpppo",
+                hidden_dim=64,
                 learning_rate=0.02,
             ),
             reward=RewardMetadata(
@@ -670,7 +618,6 @@ class TestExperimentMetadata:
             ),
             system=SystemMetadata(
                 python_version="3.12.1",
-                qiskit_version="1.1.0",
                 torch_version="2.2.0",
                 device_type="gpu",
             ),
@@ -682,7 +629,7 @@ class TestExperimentMetadata:
         assert isinstance(data, dict)
         assert data["experiment_id"] == "20250101_140000"
         assert data["environment"]["grid_size"] == 50
-        assert data["brain"]["qubits"] == 6
+        assert data["brain"]["type"] == "mlpppo"
         assert data["reward"]["reward_goal"] == 2.0
         assert data["learning_rate"]["method"] == "dynamic"
         assert data["gradient"]["method"] == "clip"
@@ -692,7 +639,7 @@ class TestExperimentMetadata:
         restored = ExperimentMetadata.from_dict(data)
         assert restored.experiment_id == experiment.experiment_id
         assert restored.environment.grid_size == experiment.environment.grid_size
-        assert restored.brain.qubits == experiment.brain.qubits
+        assert restored.brain.type == experiment.brain.type
         assert restored.reward.reward_goal == experiment.reward.reward_goal
         assert restored.learning_rate is not None
         assert experiment.learning_rate is not None
@@ -736,7 +683,6 @@ class TestExperimentMetadata:
             ),
             system=SystemMetadata(
                 python_version="3.12.1",
-                qiskit_version="1.1.0",
                 device_type="cpu",
             ),
         )

@@ -115,9 +115,6 @@ def print_experiment_details(metadata: ExperimentMetadata) -> None:  # noqa: C90
     print("\nBrain:")
     print(f"  Type: {metadata.brain.type}")
     print(f"  Learning Rate: {metadata.brain.learning_rate}")
-    if metadata.brain.qubits:
-        print(f"  Qubits: {metadata.brain.qubits}")
-        print(f"  Shots: {metadata.brain.shots}")
     if metadata.brain.hidden_dim:
         print(f"  Hidden Dim: {metadata.brain.hidden_dim}")
     if metadata.brain.parameter_initializer:
@@ -152,7 +149,6 @@ def print_experiment_details(metadata: ExperimentMetadata) -> None:  # noqa: C90
 
     print("\nSystem:")
     print(f"  Python: {metadata.system.python_version}")
-    print(f"  Qiskit: {metadata.system.qiskit_version}")
     print(f"  Device: {metadata.system.device_type}")
 
     if metadata.exports_path:

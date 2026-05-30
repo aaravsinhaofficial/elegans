@@ -9,7 +9,6 @@ from quantumnematode.experiment.system_utils import (
     get_device_type_string,
     get_package_version,
     get_python_version,
-    get_qiskit_version,
     get_torch_version,
 )
 
@@ -47,28 +46,6 @@ class TestPackageVersion:
             assert ver is None
 
 
-class TestQiskitVersion:
-    """Test Qiskit version retrieval."""
-
-    def test_get_qiskit_version_installed(self):
-        """Test getting Qiskit version when installed."""
-        with patch(
-            "quantumnematode.experiment.system_utils.get_package_version",
-            return_value="1.0.0",
-        ):
-            ver = get_qiskit_version()
-            assert ver == "1.0.0"
-
-    def test_get_qiskit_version_not_installed(self):
-        """Test fallback when Qiskit not installed."""
-        with patch(
-            "quantumnematode.experiment.system_utils.get_package_version",
-            return_value=None,
-        ):
-            ver = get_qiskit_version()
-            assert ver == "unknown"
-
-
 class TestTorchVersion:
     """Test PyTorch version retrieval."""
 
@@ -104,11 +81,6 @@ class TestDeviceTypeString:
         result = get_device_type_string(DeviceType.GPU)
         assert result == "gpu"
 
-    def test_device_type_qpu(self):
-        """Test converting QPU device type."""
-        result = get_device_type_string(DeviceType.QPU)
-        assert result == "qpu"
-
 
 class TestCaptureSystemInfo:
     """Test complete system info capture."""
@@ -121,10 +93,6 @@ class TestCaptureSystemInfo:
                 return_value="3.12.0",
             ),
             patch(
-                "quantumnematode.experiment.system_utils.get_qiskit_version",
-                return_value="1.0.0",
-            ),
-            patch(
                 "quantumnematode.experiment.system_utils.get_torch_version",
                 return_value="2.1.0",
             ),
@@ -132,32 +100,8 @@ class TestCaptureSystemInfo:
             info = capture_system_info(DeviceType.CPU)
 
             assert info["python_version"] == "3.12.0"
-            assert info["qiskit_version"] == "1.0.0"
             assert info["torch_version"] == "2.1.0"
             assert info["device_type"] == "cpu"
-            assert info["qpu_backend"] is None
-
-    def test_capture_system_info_qpu(self):
-        """Test capturing system info for QPU device."""
-        with (
-            patch(
-                "quantumnematode.experiment.system_utils.get_python_version",
-                return_value="3.12.0",
-            ),
-            patch(
-                "quantumnematode.experiment.system_utils.get_qiskit_version",
-                return_value="1.0.0",
-            ),
-            patch(
-                "quantumnematode.experiment.system_utils.get_torch_version",
-                return_value=None,
-            ),
-        ):
-            info = capture_system_info(DeviceType.QPU, qpu_backend="ibm_brisbane")
-
-            assert info["device_type"] == "qpu"
-            assert info["qpu_backend"] == "ibm_brisbane"
-            assert info["torch_version"] is None
 
     def test_capture_system_info_gpu(self):
         """Test capturing system info for GPU device."""
@@ -165,10 +109,6 @@ class TestCaptureSystemInfo:
             patch(
                 "quantumnematode.experiment.system_utils.get_python_version",
                 return_value="3.11.5",
-            ),
-            patch(
-                "quantumnematode.experiment.system_utils.get_qiskit_version",
-                return_value="0.45.0",
             ),
             patch(
                 "quantumnematode.experiment.system_utils.get_torch_version",

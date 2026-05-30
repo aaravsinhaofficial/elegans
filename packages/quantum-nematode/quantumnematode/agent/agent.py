@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from quantumnematode.agent.tracker import EpisodeTracker
 from quantumnematode.brain.actions import ActionData  # noqa: TC001 - needed at runtime
-from quantumnematode.brain.arch import Brain, BrainParams, QuantumBrain
+from quantumnematode.brain.arch import Brain, BrainParams
 from quantumnematode.brain.arch._brain import BrainHistoryData
 from quantumnematode.dtypes import FoodHistory, GridPosition  # noqa: TC001 - used at runtime
 from quantumnematode.env import (
@@ -325,24 +325,12 @@ class QuantumNematodeAgent:
             return (float(self.env.agent_pos[0]), float(self.env.agent_pos[1]))
         return agent_pos  # type: ignore[return-value]
 
-    def _prepare_input_data(self, gradient_strength: float) -> list[float] | None:
-        """Prepare input data for quantum brain data re-uploading.
+    def _prepare_input_data(self, gradient_strength: float) -> list[float] | None:  # noqa: ARG002
+        """Prepare input data for brain execution.
 
-        For quantum brains, returns a list of gradient_strength repeated for each qubit.
-        For classical brains, returns None.
-
-        Parameters
-        ----------
-        gradient_strength : float
-            The gradient strength value to use for data re-uploading.
-
-        Returns
-        -------
-        list[float] | None
-            List of floats for quantum brains, None for classical brains.
+        Classical brains build their own feature vectors inside ``run_brain``, so
+        this returns ``None``.
         """
-        if isinstance(self.brain, QuantumBrain):
-            return [float(gradient_strength)] * self.brain.num_qubits
         return None
 
     def _create_brain_params(

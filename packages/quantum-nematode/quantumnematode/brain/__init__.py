@@ -1,7 +1,6 @@
-"""Module for quantum brain."""
+"""Module for the elegans brain."""
 
 from .arch.mlpreinforce import MLPBrain, MLPReinforceBrain
-from .arch.qvarcircuit import ModularBrain, QVarCircuitBrain
 from .arch.spikingreinforce import SpikingBrain, SpikingReinforceBrain
 from .modules import (
     SENSORY_MODULES,
@@ -14,9 +13,7 @@ __all__ = [
     "SENSORY_MODULES",
     "MLPBrain",
     "MLPReinforceBrain",
-    "ModularBrain",
     "ModuleName",
-    "QVarCircuitBrain",
     "SpikingBrain",
     "SpikingReinforceBrain",
     "extract_classical_features",

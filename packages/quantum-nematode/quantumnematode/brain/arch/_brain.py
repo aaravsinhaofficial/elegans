@@ -1,12 +1,9 @@
-from typing import TYPE_CHECKING, Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable
 
 from pydantic import BaseModel, Field
 
 from quantumnematode.brain.actions import Action, ActionData
 from quantumnematode.env import Direction
-
-if TYPE_CHECKING:
-    from qiskit import QuantumCircuit
 
 
 class BrainData(BaseModel):
@@ -237,18 +234,6 @@ class Brain(Protocol):
     def post_process_episode(self, *, episode_success: bool | None = None) -> None: ...
 
     def copy(self) -> "Brain": ...
-
-
-@runtime_checkable
-class QuantumBrain(Brain, Protocol):
-    num_qubits: int
-
-    def build_brain(
-        self,
-        input_params: dict[str, dict[str, float]] | None,
-    ) -> "QuantumCircuit": ...
-
-    def inspect_circuit(self) -> "QuantumCircuit": ...
 
 
 @runtime_checkable
