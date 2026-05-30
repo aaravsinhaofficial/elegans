@@ -6,8 +6,8 @@ import json
 import sys
 from datetime import UTC, datetime
 
-from quantumnematode.experiment import compare_experiments, list_experiments, load_experiment
-from quantumnematode.experiment.metadata import ExperimentMetadata
+from elegans.experiment import compare_experiments, list_experiments, load_experiment
+from elegans.experiment.metadata import ExperimentMetadata
 
 
 def format_table_row(cells: list[str], widths: list[int]) -> str:

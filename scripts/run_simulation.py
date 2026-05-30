@@ -9,38 +9,38 @@ from copy import deepcopy
 from datetime import UTC, datetime
 from pathlib import Path
 
-from quantumnematode.agent import (
+from elegans.agent import (
     DEFAULT_AGENT_BODY_LENGTH,
     DEFAULT_MAX_STEPS,
     QuantumNematodeAgent,
     SatietyConfig,
 )
-from quantumnematode.brain.arch import (
+from elegans.brain.arch import (
     MLPDQNBrainConfig,
     MLPPPOBrainConfig,
     MLPReinforceBrainConfig,
     SpikingReinforceBrainConfig,
 )
-from quantumnematode.brain.arch.dtypes import (
+from elegans.brain.arch.dtypes import (
     BRAIN_NAME_ALIASES,
     DEFAULT_BRAIN_TYPE,
     BrainType,
     DeviceType,
 )
-from quantumnematode.env import MIN_GRID_SIZE
-from quantumnematode.env.theme import DEFAULT_THEME, Theme
-from quantumnematode.experiment import capture_experiment_metadata, save_experiment
-from quantumnematode.logging_config import (
+from elegans.env import MIN_GRID_SIZE
+from elegans.env.theme import DEFAULT_THEME, Theme
+from elegans.experiment import capture_experiment_metadata, save_experiment
+from elegans.logging_config import (
     logger,
 )
-from quantumnematode.optimizers.gradient_methods import (
+from elegans.optimizers.gradient_methods import (
     GradientCalculationMethod,
 )
-from quantumnematode.optimizers.learning_rate import (
+from elegans.optimizers.learning_rate import (
     ConstantLearningRate,
     DynamicLearningRate,
 )
-from quantumnematode.report.csv_export import (
+from elegans.report.csv_export import (
     export_convergence_metrics_to_csv,
     export_distance_efficiencies_to_csv,
     export_foraging_results_to_csv,
@@ -52,14 +52,14 @@ from quantumnematode.report.csv_export import (
     export_simulation_results_to_csv,
     export_tracking_data_to_csv,
 )
-from quantumnematode.report.dtypes import (
+from elegans.report.dtypes import (
     EpisodeTrackingData,
     PerformanceMetrics,
     SimulationResult,
     TerminationReason,
     TrackingData,
 )
-from quantumnematode.report.plots import (
+from elegans.report.plots import (
     plot_all_distance_efficiencies_distribution,
     plot_cumulative_reward_per_run,
     plot_distance_efficiency_trend,
@@ -82,9 +82,9 @@ from quantumnematode.report.plots import (
     plot_tracking_data_by_latest_run,
     plot_tracking_data_by_session,
 )
-from quantumnematode.report.summary import summary
-from quantumnematode.utils.brain_factory import setup_brain_model
-from quantumnematode.utils.config_loader import (
+from elegans.report.summary import summary
+from elegans.utils.brain_factory import setup_brain_model
+from elegans.utils.config_loader import (
     BrainContainerConfig,
     EnvironmentConfig,
     ManyworldsModeConfig,
@@ -101,8 +101,8 @@ from quantumnematode.utils.config_loader import (
     create_env_from_config,
     load_simulation_config,
 )
-from quantumnematode.utils.interrupt_handler import manage_simulation_halt
-from quantumnematode.utils.seeding import derive_run_seed, ensure_seed, get_rng, set_global_seed
+from elegans.utils.interrupt_handler import manage_simulation_halt
+from elegans.utils.seeding import derive_run_seed, ensure_seed, get_rng, set_global_seed
 
 DEFAULT_DEVICE = DeviceType.CPU
 DEFAULT_RUNS = 1

@@ -13,14 +13,14 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
-from quantumnematode.benchmark import (
+from elegans.benchmark import (
     generate_leaderboards,
     generate_readme_section,
     list_benchmarks,
     update_leaderboard,
     update_readme,
 )
-from quantumnematode.experiment import (
+from elegans.experiment import (
     MIN_SESSIONS_REQUIRED,
     AggregateMetrics,
     ExperimentMetadata,

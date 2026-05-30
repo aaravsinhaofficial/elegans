@@ -16,7 +16,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from quantumnematode.experiment import MIN_RUNS_PER_SESSION, MIN_SESSIONS_REQUIRED
+from elegans.experiment import MIN_RUNS_PER_SESSION, MIN_SESSIONS_REQUIRED
 
 
 @dataclass

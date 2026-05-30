@@ -1,0 +1,106 @@
+[project]
+name = "elegans"
+version = "1.0.0"
+description = "Brain simulation of a nematode (C. elegans)"
+readme = "../../README.md"
+license = { text = "Apache-2.0" }
+authors = []
+maintainers = []
+requires-python = ">=3.12,<3.13"
+keywords = [
+    "machine-learning",
+    "nematode",
+    "c-elegans",
+    "simulation",
+    "reinforcement-learning",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Private :: Do Not Upload",
+]
+dependencies = [
+    "matplotlib>=3.10.1",
+    "ipykernel>=6.29.5",
+    "numpy>=2.2.4",
+    "pydantic>=2.11.4",
+    "python-dotenv>=1.1.1",
+    "rich>=13.0.0",
+    "cma>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/SyntheticBrains/nematode"
+Repository = "https://github.com/SyntheticBrains/nematode"
+Documentation = "https://github.com/SyntheticBrains/nematode#readme"
+Issues = "https://github.com/SyntheticBrains/nematode/issues"
+
+[project.optional-dependencies]
+torch = [
+  "torch>=2.7.0",
+]
+pixel = [
+  "pygame>=2.6.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["elegans"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--verbose",
+    "--strict-markers",
+    "--strict-config",
+    "--cov=elegans",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+    "--cov-report=html",
+]
+markers = [
+    "smoke: Smoke tests that run entry-point scripts (excluded from pre-commit)",
+    "nightly: Nightly regression tests against benchmarks (slow)",
+]
+
+[tool.coverage.run]
+source = ["elegans"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/site-packages/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[tool.coverage.html]
+directory = "htmlcov"

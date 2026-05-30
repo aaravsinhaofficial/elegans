@@ -22,8 +22,8 @@ def main(output_path: str = "docs/assets/images/pixel_theme.png") -> None:
     # Use dummy video driver so no window actually appears
     os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
     import pygame
-    from quantumnematode.brain.actions import Action
-    from quantumnematode.env.env import (
+    from elegans.brain.actions import Action
+    from elegans.env.env import (
         DynamicForagingEnvironment,
         ForagingParams,
         HealthParams,
@@ -32,8 +32,8 @@ def main(output_path: str = "docs/assets/images/pixel_theme.png") -> None:
         PredatorType,
         ThermotaxisParams,
     )
-    from quantumnematode.env.pygame_renderer import PygameRenderer
-    from quantumnematode.env.theme import Theme
+    from elegans.env.pygame_renderer import PygameRenderer
+    from elegans.env.theme import Theme
 
     # Create an environment with all features enabled.
     # Use a hot spot near the viewport to create visible temperature zones.
