@@ -424,9 +424,6 @@ class TestBrainRegistration:
 
     def test_brain_factory(self):
         """Test brain factory creates correct brain type."""
-        from elegans.optimizers.gradient_methods import (
-            GradientCalculationMethod,
-        )
         from elegans.optimizers.learning_rate import ConstantLearningRate
         from elegans.utils.brain_factory import setup_brain_model
         from elegans.utils.config_loader import ParameterInitializerConfig
@@ -435,12 +432,8 @@ class TestBrainRegistration:
         brain = setup_brain_model(
             brain_type=BrainType.HYBRID_CLASSICAL,
             brain_config=config,
-            shots=100,
-            qubits=2,
             device=DeviceType.CPU,
             learning_rate=ConstantLearningRate(learning_rate=0.01),
-            gradient_method=GradientCalculationMethod.CLIP,
-            gradient_max_norm=None,
             parameter_initializer_config=ParameterInitializerConfig(),
         )
         assert isinstance(brain, HybridClassicalBrain)

@@ -26,8 +26,6 @@ SIMULATION_CONFIGS = [
     "mlpppo_foraging_small.yml",
     "mlpreinforce_foraging_small.yml",
     "spikingreinforce_foraging_small.yml",
-    "qvarcircuit_foraging_small_validate.yml",
-    "qvarcircuit_predators_small_validate.yml",
     "mlpppo_thermotaxis_foraging_small.yml",
     "mlpppo_predators_small.yml",
 ]
@@ -70,43 +68,3 @@ def test_run_simulation_smoke(config_name: str, tmp_path: Path) -> None:
     assert "Traceback" not in result.stderr, (
         f"Traceback in stderr for {config_name}:\n{result.stderr[-2000:]}"
     )
-
-
-@pytest.mark.smoke
-def test_run_evolution_smoke(tmp_path: Path) -> None:
-    """Verify run_evolution.py exits cleanly with minimal parameters."""
-    config_path = CONFIGS_DIR / "evolution_qvarcircuit_foraging_small.yml"
-    assert config_path.exists(), f"Config not found: {config_path}"
-
-    result = subprocess.run(  # noqa: S603
-        [
-            sys.executable,
-            str(SCRIPTS_DIR / "run_evolution.py"),
-            "--config",
-            str(config_path),
-            "--generations",
-            "1",
-            "--population",
-            "4",
-            "--episodes",
-            "2",
-            "--seed",
-            "42",
-            "--log-level",
-            "WARNING",
-            "--output-dir",
-            str(tmp_path / "evolution_results"),
-        ],
-        check=False,
-        cwd=str(tmp_path),
-        capture_output=True,
-        text=True,
-        timeout=300,
-    )
-
-    assert result.returncode == 0, (
-        f"run_evolution.py failed.\n"
-        f"stdout:\n{result.stdout[-2000:]}\n"
-        f"stderr:\n{result.stderr[-2000:]}"
-    )
-    assert "Traceback" not in result.stderr, f"Traceback in stderr:\n{result.stderr[-2000:]}"
