@@ -1,0 +1,587 @@
+{
+  "behavior": {
+    "base_seed": 751000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 300,
+      "controller_gain": 0.5,
+      "enabled": true,
+      "influence_threshold": 0.06,
+      "logistic_gain": 30.0,
+      "min_vigor": 0.01,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.03,
+      "probes_enabled": true,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "gated",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_initial",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "disconnected",
+        "gain_scale": 1.0,
+        "name": "disconnected",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_restored",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  },
+  "behavior_oracle": {
+    "base_seed": 751000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 300,
+      "controller_gain": 0.5,
+      "enabled": true,
+      "influence_threshold": 0.06,
+      "logistic_gain": 30.0,
+      "min_vigor": 0.01,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.0,
+      "probes_enabled": false,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "gated",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_initial",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "disconnected",
+        "gain_scale": 1.0,
+        "name": "disconnected",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_restored",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  },
+  "behavior_ungated": {
+    "base_seed": 751000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 300,
+      "controller_gain": 0.5,
+      "enabled": true,
+      "influence_threshold": 0.06,
+      "logistic_gain": 30.0,
+      "min_vigor": 0.01,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.0,
+      "probes_enabled": false,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "gated",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_initial",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "disconnected",
+        "gain_scale": 1.0,
+        "name": "disconnected",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_restored",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  },
+  "behavior_yoked": {
+    "base_seed": 754000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 300,
+      "controller_gain": 0.5,
+      "enabled": true,
+      "influence_threshold": 0.06,
+      "logistic_gain": 30.0,
+      "min_vigor": 0.01,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.03,
+      "probes_enabled": true,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "gated",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_initial",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "yoked",
+        "gain_scale": 1.0,
+        "name": "yoked",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_restored",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  },
+  "deterministic_policy": {
+    "base_seed": 753000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 0,
+      "controller_gain": 0.5,
+      "enabled": true,
+      "influence_threshold": 0.06,
+      "logistic_gain": 30.0,
+      "min_vigor": 0.01,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.0,
+      "probes_enabled": false,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "gated",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_1",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_2",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_3",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  },
+  "estimator_disconnected": {
+    "base_seed": 751000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 300,
+      "controller_gain": 0.5,
+      "enabled": false,
+      "influence_threshold": 0.1,
+      "logistic_gain": 8.0,
+      "min_vigor": 0.05,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.03,
+      "probes_enabled": true,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "estimator",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_initial",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "disconnected",
+        "gain_scale": 1.0,
+        "name": "disconnected",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_restored",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  },
+  "estimator_reversed": {
+    "base_seed": 752000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 300,
+      "controller_gain": 0.5,
+      "enabled": false,
+      "influence_threshold": 0.1,
+      "logistic_gain": 8.0,
+      "min_vigor": 0.05,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.03,
+      "probes_enabled": true,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "estimator",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_initial",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "reversed",
+        "gain_scale": 1.0,
+        "name": "reversed",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_restored",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  },
+  "estimator_yoked": {
+    "base_seed": 751000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 300,
+      "controller_gain": 0.5,
+      "enabled": false,
+      "influence_threshold": 0.1,
+      "logistic_gain": 8.0,
+      "min_vigor": 0.05,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.03,
+      "probes_enabled": true,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "estimator",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_initial",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "yoked",
+        "gain_scale": 1.0,
+        "name": "yoked",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_restored",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  },
+  "robustness_template": {
+    "base_seed": 761000,
+    "bootstrap_replicates": 10000,
+    "confidence_level": 0.95,
+    "environment": {
+      "action_std": 1.0,
+      "coupling_gain": 1.0,
+      "initial_state": 0.0,
+      "process_noise_std": 0.2,
+      "rho": 0.8
+    },
+    "estimator": {
+      "evidence_clip": 8.0,
+      "initial_influence": 0.0,
+      "smoothing_rate": 0.01
+    },
+    "gate": {
+      "action_clip": 3.0,
+      "calibration_steps": 300,
+      "controller_gain": 0.5,
+      "enabled": false,
+      "influence_threshold": 0.1,
+      "logistic_gain": 8.0,
+      "min_vigor": 0.05,
+      "probe_amplitude": 1.0,
+      "probe_probability": 0.03,
+      "probes_enabled": true,
+      "target_state": 1.0
+    },
+    "learner": {
+      "fixed_variance": 0.04,
+      "initial_variance": 1.0,
+      "max_variance": 100.0,
+      "mean_learning_rate": 0.015,
+      "min_variance": 0.0001,
+      "variance_learning_rate": 0.01,
+      "variance_mode": "adaptive"
+    },
+    "mode": "estimator",
+    "n_seeds": 30,
+    "phase_metric_burn_in": 750,
+    "phases": [
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_initial",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "yoked",
+        "gain_scale": 1.0,
+        "name": "yoked",
+        "noise_scale": 1.0,
+        "steps": 1500
+      },
+      {
+        "coupling": "connected",
+        "gain_scale": 1.0,
+        "name": "connected_restored",
+        "noise_scale": 1.0,
+        "steps": 1500
+      }
+    ]
+  }
+}
