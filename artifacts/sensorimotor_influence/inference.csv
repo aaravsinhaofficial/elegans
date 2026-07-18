@@ -1,0 +1,12 @@
+comparison,estimate,ci_low,ci_high,n_seeds,interpretation
+H1_connected_minus_yoked_influence,1.5901280431851617,1.5798977062455086,1.600755366521428,30,positive supports H1
+analytic_calibration_error,-0.009751168847754265,-0.020634978973955557,0.0012255918715059597,30,unclipped loss advantage minus analytic information
+yoked_connected_minus_yoked_sensory_variance,-0.08452778801641216,-0.21684469045573107,0.04495575569004387,30,interval near zero validates variance matching
+H2_disconnection_drop,1.596669671871772,1.5863684670148297,1.6073274371313073,30,positive supports H2
+H2_reconnection_rise,1.5930085044452795,1.5826587122471094,1.6037359680942156,30,positive supports H2
+H3_ungated_minus_gated_energy,0.24558439730257758,0.23990914876678682,0.2509737482741196,30,positive supports H3
+H6_shuffled_action_advantage,-3.045029861387551e-05,-0.0005879175273270656,0.0005345805390162787,30,zero expected under H6
+H8_reversed_tail_influence,1.6121101276722944,1.5909385580111945,1.6325529138368968,30,positive supports H8
+H8_reversed_minus_connected_tail_influence,-0.005818012329950095,-0.037524643864940394,0.02577182226619172,30,interval within equivalence margin supports equal influence
+H4_withdrawn_minus_probe_recovery_latency,1421.4333333333334,1404.9325000000001,1435.6008333333332,30,positive supports H4
+H5_yoked_minus_connected_raw_error,1.031058796533021,1.0136962117835562,1.0494376157362006,30,"positive here, but raw error is noise- and reversal-sensitive"

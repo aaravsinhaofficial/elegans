@@ -1,0 +1,77 @@
+{
+  "H1": {
+    "ci": [
+      1.5798977062455086,
+      1.600755366521428
+    ],
+    "claim": "Influence is higher when coupled than yoked with matched sensory variance.",
+    "paired_difference": 1.5901280431851617,
+    "supported": true,
+    "unclipped_calibration_error": -0.009751168847754265,
+    "variance_difference_ci": [
+      -0.21684469045573107,
+      0.04495575569004387
+    ]
+  },
+  "H2": {
+    "claim": "Influence falls after disconnection and rises after reconnection.",
+    "drop": 1.596669671871772,
+    "rise": 1.5930085044452795,
+    "supported": true
+  },
+  "H3": {
+    "claim": "The learned gate saves action energy while disconnected.",
+    "energy_saved_per_step": 0.24558439730257758,
+    "supported": true
+  },
+  "H4": {
+    "claim": "Persistent fixed-amplitude probes improve reconnection recovery.",
+    "failure_fraction_probe_0.03": 0.0,
+    "failure_fraction_probes_withdrawn": 1.0,
+    "latency_improvement": 1421.4333333333334,
+    "supported": true
+  },
+  "H5": {
+    "claim": "Raw forward error is a non-specific surprise baseline.",
+    "high_noise_connected_mse": 1.4812650990504506,
+    "low_noise_yoked_mse": 1.0074621067862652,
+    "matched_yoked_error_difference": 1.031058796533021,
+    "qualification": "It separates the matched yoked phase in this parameterization, but changes with irreducible noise and spikes under still-controllable reversal.",
+    "reversal_mse_spike": 3.4864079528505627,
+    "supported": true
+  },
+  "H6": {
+    "claim": "Shuffling the command removes the action-aware advantage.",
+    "real_action_advantage": 1.6192971001629872,
+    "shuffled_advantage": -3.045029861387551e-05,
+    "supported": true
+  },
+  "H7": {
+    "claim": "Detection improves with action-to-noise ratio.",
+    "snr_auc_correlation": 0.39006764317007364,
+    "snr_detection_latency_correlation": 0.5553480775821727,
+    "supported": false
+  },
+  "H8": {
+    "claim": "Reversal retains influence after adaptation despite initial mismatch.",
+    "mean_initial_reversal_squared_error": 3.527503817903251,
+    "reversed_minus_connected": -0.005818012329950095,
+    "reversed_tail_influence": 1.6121101276722944,
+    "supported": true
+  },
+  "identifiability_control": {
+    "claim": "A deterministic action given state does not identify conditional influence.",
+    "mean_tail_influence": -5.820915171074427e-05,
+    "supported": true
+  },
+  "study_design": {
+    "bootstrap_replicates": 10000,
+    "calibration_intercept": -0.024076938579093893,
+    "calibration_rmse": 0.07291710889217823,
+    "calibration_slope": 0.9785310407308127,
+    "independent_unit": "seed",
+    "phase_steps": 1500,
+    "steady_state_window": "final 50% of each phase",
+    "time_steps_treated_as_independent": false
+  }
+}

@@ -103,6 +103,32 @@ docker-compose exec elegans uv run ./scripts/run_simulation.py --log-level DEBUG
 docker-compose exec elegans bash
 ```
 
+### 4. Run the Minimal Curvature Taxis Demo
+
+This deterministic demo uses no brain or learning. A point agent moves forward through one smooth
+odor field and bends using only the concentration difference between left and right sensors.
+
+```bash
+uv run python scripts/run_curvature_taxis_demo.py
+```
+
+The command writes a four-panel trajectory/distance/concentration/curvature figure, complete CSV
+transition logs, a 20-heading comparison, and a JSON summary to `exports/curvature_taxis/`.
+
+### 5. Run the Sensorimotor-Influence Toy Study
+
+This reward-free scalar experiment tests whether an online action-aware predictor outperforms a
+matched action-blind predictor, then uses their loss difference to gate a fixed controller's vigor.
+It includes cable-off, matched-yoked, probe-withdrawal, reversed-action, and gain/noise controls.
+
+```bash
+uv run ./scripts/run_sensorimotor_influence.py \
+  --output artifacts/sensorimotor_influence
+```
+
+See the [study overview](docs/research/sensorimotor_influence/README.md) for the claim boundary,
+analytic target, validation protocol, and quick-run command.
+
 ## ❓ How It Works
 
 ### Dynamic Foraging Environment
