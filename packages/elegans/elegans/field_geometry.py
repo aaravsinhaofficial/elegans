@@ -114,6 +114,7 @@ def sample_odor_stencil(
         [np.cos(heading_value), np.sin(heading_value)],
         dtype=np.float64,
     )
+    # Rotating this basis with the agent makes the stencil body-aligned.
     left_axis = np.array([-forward_axis[1], forward_axis[0]], dtype=np.float64)
     forward_offset = spacing_value * forward_axis
     left_offset = spacing_value * left_axis
@@ -150,13 +151,20 @@ def estimate_field_geometry(
     gradient_floor_value = _validate_positive_finite(gradient_floor, "gradient_floor")
 
     spacing = stencil.spacing
+
+    # Cache squared sensor spacing for the second-derivative estimates.
     spacing_squared = spacing**2
+
+    # Opposite sensor pairs estimate the local gradient.
     gradient_forward = (stencil.forward - stencil.backward) / (2.0 * spacing)
     gradient_left = (stencil.left - stencil.right) / (2.0 * spacing)
+
+    # Center-versus-opposite samples give the two on-axis second derivatives.
     hessian_forward_forward = (
         stencil.forward - 2.0 * stencil.center + stencil.backward
     ) / spacing_squared
     hessian_left_left = (stencil.left - 2.0 * stencil.center + stencil.right) / spacing_squared
+    # The four corners isolate the mixed derivative, completing the 2x2 Hessian.
     hessian_forward_left = (
         stencil.forward_left
         - stencil.forward_right
@@ -164,6 +172,7 @@ def estimate_field_geometry(
         + stencil.backward_right
     ) / (4.0 * spacing_squared)
 
+    # Convert the estimated gradient and Hessian into regularized field geometry.
     return geometry_from_derivatives(
         (gradient_forward, gradient_left),
         (
@@ -216,11 +225,14 @@ def geometry_from_derivatives(
     regularized_squared = gradient_squared + gradient_floor_value**2
     curvature_denominator = regularized_squared**1.5
 
+    # This numerator measures curvature of equal-concentration contours.
     level_set_numerator = (
         hessian_forward_forward * gradient_left**2
         - 2.0 * hessian_forward_left * gradient_forward * gradient_left
         + hessian_left_left * gradient_forward**2
     )
+    # This numerator measures sideways rotation of the gradient while following the
+    # gradient itself. It is field geometry, not curvature of the agent's path.
     streamline_numerator = (
         hessian_forward_left * (gradient_forward**2 - gradient_left**2)
         + (hessian_left_left - hessian_forward_forward) * gradient_forward * gradient_left
@@ -253,6 +265,7 @@ def curvature_controlled_speed(  # noqa: PLR0913 - public scalar control-law API
     curvature magnitude continuously approaches ``min_speed``.  Low confidence
     conservatively blends the result toward ``min_speed``.
     """
+    # Normalize and validate the controller inputs.
     curvature_value = _as_finite_scalar(curvature, "curvature")
     confidence_value = _as_finite_scalar(confidence, "confidence")
     min_speed_value = _as_finite_scalar(min_speed, "min_speed")
@@ -271,6 +284,8 @@ def curvature_controlled_speed(  # noqa: PLR0913 - public scalar control-law API
         raise ValueError(message)
 
     normalized_curvature = abs(curvature_value) / curvature_scale_value
+    # Curvature slows through the denominator; low confidence also blends toward
+    # min_speed instead of allowing acceleration from an unreliable flat signal.
     response = confidence_value / (1.0 + normalized_curvature**exponent_value)
     return float(min_speed_value + (max_speed_value - min_speed_value) * response)
 

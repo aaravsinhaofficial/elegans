@@ -63,10 +63,13 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     """Run the demo, save all outputs, and print its machine-readable summary."""
     args = parse_args()
+    # Start from the reproducible research defaults and override only CLI choices.
     config = replace(
         CurvatureTaxisConfig(),
         initial_heading_degrees=args.initial_heading_degrees,
     )
+    # This call runs the adaptive treatment, controls, heading sweep, analyses, and
+    # artifact writers. Video rendering is optional and replays the adaptive trace.
     summary = save_demo_artifacts(
         args.output_dir,
         config,

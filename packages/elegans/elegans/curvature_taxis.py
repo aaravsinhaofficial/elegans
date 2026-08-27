@@ -68,19 +68,21 @@ class TerminationReason(StrEnum):
 class CurvedOdorField:
     """A rotated anisotropic quartic field with one unique maximum.
 
+    This field defines the concentration at each world position sampled by the agent.
     In dimensionless rotated coordinates ``U, V``, concentration is
-
     ``exp(-0.5 * (U**2 + V**2) - beta * U**4 - gamma * U**2 * V**2)``.
-
-    Positive ``beta`` and ``gamma`` make this genuinely non-Gaussian.  Unequal
-    scales and rotation make the field non-circular, while the quartic coupling
-    bends its gradient-flow streamlines.
     """
 
     source: tuple[float, float]
+
+    # Stretch the field independently along its local axes.
     scale_u: float
     scale_v: float
+
+    # Rotate the stretched field in world coordinates.
     rotation_degrees: float
+
+    # Add non-Gaussian bending.
     beta: float
     gamma: float
 
@@ -101,6 +103,7 @@ class CurvedOdorField:
             message = "rotation_degrees must be finite"
             raise ValueError(message)
 
+    # Convert world coordinates into the field's rotated and stretched frame.
     def _transform(self) -> NDArray[np.float64]:
         angle = np.deg2rad(self.rotation_degrees)
         cosine = float(np.cos(angle))
@@ -116,13 +119,16 @@ class CurvedOdorField:
     def concentration(self, position: Sequence[float] | NDArray[np.float64]) -> float:
         """Evaluate concentration at a 2-D position."""
         point = _point(position)
+        # Center on the source, then rotate and rescale so U and V are dimensionless.
         coordinates = self._transform() @ (point - np.asarray(self.source, dtype=np.float64))
         u_coordinate, v_coordinate = coordinates
+        # Positive quartic terms retain one peak while making the field non-Gaussian.
         energy = (
             0.5 * (u_coordinate**2 + v_coordinate**2)
             + self.beta * u_coordinate**4
             + self.gamma * u_coordinate**2 * v_coordinate**2
         )
+        # Concentration is one at the source (energy zero) and decays away from it.
         return float(np.exp(-energy))
 
     def derivatives(
@@ -130,7 +136,11 @@ class CurvedOdorField:
         position: Sequence[float] | NDArray[np.float64],
     ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
         """Return the analytic world-coordinate gradient and Hessian."""
+        # These exact derivatives provide validation ground truth. The live controller
+        # reconstructs its geometry from sensor samples instead.
         point = _point(position)
+
+        # Convert world coordinates into the field frame.
         transform = self._transform()
         u_coordinate, v_coordinate = transform @ (point - np.asarray(self.source, dtype=np.float64))
         energy = (
@@ -138,7 +148,11 @@ class CurvedOdorField:
             + self.beta * u_coordinate**4
             + self.gamma * u_coordinate**2 * v_coordinate**2
         )
+
+        # Evaluate the odor level at the requested point.
         concentration = float(np.exp(-energy))
+
+        # Differentiate the energy equation in local coordinates.
         energy_gradient_local = np.array(
             [
                 u_coordinate
@@ -148,6 +162,8 @@ class CurvedOdorField:
             ],
             dtype=np.float64,
         )
+
+        # Construct the local Hessian of E(U, V).
         energy_hessian_local = np.array(
             [
                 [
@@ -172,23 +188,32 @@ class CurvedOdorField:
 class CurvatureTaxisConfig:
     """Parameters for the curvature-sensing navigation experiment."""
 
+    # Arena geometry and the primary trial's initial condition.
     arena_size: float = 10.0
     source: tuple[float, float] = (7.7, 6.4)
     start: tuple[float, float] = (1.7, 2.1)
     initial_heading_degrees: float = 28.0
+
+    # Shape of the rotated, non-Gaussian odor field.
     field_scale_u: float = 3.8
     field_scale_v: float = 1.45
     field_rotation_degrees: float = 31.0
     field_beta: float = 0.035
     field_gamma: float = 0.24
+
+    # Local sensing and numerical regularization near a flat odor signal.
     sensor_spacing: float = 0.16
     gradient_floor: float = 2e-4
+
+    # Independent forward-speed and steering controllers.
     min_speed: float = 0.10
     max_speed: float = 0.42
     curvature_scale: float = 0.22
     speed_exponent: float = 2.0
     max_turn_rate: float = 1.25
     steering_gain: float = 2.4
+
+    # Continuous-time integration and episode stopping conditions.
     dt: float = 0.04
     target_radius: float = 0.45
     max_duration: float = 120.0
@@ -437,6 +462,8 @@ class CurvatureTaxisEnvironment:
 
     def observe(self) -> TaxisObservation:
         """Sense nine concentrations and derive geometry from only those samples."""
+        # The stencil rotates with the body, so "forward" and "left" always mean
+        # directions relative to the current heading rather than fixed world axes.
         stencil = sample_odor_stencil(
             self.concentration,
             self._position,
@@ -445,11 +472,14 @@ class CurvatureTaxisEnvironment:
         )
         return TaxisObservation(
             stencil=stencil,
+            # This finite-difference estimate is the geometry available to the agent.
             geometry=estimate_field_geometry(stencil, self.config.gradient_floor),
         )
 
     def reference_geometry(self) -> FieldGeometryEstimate:
         """Return an analytic reference in the agent's forward/left frame."""
+        # Convert exact world-frame derivatives into the same body frame as the
+        # sensor estimate. This permits an apples-to-apples accuracy measurement.
         gradient_world, hessian_world = self.field.derivatives(self._position)
         forward = np.array([np.cos(self._heading), np.sin(self._heading)], dtype=np.float64)
         left = np.array([-forward[1], forward[0]], dtype=np.float64)
@@ -490,12 +520,15 @@ class CurvatureTaxisEnvironment:
         )
         applied_speed = float(np.clip(speed, self.config.min_speed, self.config.max_speed))
 
+        # Steering and translation are separate motor channels: turn first for this
+        # small time step, then advance along the updated heading at the chosen speed.
         self._heading += applied_turn_rate * self.config.dt
         direction = np.array([np.cos(self._heading), np.sin(self._heading)], dtype=np.float64)
         self._position += applied_speed * direction * self.config.dt
         self._time += self.config.dt
 
         snapshot = self.snapshot()
+        # Target success takes precedence if a step reaches the target near an edge.
         if snapshot.distance_to_source < self.config.target_radius:
             self._termination_reason = TerminationReason.TARGET_REACHED
         elif not self._inside_arena():
@@ -532,13 +565,17 @@ def bilateral_turn_rate(
     """Turn toward the stronger forward-side sample."""
     left = observation.stencil.forward_left
     right = observation.stencil.forward_right
+    # Normalize the bilateral difference so steering responds to relative contrast,
+    # rather than becoming arbitrarily stronger merely because all odor is stronger.
     error = (left - right) / (left + right + 1e-12)
+    # tanh gives a continuous response while enforcing the maximum angular velocity.
     return float(max_turn_rate * np.tanh(gain * error))
 
 
 def adaptive_speed(observation: TaxisObservation, config: CurvatureTaxisConfig) -> float:
     """Map sensed field curvature and confidence to forward speed."""
     geometry = observation.geometry
+    # Speed depends on sensed field geometry only; steering is computed separately.
     return curvature_controlled_speed(
         geometry.streamline_curvature,
         geometry.confidence,
@@ -558,6 +595,8 @@ def run_episode(
     """Run one episode with adaptive or fixed speed and the same steering reflex."""
     environment = CurvatureTaxisEnvironment(config)
     observation = environment.reset()
+    # Snapshots describe states; transitions align each sensed state with the action
+    # selected from it and the next sensed state produced by that action.
     snapshots = [environment.snapshot()]
     transitions: list[TaxisTransition] = []
     if environment.terminated:
@@ -582,9 +621,12 @@ def run_episode(
             if steering
             else 0.0
         )
+        # A supplied constant speed changes only the speed policy. The paired control
+        # therefore retains the exact same sensing and bilateral steering mechanism.
         requested_speed = (
             adaptive_speed(observation, config) if constant_speed is None else constant_speed
         )
+        # One research step is: sense -> choose turn/speed -> integrate dynamics -> sense.
         next_observation, _reward, terminated, info = environment.step(turn_rate, requested_speed)
         command = ControlCommand(
             turn_rate=float(info["turn_rate"]),
@@ -621,6 +663,8 @@ def run_matched_constant_speed(
 ) -> TaxisTrace:
     """Run identical steering at the adaptive trace's mean speed."""
     reference = adaptive_trace or run_taxis(config)
+    # Matching mean speed isolates the timing of curvature modulation from a trivial
+    # advantage caused by one controller simply having a larger overall speed budget.
     matched_speed = float(np.mean(reference.speeds)) if reference.transitions else config.min_speed
     return run_episode(config, constant_speed=matched_speed)
 
@@ -640,6 +684,8 @@ def run_heading_sweep(
         raise ValueError(message)
     rows: list[HeadingSweepRow] = []
     for heading in np.linspace(0.0, 360.0, count, endpoint=False):
+        # Each heading is a paired experiment: its constant controller is matched to
+        # the mean speed of the adaptive run from that same initial heading.
         heading_config = replace(config, initial_heading_degrees=float(heading))
         adaptive = run_taxis(heading_config)
         constant = run_matched_constant_speed(heading_config, adaptive)
@@ -697,6 +743,8 @@ def save_demo_artifacts(  # noqa: PLR0913 - optional video settings share artifa
 ) -> dict[str, Any]:
     """Run the experiment and save plots, traces, metrics, and optional video."""
     output_dir.mkdir(parents=True, exist_ok=True)
+    # Primary treatment, matched-speed baseline, steering-negative control, and
+    # robustness sweep. All four use the same field and integration dynamics.
     adaptive = run_taxis(config)
     constant = run_matched_constant_speed(config, adaptive)
     no_steering = run_no_steering(config)
@@ -1229,6 +1277,7 @@ def _video_frame_indices(
 
 
 def _trace_summary(trace: TaxisTrace) -> dict[str, float | bool | str]:
+    """Summarize whether an episode worked and how its trajectory changed."""
     return {
         "success": trace.success,
         "termination_reason": trace.termination_reason.value,
@@ -1245,8 +1294,11 @@ def _trace_summary(trace: TaxisTrace) -> dict[str, float | bool | str]:
 
 
 def _estimator_summary(trace: TaxisTrace) -> dict[str, float]:
+    """Compare nine-sensor curvature estimates with hidden analytic ground truth."""
     estimated = trace.estimated_streamline_curvatures
     reference = trace.reference_streamline_curvatures
+    # This reference is used only after the run to score the estimator; it never
+    # enters steering, speed selection, or the environment state seen by the agent.
     error = estimated - reference
     return {
         "mean_absolute_error": float(np.mean(np.abs(error))),
@@ -1263,8 +1315,11 @@ def _estimator_summary(trace: TaxisTrace) -> dict[str, float]:
 
 
 def _speed_relation_summary(trace: TaxisTrace) -> dict[str, float]:
+    """Test whether high sensed curvature coincided with lower commanded speed."""
     curvature = np.abs(trace.estimated_streamline_curvatures)
     speeds = trace.speeds
+    # Use trajectory-relative quartiles instead of selecting a favorable hand-tuned
+    # threshold: compare the least-curved quarter with the most-curved quarter.
     lower, upper = np.quantile(curvature, [0.25, 0.75])
     low_speeds = speeds[curvature <= lower]
     high_speeds = speeds[curvature >= upper]
@@ -1283,6 +1338,7 @@ def _speed_relation_summary(trace: TaxisTrace) -> dict[str, float]:
 
 
 def _write_trace_csv(path: Path, trace: TaxisTrace) -> None:
+    """Write every observation-action-next-observation transition for auditing."""
     base_fields = [
         "time",
         "x",
